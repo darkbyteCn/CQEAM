@@ -1,0 +1,205 @@
+@charset "GBK";
+BODY {
+	margin: 0px;
+    overflow-y:hidden;
+    overflow-x:hidden;
+    FONT-FACE: Courier New;
+    FONT-SIZE: 12px;
+    scrollbar-base-color: #86B9D6;
+    scrollbar-shadow-color: #FFFFFF;
+    scrollbar-highlight-color: #FFFFFF;
+    scrollbar-arrow-color: #FFFFFF;
+    scrollbar-face-color: #59ADBB;
+    scrollbar-track-color: #FFFFFF;
+    scrollbar-3dlight-color: #59ADBB;
+    scrollbar-darkshadow-color: #59ADBB;
+    BORDER-RIGHT: 0 PX;
+    BORDER-TOP: 0 PX;
+    BORDER-LEFT: 0 PX;
+    BORDER-BOTTOM: 0 PX;
+    BACKGROUND-COLOR: #FFFFFF;
+    BACKGROUND-COLOR: transparent;
+}
+
+TEXTAREA, INPUT,SELECT {
+    FONT-SIZE: 12px;
+    FONT-FAMILY:Arial;
+    background-color: #FFFFFF;
+    border:#336699 solid 1px;
+}
+
+TD, SELECT {
+    FONT-FACE: Courier New;
+    FONT-SIZE: 12px;
+    word-break:break-all;
+}
+TABLE {
+    BORDER-COLLAPSE: COLLAPSE;
+}
+
+FORM {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.queryHeadBg{
+    background-color:#efefef;
+}
+
+.headerTR {
+    background-image: url( '/rds/images/otherbg/bg_02.gif' );
+    color: #FFFFFF;
+    height:23px
+}
+
+.crossReportHeaderTR {
+    height:23px;
+}
+
+tr.dataTR {
+    behavior: url( '/rds/WebLibary/css/dataTR.htc' );
+    cursor:pointer;
+    height:23px;
+}
+
+.gridTable td {
+	background-color:#FFFFFF;
+}
+
+.fInput1 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    FONT-SIZE: 12PX;
+    border:#336699 solid 1px;
+    FONT-FAMILY: ARIAL;
+}
+.fInput2 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    FONT-SIZE: 12PX;
+    border:#336699 solid 1px;
+    FONT-FAMILY: ARIAL;
+    TEXT-ALIGN:CENTER;
+}
+.fInput3 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    FONT-SIZE: 12PX;
+    border:#336699 solid 1px;
+    FONT-FAMILY: ARIAL;
+    TEXT-ALIGN:RIGHT;
+    PADDING-RIGHT:2PX;
+}
+.readonlyInput1 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    FONT-SIZE: 12PX;
+    border:#336699 solid 1px;
+    FONT-FAMILY: ARIAL;
+    BACKGROUND-COLOR:#efefef;
+}
+.readonlyInput2 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    FONT-SIZE: 12PX;
+    border:#336699 solid 1px;
+    FONT-FAMILY: ARIAL;
+    BACKGROUND-COLOR:#efefef;
+    TEXT-ALIGN:CENTER;
+}
+.readonlyInput3 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    FONT-SIZE: 12PX;
+    border:#336699 solid 1px;
+    FONT-FAMILY: ARIAL;
+    BACKGROUND-COLOR:#efefef;
+    TEXT-ALIGN:RIGHT;
+    PADDING-RIGHT:2PX;
+}
+
+.tableInput1 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    BORDER-RIGHT: 0px ridge;
+    BORDER-TOP: 0px ridge;
+    BORDER-LEFT: 0px ridge;
+    BORDER-BOTTOM: 0px ridge;
+    FONT-SIZE: 12PX;
+    COLOR:#474747;
+    FONT-FAMILY: ARIAL;
+}
+.tableInput2 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    BORDER-RIGHT: 0px ridge;
+    BORDER-TOP: 0px ridge;
+    BORDER-LEFT: 0px ridge;
+    BORDER-BOTTOM: 0px ridge;
+    FONT-SIZE: 12px;
+    FONT-FAMILY: ARIAL;
+    COLOR:#474747;
+    TEXT-ALIGN:CENTER;
+}
+.tableInput3 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    BORDER-RIGHT: 0px ridge;
+    BORDER-TOP: 0px ridge;
+    BORDER-LEFT: 0px ridge;
+    BORDER-BOTTOM: 0px ridge;
+    FONT-SIZE: 12px;
+    FONT-FAMILY: ARIAL;
+    COLOR:#474747;
+    TEXT-ALIGN:RIGHT;
+    PADDING-RIGHT:2PX;
+}
+
+.tableReadonlyInput1 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    BORDER-RIGHT: 0px ridge;
+    BORDER-TOP: 0px ridge;
+    BORDER-LEFT: 0px ridge;
+    BORDER-BOTTOM: 0px ridge;
+    FONT-SIZE: 12PX;
+    COLOR:#474747;
+    FONT-FAMILY: ARIAL;
+    BACKGROUND-COLOR:#EFEFEF;
+}
+.tableReadonlyInput2 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    BORDER-RIGHT: 0px ridge;
+    BORDER-TOP: 0px ridge;
+    BORDER-LEFT: 0px ridge;
+    BORDER-BOTTOM: 0px ridge;
+    FONT-SIZE: 12px;
+    FONT-FAMILY: ARIAL;
+    COLOR:#474747;
+    TEXT-ALIGN:CENTER;
+    BACKGROUND-COLOR:#EFEFEF;
+}
+.tableReadonlyInput3 {
+    WIDTH:100%;
+    HEIGHT:100%;
+    BORDER-RIGHT: 0px ridge;
+    BORDER-TOP: 0px ridge;
+    BORDER-LEFT: 0px ridge;
+    BORDER-BOTTOM: 0px ridge;
+    FONT-SIZE: 12px;
+    FONT-FAMILY: ARIAL;
+    COLOR:#474747;
+    TEXT-ALIGN:RIGHT;
+    BACKGROUND-COLOR:#EFEFEF;
+    PADDING-RIGHT:2PX;
+}
+
+.resizeDivClass{
+    behavior: url( '/rds/WebLibary/css/headTD.htc' );
+    width:1px;
+    margin:0px 0px 0px 0px;
+    border:0px;
+    float:right;
+    cursor:e-resize;
+}

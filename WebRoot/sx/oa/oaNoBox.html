@@ -1,0 +1,48 @@
+<%--
+  User: zhoujs
+  Date: 2009-05-18
+  Time: 03:34:50
+  Function:山西OA办公系统资产实物待办集成不能登陆页面
+--%>
+<%@ page contentType="text/html;charset=GBK" language="java" %>
+<html>
+<head>
+    <title>我的待办</title>
+    <link href="/WebLibary/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="/WebLibary/css/comon.css" rel="stylesheet" type="text/css"/>
+    <link href="/WebLibary/css/html.css" rel="stylesheet" type="text/css"/>
+    <script language="javascript" src="/flow/flow.js"></script>
+    <script language="javascript" src="/WebLibary/js/CheckboxProcess.js"></script>
+    <script language="javascript" src="/WebLibary/js/SinoToolBar.js"></script>
+    <script language="javascript" src="/WebLibary/js/SinoToolBarConst.js"></script>
+    <script language="javascript" src="/WebLibary/js/TableProcess.js"></script>
+</head>
+
+<body bgcolor="#ECF5FF" leftmargin="0" topmargin="0">
+<form action="/servlet/com.sino.sso.servlet.OABoxServlet" method="post" name="mainForm">
+    <table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ECF5FF">
+  		<tr>
+		<td align="center" valign="top" bgcolor="#ECF5FF">
+			<tr valign="top">
+				<td  colspan="3" align="center">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr><td colspan="2"><b><font color='blue'>&nbsp;&nbsp;&nbsp;您没有资产实物待办</font></b></td></tr>
+                </table>
+		</td>
+	</tr>
+    
+    </table>
+    <input type="hidden" name="flag" value="">
+    <input type="hidden" name="applyId" value="">
+</form>
+</div>
+</body>
+</html>
+<script>
+
+function doStep(url){
+    var style = "width=1024,height=700,top=0,left=0,toolbar=no,menubar=no,scrollbars=no, resizable=yes,location=no, status=yes";
+    window.open(url, 'applyInFlowWin', style); 
+}
+
+</script>

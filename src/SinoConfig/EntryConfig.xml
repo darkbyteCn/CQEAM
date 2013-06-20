@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GB2312"?>
+<configs>
+	<config loadConfig="true" supportReload="true">
+		<name>TaskConfig</name><!--定时任务配置-->
+		<description>定时任务配置</description>
+		<value>taskConfig</value>
+        <fileExtention>.xml</fileExtention>
+		<loaderClassName>com.sino.foundation.config.task.TaskConfigLoader</loaderClassName>
+        <postProcessor>com.sino.foundation.config.task.TaskConfigPostProcessor</postProcessor>
+        <delayTime>60</delayTime><!--延迟一分钟启动配置文件后置处理器TaskConfigPostProcessor-->
+	</config>
+</configs>

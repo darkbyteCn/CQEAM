@@ -1,0 +1,433 @@
+@charset "utf-8";
+BODY {
+    overflow-y:hidden;
+    FONT-FACE: Courier New;
+    FONT-SIZE: 12px;
+    BORDER-RIGHT: 0 PX;
+    BORDER-TOP: 0 PX;
+    BORDER-LEFT: 0 PX;
+    BORDER-BOTTOM: 0 PX;
+    BACKGROUND-COLOR: #FFFFFF;
+} 
+TD, SELECT {
+    FONT-FACE: Courier New;
+    FONT-SIZE: 12px;
+    word-break:break-all;
+} 
+/**
+TEXTAREA, INPUT {
+    FONT-FAMILY: TAHOMA, VERDANA;
+    FONT-SIZE: 12 PX;
+    FONT-WEIGHT: NORMAL;
+    COLOR: #000000;
+    BACKGROUND-COLOR: #FFFFFF;
+}
+**/
+
+TABLE {
+    BORDER-COLLAPSE: COLLAPSE;
+}
+
+FORM {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+INPUT{
+	font-family: "宋体";
+	font-size: 12px; 
+	text-decoration: none;
+	position:relative;
+}
+TEXTAREA{ 
+	position:relative;
+}
+ 
+
+SELECT{
+	position:relative;
+}
+A{
+	position:relative;
+}
+IMG{ 
+	position:relative;
+}
+button{ 
+	position:relative;
+}
+.xp{
+	
+}
+.crystalScroll {
+    SCROLLBAR-FACE-COLOR: #e2f6d4;
+    scrollbar-base-color: #FFFFFF;
+    /** SCROLLBAR-SHADOW-COLOR: #e2f6d4; 
+    scrollbar-highlight-color: #e2f6d4;**/
+    SCROLLBAR-3DLIGHT-COLOR: #e2f6d4;
+    SCROLLBAR-DARKSHADOW-COLOR: #e2f6d4;
+    SCROLLBAR-ARROW-COLOR: #a2e2f2;
+    
+}
+
+/**打印JS调用 **/
+.printUnitTableHeader{
+	background-color:#add194;
+	/** margin-left: 24px; **/
+}
+.printUnitTableHeader td{ 
+	background-color:#e4fed2;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #489917;
+	text-decoration: none; 
+}
+
+.printUnitTableList{
+	background-color:#e2f6d4;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #034170;
+	text-decoration: none; 
+}
+.printUnitTableList tr {
+	background-color:#FFFFFF; 
+}
+.printUnitTableList input {
+	/** behavior: url('/WebLibary/css/gridInputColor.htc'); **/
+	/** background-color:#FFFFFF; **/ 
+}
+/*查询列表页面*/
+/*标头样式定义  table*/
+.titleTbClass{
+}
+/*查询块样式定义 table*/
+.searchBg{
+	/**filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( enabled=true,src="/images/image/search_bg.jpg", sizingMethod='scale');**/
+	background: #d8edb2;
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 96%;  
+	
+	/**
+	background:url(/WebLibary/image/search_bg.jpg);  
+	background-image:url(/WebLibary/image/search_bg.jpg); **/
+}
+
+/*grid 样式定义 头 table*/
+.headerTable{ 
+	background-color:#a2e2f2;
+	margin-left: 24px;
+	width: 805px; 
+	/**
+	background-image: url( '/images/bg_02.gif' );   /*河南请用 bg_02.gif ,西藏请用 bg_03.jpg*/
+    /**color: azure; **/
+}
+.headerTable td{ 
+	background-color:#e2f6d4;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #489917;
+	text-decoration: none; 
+}
+
+/*grid 样式定义 头 table*/
+.openHeaderTable{ 
+	//background-color:#a2e2f2; 
+	background-color:#5faa1e; 
+	/**background-image: url( '/images/bg_02.gif' );   /*河南请用 bg_02.gif ,西藏请用 bg_03.jpg*/
+    /**color: azure; **/
+}
+.openHeaderTable td{ 
+	//background-color:#e2f6d4;
+	background-color:#bbde7b;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #034170;
+	text-decoration: none; 
+}
+/*grid 样式定义 列表内容  table*/
+.gridTable {
+	background-color:#e2f6d4;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #034170;
+	text-decoration: none; 
+}
+.gridTable td {
+	background-color:#FFFFFF; 
+}
+.gridTable input {
+	background-color:#FFFFFF; 
+}
+/*grid 样式定义 列表内容  table*/
+.gridTbBorder{  
+	background-color:#e2f6d4;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #034170;
+	text-decoration: none; 
+}
+.gridTbBorder tr {
+	background-color:#FFFFFF; 
+}
+.gridTbBorder input {
+	background-color:#FFFFFF; 
+}
+
+.lightBlue{
+	background-color:#e2f6d4; 
+}
+
+/*详细信息编辑 样式定义  table */
+.editTb{ 
+	margin-left: 2%;
+	margin-right: 2%;
+	width: 96%;  
+	border: 0px;
+	background: #d8edb2;
+	//filter:progid:DXImageTransform.Microsoft.AlphaImageLoader( enabled=true,src="/images/image/seach_long.jpg", sizingMethod='scale');
+} 
+
+/*详细信息查看样式定义 table*/
+.detailTb{
+	background:url(/images/image/search_bg.jpg);
+	background-image:url(/images/image/search_bg.jpg); 
+}
+.detailHeader{
+}
+
+/** 按钮  7-14*/
+.btn_big{
+  cursor:pointer;
+  width:184px;
+  height:24px;
+  float:none;
+  font-family: "宋体";
+  font-size: 12px;
+  font-weight: bold; 
+  color: #489917;
+  padding:0;
+  margin:0; 
+  border:1;
+  text-align:center; 
+  background:url('/WebLibary/image/but_big.gif'); 
+}
+
+/** 按钮  4-6*/
+.btn_long{
+  cursor:pointer;
+  width:92px;
+  height:24px;
+  float:none;
+  font-family: "宋体";
+  font-size: 12px;
+  font-weight: bold; 
+  color: #367008;
+  padding:0;
+  margin:0; 
+  border:1;
+  text-align:center; 
+  background:url('/images/image/but_big.gif');
+}
+
+/** 按钮  2-3*/
+.btn_short{
+	cursor:pointer;
+  width:63px;
+  height:24px;
+  float:none;
+  font-family: "宋体";
+  font-size: 12px;
+  font-weight: bold; 
+  color: #367008;
+  padding:0;
+  margin:0; 
+  border:1;
+  text-align:center; 
+  background:url('/images/image/but_small.gif');
+}
+.titleBar{
+	margin-left: 0px;
+	width: 98%;
+}
+.btnBarXTb{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 10px;
+} 
+.btns{
+	margin-left: 2%;
+	width: 96%;
+}
+.font-bai {
+	font-family: "宋体";
+	font-size: 12px;
+	line-height: 25px;
+	color: #FFF;
+	text-decoration: none;
+}
+.font-bai1 {
+	font-family: "宋体";
+	font-size: 12px;
+	line-height: 25px;
+	color: #FFF;
+	font-weight:bold;
+	text-decoration: none;
+}
+.font-hei {
+	font-family: "宋体";
+	font-size: 12px;
+	color: #000;
+	text-decoration: none;
+}
+.font-hei14 {
+	font-family: "宋体";
+	font-size: 14px;
+	color: #4d5259;
+	font-weight: bold;
+	text-decoration: none;
+}
+.font-lan {
+	font-family: "宋体";
+	font-size: 12px;
+	color: #367008;
+	text-decoration: none;
+}
+.font-lan1 {
+	font-family: "宋体";
+	font-size: 12px;
+	color: #88b0bc;
+	text-decoration: none;
+}
+.font-lan2 {
+	font-family: "宋体";
+	font-size: 12px;
+	color: #034170;
+	font-weight:bold;
+	text-decoration: none;
+}
+.font-lan14 {
+	font-family: "宋体";
+	font-size: 14px;
+	color: #034170;
+	font-weight:bold;
+	text-decoration: none;
+}
+.font-hui {
+	font-family: "宋体";
+	font-size: 12px;
+	color: #4d545a;
+	text-decoration: none;
+    /*border-bottom-style: dashed;*/
+    /*border-bottom-width: thin;*/
+    /*border-bottom-color: #C0C0C0;*/
+}
+.pic{
+	background-image:url(image/right-09.jpg);
+	background-repeat:no-repeat;
+	background-position:bottom right;
+}
+.leftpic{
+	background-image:url(image/left-04.jpg);
+	background-repeat:no-repeat;
+	background-position:bottom ;
+}
+.userinfopic{
+	background-image:url(/image/userinfo-02.jpg);
+	background-repeat:no-repeat;
+	background-position:center top;
+}
+.userinfopic1{
+	background-image:url(/image/userinfo-01.jpg);
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.groundback1{
+	background-image:url(/image/groundback-01.jpg);
+	background-repeat:no-repeat;
+	background-position:center top;
+}
+.seachback{
+	background-image:url(/image/seach-01.jpg);
+	background-repeat:no-repeat;
+	background-position:center top;
+}
+.orderback{
+	background-image:url(/image/order-01.jpg);
+	background-repeat:no-repeat;
+	background-position:center top;
+}
+.input_120{
+	width:120px;
+	border: 1px solid #a6c4eb;
+}	
+ 
+.table{
+	border:1px solid #d0d7e3;
+}
+.table1{
+	border-left:1px;
+	border-bottom:1px;
+	border-right:1px;
+	border-top:0px;
+	border-color:#d0d7e3;
+	border-style:solid;
+}
+.font-hei a:link {
+	margin:0px;
+	padding:0px;
+	font-family: "宋体";
+	font-size: 12px;
+	color: #000;
+	text-decoration: none;
+	line-height: 25px;
+}
+
+.font-hei a:visited {
+	font-family: "宋体";
+	font-size: 12px;
+	color: #fff;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.font-hei a:hover {
+	margin:0px;
+	padding:0px;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFF;
+	text-decoration: none;
+	line-height:25px;
+}
+.font-hui a:link,.font-hui a:visited{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #4d545a;
+	text-decoration: none;
+}
+.font-hui a:hover{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #f37d00;
+	text-decoration: none;
+}
+.font-lan a:link,.font-lan a:visited{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #034170;
+	text-decoration: none;
+}
+.font-lan a:hover{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #f37d00;
+	text-decoration: none;
+}
+	
+.mainTb{
+	border:0px; 
+}
+
+

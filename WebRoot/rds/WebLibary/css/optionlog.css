@@ -1,0 +1,81 @@
+body {
+  color:#000;
+  font:12px "ËÎÌו";  
+  margin:5px;
+  padding:0;
+}
+
+#header {
+ margin: 0 0 5px 0;
+}
+
+#searchElements {
+  float:left;
+  margin:1px 10px 0 0;
+}
+
+#searchElements label {
+   text-align:right;
+}
+
+#content{
+  clear:both;
+  height:350px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+  width:100%;
+}
+
+#thead{
+  width:100%;
+}
+
+#content table,#tablehead {
+  margin:0;
+  padding:0;
+  width:100%;
+  border: 1px solid gray;
+  border-collapse:collapse;
+  table-layout:fixed;
+  zoom:
+}
+
+th { 
+  height:22px; 
+  border: 1px solid gray;
+  margin:0px;
+  padding:0px;
+}
+
+#searchbtn {
+ width:64px;
+	  height:23px;
+	  float:none;
+	  padding:0; 
+	  margin:0; 
+	  border:0;
+	  font-family: "ËÎÌו";
+	  font-size: 12px;
+	  font-weight: bold;
+	  color: #296fa0;
+	  text-align:center;
+      background:url('/image/query.gif');
+}
+
+#tfooter {
+ background:#f5fafa; 
+}
+
+#\$\$\$WebGridTipMsg\$\$\$ {
+   width:99%;
+   top:50%;		 
+}
+
+#tbodier td,#tfooter td {
+  height:20px;
+  border: 1px solid gray;
+}
+
+img {
+   cursor:pointer;
+}

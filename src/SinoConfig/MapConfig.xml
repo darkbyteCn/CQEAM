@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<map mapClass="com.supermap.server.components.MyMap"
+		mapId="myMap">
+		<!--  -->
+		<layers>
+			<layer>
+				<name>SuperMap</name>
+				<caption>SuperMap</caption>
+				<description>SuperMap</description>
+				<visible>true</visible>
+				<queryable>true</queryable>
+				<minScale>0.0</minScale>
+				<maxScale>0.0</maxScale>
+				<displayFilter><!--  --></displayFilter>
+				<opaqueRate>100</opaqueRate>
+				<isSymbolScalable>false</isSymbolScalable>
+				<minVisibleGeometrySize>10</minVisibleGeometrySize>
+				<layerSetting
+					layerSettingType="SUPERMAPCOLLECTION">
+					<mapName>Changchun</mapName>
+					<serviceAddress>localhost</serviceAddress>
+					<servicePort>8600</servicePort>
+				</layerSetting>
+			</layer>
+			<layer>
+				<name>WMS</name>
+				<caption>WMS</caption>
+				<description>WMS</description>
+				<visible>true</visible>
+				<queryable>true</queryable>
+				<minScale>0.0</minScale>
+				<maxScale>0.0</maxScale>
+				<displayFilter><!--  --></displayFilter>
+				<opaqueRate>100</opaqueRate>
+				<isSymbolScalable>false</isSymbolScalable>
+				<minVisibleGeometrySize>10</minVisibleGeometrySize>
+				<layerSetting layerSettingType="WMS">
+					<url></url>
+					<version></version>
+					<service></service>
+					<format></format>
+					<styles></styles>
+					<request></request>
+					<exceptions></exceptions>
+				</layerSetting>
+			</layer>
+			<layer>
+				<name>WFS</name>
+				<caption>WFS</caption>
+				<description>WFS</description>
+				<visible>true</visible>
+				<queryable>true</queryable>
+				<minScale>0.0</minScale>
+				<maxScale>0.0</maxScale>
+				<displayFilter><!--  --></displayFilter>
+				<opaqueRate>100</opaqueRate>
+				<isSymbolScalable>false</isSymbolScalable>
+				<minVisibleGeometrySize>10</minVisibleGeometrySize>
+				<layerSetting layerSettingType="WFS">
+					<url></url>
+					<version></version>
+					<service></service>
+					<request></request>
+					<typeName></typeName>
+				</layerSetting>
+			</layer>
+		</layers>
+	</map>
+</configuration>

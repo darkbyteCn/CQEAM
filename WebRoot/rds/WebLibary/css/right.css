@@ -1,0 +1,137 @@
+.nav_content {
+    margin: 0px;
+    padding: 10px;
+    background-color: #fafaf4;
+
+    border: 1px solid #dfd9c3;
+    width: 760px;
+    height: 631px;
+
+}
+
+.nav_content2 {
+    margin: 0px;
+    padding: 0px;
+    background-image: url('/images/main/b_03.jpg');
+    background-repeat: repeat-x;
+    border: 1px solid #dfd9c3;
+    width: 740px;
+    height: 25px
+}
+
+.nav_content2.gao {
+    margin-top: 30px;
+
+}
+
+.nav_content3 {
+    margin: 0px;
+    padding: 0px;
+    background-color: #d9eec3;
+    width: 740px;
+    height: 330px
+}
+
+.nav_content4 {
+    float: inherit;
+    background-color: #fff;
+    border: 1px solid #dfd9c3;
+    width: 700px;
+    height: 290px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.wenzi1 {
+    background: #55a616 no-repeat;
+    color: #fff;
+    width: 65px;
+    height: 25px;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    text-align: center;
+}
+
+.selected {
+    background: #55a616 no-repeat;
+    color: #fff;
+    width: 65px;
+    height: 25px;
+    margin: 0px;
+    padding: 0px;
+    float: left;
+}
+
+.selected2 {
+    color: #000;
+    width: 165px;
+    height: 25px;
+    padding: 0px;
+    float: left;
+    margin-left: 30px;
+}
+
+.xinxi {
+    height: 150px;
+
+}
+
+.ul {
+    float: left;
+    width: 350px;
+    margin-left: 0px;
+    height: 120px;
+    border-right-style: dashed;
+    border-right-width: thin;
+    border-right-color: #C0C0C0;
+    margin-top: 20px;
+}
+
+.ul.ul2 {
+    margin-left: 30px;
+}
+
+#li {
+    line-height: 20px;
+}
+
+.caigou {
+    width: 66px;
+    height: 66px;
+    float: left;
+    margin-top: 20px;
+
+}
+
+.row1 .rcontent2 {
+    width: 226px;
+    float: left;
+    border-right: 1px solid #dbd8d3;
+    margin-left: 10px;
+    height: 100%;
+}
+
+.mt10 {
+    margin-top: 2px;
+}
+
+.liststyle2 li {
+    list-style: none;
+    background: url('/images/main/arrow.gif') no-repeat left center;;
+    text-indent: 12px;
+    text-align: left;
+    line-height: 26px;
+    height: 26px;
+    border-bottom: 1px dashed #dcdcdc;
+    width: 95%;
+}
+
+.tbHome {
+    bgcolor: #FAFAF4;
+    border-color: #D4CCB0
+}
+
+.style1 {
+	border-width: 0px;
+}

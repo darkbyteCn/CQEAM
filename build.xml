@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="CQEAM" basedir="." default="build">
+	<property file="build.properties" />
+	<property name="src.dir" value="src" />
+	<property name="war.dir" value="war" />
+	<property name="webroot.dir" value="WebRoot" />
+	<property name="build.dir" value="${war.dir}/WEB-INF" />
+	<property name="name" value="CQEAM" />
+	
+	<path id="master-classpath">
+		<fileset dir="${build.dir}/lib">
+			<include name="*.jar" />
+		</fileset>
+		
+		<pathelement path="${build.dir}/classes" />
+	</path>
+	
+	<target name="build" description="Compile main source tree java files">
+		<echo>Building......</echo>
+		
+		<echo>Make classes folder</echo>
+		<mkdir dir="${build.dir}/classes"/>
+		
+		<echo>Copy lib folder</echo>
+		<copydir dest="${build.dir}/lib" src="${webroot.dir}/WEB-INF/lib" />
+		
+		<javac destdir="${build.dir}/classes" failonerror="true">
+			<src path="${src.dir}" />
+			<classpath refid="master-classpath" />
+		</javac>
+	</target>
+	
+	
+	<target name="war-archiving">
+		<echo>Archiving....</echo>
+		
+		<echo>Copy properties files </echo>
+		<copydir dest="${build.dir}/classes/config" src="${src.dir}/config"></copydir>
+		<copydir dest="${build.dir}/classes/SinoConfig" src="${src.dir}/SinoConfig"></copydir>
+		
+		<echo>Copy Html and JSP files</echo>
+		<copydir dest="${war.dir}" src="${webroot.dir}" />
+		<!--
+		<copy todir="${war.dir}">
+			<fileset dir="${webroot.dir}">
+				<include name="*/*.*"/>
+				<include name="*.*" />
+				<exclude name="WEB-INF"/>
+				<exclude name="META-INF"/>
+			</fileset>
+		</copy>
+		
+		<echo>Copy web.xml </echo>
+		<copy todir="${build.dir}">
+			<fileset dir="${webroot.dir}/WEB-INF">
+				<include name="*.xml"/>
+			</fileset>
+		</copy>
+		
+		<echo>Copy META-INF</echo>
+		<copydir dest="${war.dir}/META-INF" src="${webroot.dir}/META-INF" /> -->
+		
+		<!--
+		<war destfile="${name}.war" webxml="${build.dir}/web.xml">
+			<fileset dir="${war.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war> -->
+	</target>
+	
+	<!--
+	<target name="deploy" depends="build">
+		<echo>Deploying....</echo>
+		<copy todir="${deploy.path}">
+			<fileset dir=".">
+				<include name="*.war" />
+			</fileset>
+		</copy>
+	</target> -->
+</project>

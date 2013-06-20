@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<foldConfigs>
+	<foldConfig foldID="1" foldDesc="" foldPath="D:\\temp" hasSpace="true" loadConfig="false"/> 
+	<foldConfig foldID="2" foldDesc="" foldPath="/tmp/cms_files/template" hasSpace="true" loadConfig="true"/> 
+	<foldConfig foldID="2" foldDesc="" foldPath="D:\\temp" hasSpace="false" loadConfig="false"/> 
+</foldConfigs>

@@ -1,0 +1,12 @@
+<PUBLIC:COMPONENT>
+    <PUBLIC:ATTACH EVENT="onmouseover" ONEVENT="changeit()"/>
+    <PUBLIC:ATTACH EVENT="onmouseout" ONEVENT="nochange()"/>
+    <script type="text/javascript">
+        function changeit() {
+            element.style.backgroundColor = '#FFFFFF';
+        }
+        function nochange() {
+            element.style.backgroundColor = '#EEF7FF';
+        }
+    </script>
+</PUBLIC:COMPONENT>    

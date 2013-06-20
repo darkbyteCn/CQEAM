@@ -1,0 +1,116 @@
+.selected{
+	background: #55a616 no-repeat;
+	width: 55px;
+	height: 25px;
+	color: #fff;
+	text-align: left;
+	line-height: 25px;
+	    /* Do rounding (native in Opera, Firefox and Safari) */
+    border-radius:2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+
+ul{
+    width:180px;
+	height:23px;
+	line-height:23px;
+	list-style:none;
+}
+li{
+	float:left;
+	width:69px;
+	height:20px;
+	text-align:center;
+	cursor:pointer;
+}
+#nav_content{
+	margin:0px;
+	padding:10px;
+	background-color: #fafaf4;
+
+	border:1px solid #dfd9c3;
+	width:218px;
+         height:121px;
+             /* Do rounding (native in Opera, Firefox and Safari) */
+    border-radius:2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+
+}
+#nav_content2{
+	margin:0px;
+	padding:10px;
+	background-color: #fafaf4;
+
+	border:1px solid #dfd9c3;
+	width:218px;
+         height:121px;
+             /* Do rounding (native in Opera, Firefox and Safari) */
+    border-radius:2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+}
+#nav_content3{
+	margin:0px;
+	padding:10px;
+	background-color: #fafaf4;
+
+	border:1px solid #dfd9c3;
+	width:218px;
+         height:121px;
+             /* Do rounding (native in Opera, Firefox and Safari) */
+    border-radius:2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+
+}
+.juzhong{
+	margin-left: 20px;
+}
+.dingdan{
+ margin-top:10px;
+ float:left;
+}
+
+
+.shortcut{
+	float: left;
+	height: 80%;
+	width: 110px;
+}
+
+.row1 .rcontent2{ width:200px; float:left; border-right:1px solid #dbd8d3; margin-left:10px; height:100%;}
+.mt10{
+	margin-top: 2px;
+	margin-left: 2px;
+	padding-left: 0px;
+}
+.liststyle2 li
+{
+	list-style:none;
+	text-indent:12px;
+	text-align:left;
+	line-height:26px;
+	height:26px;
+	border-bottom:1px dashed #dcdcdc;
+	width:95%;
+
+}
+
+.liststyle3 li
+{float:left;
+	list-style:none;
+
+	text-indent:12px;
+	text-align:left;
+	line-height:26px;
+	height:26px;
+	border-bottom:1px dashed #dcdcdc;
+	width:95%;
+}
+
+.input {
+    background-image: url('/images/main/input.png');
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,125 @@
+#container
+{
+width: 98%;
+padding: 5px;
+border: 1px solid #ccc;
+background: #fff;
+}
+
+#beautytab
+{
+height: 10px;
+margin: 0;
+padding-left: 10px;
+background: url('/rds/images/tab/bottom.gif' ) repeat-x bottom;
+}
+
+#beautytab li
+{
+margin: 0;
+padding: 0;
+display: inline;
+list-style-type: none;
+}
+
+#beautytab a:link, #beautytab a:visited
+{
+float: left;
+background: #f3f3f3;
+font-size: 12px;
+line-height: 14px;
+font-weight: bold;
+padding: 2px 10px 2px 10px;
+margin-right: 4px;
+border: 1px solid #ccc;
+text-decoration: none;
+color: #666;
+}
+
+#beautytab a:link.selectedtab, #beautytab a:visited.selectedtab
+{
+border-bottom: 1px solid #fff;
+background: #fff;
+color: #000;
+}
+
+#beautytab a:link.unselectedtab, #beautytab a:visited.unselectedtab
+{
+border-bottom: 1px solid #fff;
+background: #fff;
+color: #000;
+}
+
+#beautytab a:hover
+{
+background: #fff;
+}
+body
+{
+ margin: 6pt;
+}
+
+.bd
+{
+ FILTER: progid:DXImageTransform.Microsoft.Shadow(direction=135,color=#999999,strength=3);
+}
+.tleft
+{
+
+}
+.tright
+{
+
+}
+.ttop
+{
+
+}
+.ttop_over
+{
+
+}
+.tbottom
+{
+
+}
+.tbottom2
+{
+ 
+}
+.tbottom3
+{
+
+ border-bottom: 1px #000000 solid;
+}
+.getfouce
+{
+ cursor: default;
+ text-indent: 6px;
+ font-size: 14px;
+ background-color: #ffffff;
+ background-image: url('/rds/images/tab/main_bg.gif');
+ color:#000000;
+ FONT-FAMILY: 'ËÎÌו';
+ font-weight:bold
+}
+.lostfouce
+{
+ text-indent: 6px;
+ font-size: 14px;
+ background-image: url('/rds/images/tab/listbg.gif' );
+ border-bottom: 1px #000000 solid;
+ cursor:pointer;
+ color:#555555;
+ FONT-FAMILY: 'ËÎÌו';
+ padding-top:4px
+}
+.lostfouce_over
+{
+ text-indent: 6px;
+ font-size: 14px;
+ cursor:pointer;
+ background-image: url('/rds/images/tab/listbg.gif');
+ border-bottom: 1px #000000 solid;
+}
+

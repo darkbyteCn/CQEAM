@@ -1,0 +1,73 @@
+//HTML.select.hack.iframe shim.htm
+<HTML>
+<head>
+<script>
+function DivSetVisible(state)
+{
+var DivRef = document.getElementById('PopupDiv');
+//var IfrRef = document.getElementById('DivShim');
+if(state)
+{
+//DivRef.style.display = "block";
+    DivRef.style.visibility = 'visible';
+//    alert(document.getElementById("selbox").options[document.getElementById("selbox").selectedIndex].value)
+/*
+IfrRef.style.width = DivRef.offsetWidth;
+IfrRef.style.height = DivRef.offsetHeight + 50;
+IfrRef.style.top = DivRef.style.top;
+IfrRef.style.left = DivRef.style.left;
+IfrRef.style.zIndex = DivRef.style.zIndex - 1;
+IfrRef.style.display = "block";
+*/
+}
+else
+{
+    DivRef.style.visibility = 'hidden';
+//    alert(document.getElementById("selbox").options[document.getElementById("selbox").selectedIndex].value)
+    
+//DivRef.style.display = "none";
+//IfrRef.style.display = "none";
+}
+}
+</script>
+</head>
+<body>
+<form>
+<select name="selbox">
+<option value="1">第一</option>
+<option value="2">第二</option>
+<option value="3">第三</option>
+</select>
+</form>
+<!--div
+id="PopupDiv"
+style="position:absolute;font:italic normal bolder 12pt Arial; top:25px; left:50px; padding:4px; display:none; color:#ffff00; z-index:100">
+.... and a DIV can cover it up<br>through the help of an IFRAME.
+</div-->
+<div id="PopupDiv"
+     style="position:absolute;bottom:0px;top:0px;left:0px;right:0px;z-index:10;visibility:hidden;width:300px;height:100px">
+    <!--table width=100% height=100%
+           style="background-color:#dddddd;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=30,finishOpacity=30,style=2)">
+        <tr><td></td></tr>
+    </table-->
+    <table width=100% height=100%
+           style="background-color:#dddddd;filter:alpha(opacity=50);-moz-opacity:0.3;khtml-opacity:0.3;opacity: 0.3">
+        <tr><td></td></tr>
+    </table>
+
+</div>
+<!--iframe
+id="DivShim"
+src="javascript:false;"                 
+scrolling="no"
+frameborder="0"
+style="position:absolute; top:0px; left:0px; display:none;filter=progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0);">
+</iframe-->
+<br>
+<br>
+<input type="button" name="Submit" value="show" onclick="DivSetVisible(true)">
+<br>
+<br>
+<input type="button" name="Submit" value="hide" onclick="DivSetVisible(false)">
+</body>
+</HTML> 

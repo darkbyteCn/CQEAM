@@ -1,0 +1,36 @@
+<PUBLIC:COMPONENT> 
+    <PUBLIC:ATTACH EVENT="onchange" ONEVENT="formatAmount();"/> 
+    <script type="text/javascript">
+    	//格式化金额
+        function formatAmount() { 
+            if( element.tagName == "TD" ){
+        		var value = trim( element.innerText ); 
+        		if( element.align == "" ){
+       				element.align="right";
+       			}
+        		element.innerText = formatValue( value ); 
+            }else if( element.tagName == "INPUT" ){  
+            	var value = trim( element.value ); 
+    			element.value = formatValue( value ); 
+            }
+        } 
+        function formatValue( value ){
+        	try{
+	             if( typeof(value)!= undefined && value!= undefined && value != "" ){
+	             	var numberValue = Number(value);
+	             	if( numberValue == 0 ){
+	             		return "";
+	             	}else{
+	                	return numberValue.toFixed(2);
+	            	}
+	           	 }else{
+	           	 	return value;
+	           	 }
+           	 }catch(ex){
+           	 	alert( ex.message );
+           	 	return value;
+           	 }
+        }
+        formatAmount();
+    </script>
+</PUBLIC:COMPONENT>    

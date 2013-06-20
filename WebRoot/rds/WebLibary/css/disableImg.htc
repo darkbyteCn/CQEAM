@@ -1,0 +1,10 @@
+<PUBLIC:COMPONENT>
+    <PUBLIC:ATTACH EVENT="onclick" ONEVENT="disableImg()"/>
+    <script type="text/javascript">
+        function disableImg() {
+        		alert("disable");
+            element.disabled = true;
+        }
+        
+    </script>
+</PUBLIC:COMPONENT>

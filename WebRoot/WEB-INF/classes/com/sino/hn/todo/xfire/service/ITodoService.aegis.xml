@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings>
+	<mapping>
+		<method name="saveOpen">
+			<parameter index="0" componentType="com.sino.hn.todo.xfire.beans.Open" />
+		</method>
+		<method name="saveClose">
+			<parameter index="0" componentType="com.sino.hn.todo.xfire.beans.Close" />
+		</method>
+		<method name="saveCancel">
+			<parameter index="0" componentType="com.sino.hn.todo.xfire.beans.Cancel" />
+		</method>
+		<method name="updateTodo">
+			<parameter index="2" componentType="java.lang.String" />
+		</method>
+		<method name="deleteTodo">
+			<parameter index="1" componentType="java.lang.String" />
+		</method>
+	</mapping>
+</mappings>

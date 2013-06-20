@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="/WebLibary/css/main.css"/>
+
+<script type="text/javascript">
+    function go_home() {
+        parent.main.location = "/home.jsp";
+    }
+
+    function do_ChangeOrganization() {
+        var win = parent.parent.window;
+        var actionURL = "/servlet/com.sino.ams.log.servlet.ChangeOrganizationServlet";
+        var winPercent = 0.5;
+        var width = window.screen.availWidth * winPercent;
+        var height = window.screen.availHeight * winPercent;
+        var left = (window.screen.availWidth - width) / 2;
+        var top = (window.screen.availHeight - height) / 2;
+        var winStyle = "width=" + width + ",height=" + height + ",top=" + top + ",left=" + left + ",resizable=no";
+        win.open(actionURL, "changeOuWin", winStyle);
+    }
+</script>
+</head>
+
+<body style="padding:0; margin:0; border:0;">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#3593DD">
+  <tr>
+    <td width="30%" height="25">
+    	<iframe align="right" height="25" style="filter:chroma(color=#ffffff)" allowTransparency="true" scrolling="no" src="/system/onLineUserCount.jsp" frameborder="0" ></iframe>
+	</td>
+    <td width="30%" height="25" align="center"> <a href="" style="text-decoration:underline" onclick="do_ChangeOrganization();return false;">切换OU组织</a></td>
+    <td width="20%" height="25" align="center"> <a href="#" style="text-decoration:underline" onclick="go_home();">首页</a>| <a href="mailto:admin@sinoprof.com" style="text-decoration:underline">与我联系</a></td>
+    <td width="20%" height="25">&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

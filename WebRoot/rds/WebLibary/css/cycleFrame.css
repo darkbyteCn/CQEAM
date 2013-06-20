@@ -1,0 +1,8 @@
+.curvedBox{width:300px;margin: 10px auto 0;}
+.curvedBox .r1,.curvedBox .r2,.curvedBox .r3,.curvedBox .r4{background-color:#666;display:block;overflow:hidden;height:1px;font-size:1px;}
+.curvedBox .r2,.curvedBox .r3,.curvedBox .r4{border-width:0 1px;border-left:1px solid #666;border-right:1px solid #666;}
+.curvedBox .r1{margin:0 6px;}
+.curvedBox .r2{margin:0 3px;}
+.curvedBox .r3{margin:0 2px;}
+.curvedBox .r4{margin:0 1px;height:2px;}
+.curvedBox .content{background:#666;border-left:1px solid #666;border-right:1px solid #666;padding:0 5px;}

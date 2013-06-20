@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ZH-CN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html">
+		<script type="text/javascript" src="Constant.js"></script>
+		<script type="text/javascript" src="CommonUtil.js"></script>
+		<script type="text/javascript" src="DateProcess.js"></script>
+		<script type="text/javascript" src="FormValidate.js"></script>
+	</head>
+<body>
+	<form>
+		<input type="text" name="user" value="2007-09-20">
+		<input type="text" name="userAge" value="2007-09-26">
+		<input type="button" value="check" onClick="do_Validate()">
+	</form>
+	
+</body>	
+<script>
+function do_Validate(){
+	var fieldNames = "user;userAge";
+	var labels = ";";
+	var type = DATE_VALIDATE;
+//	setDatePattern("yyyy.mm.dd");
+	formValidate(fieldNames, labels, type);
+}
+</script>

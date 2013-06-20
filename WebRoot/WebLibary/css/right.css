@@ -1,0 +1,14 @@
+.nav {
+   background:url('/images/main/nav_01.jpg') repeat-x left center;;
+   border:1 #94b1cd;
+}
+.nav_left {
+   background:url('/images/main/nav_00.jpg') no-repeat left;;
+   border:1 #94b1cd;
+}
+.nav_right {
+   background:url('/images/main/nav_00.jpg') no-repeat right;;
+   border:1 #94b1cd;
+}
+
+

@@ -1,0 +1,45 @@
+<PUBLIC:COMPONENT>
+    <PUBLIC:ATTACH EVENT="onmousedown" ONEVENT="MouseDownToResize()"/>
+    <PUBLIC:ATTACH EVENT="onmousemove" ONEVENT="MouseMoveToResize()"/>
+    <PUBLIC:ATTACH EVENT="onmouseup" ONEVENT="MouseUpToResize()"/>
+    <script type="text/javascript">
+        function MouseDownToResize() {
+            dragSize = true;
+            var headTable = getHeadTable();
+            var dataTable = getDataTable();
+            if(headTable && dataTable){
+                element.mouseDownX = event.clientX;
+                element.pareneTdW = element.parentElement.offsetWidth;
+                element.pareneTableW = headTable.offsetWidth;
+                element.setCapture();
+            }
+        }
+
+        function MouseMoveToResize() {
+            if (!element.mouseDownX) {
+                return;
+            }
+            var headTable = getHeadTable();
+            var dataTable = getDataTable();
+            if(headTable && dataTable){
+                var newWidth = element.pareneTdW + event.clientX - element.mouseDownX;
+                var newTableWidth = element.pareneTableW + newWidth - element.pareneTdW;
+                if (newWidth > 40) {
+                    element.parentElement.style.width = newWidth;
+                    dataTable.cells[element.parentElement.cellIndex].style.width = newWidth;
+                    if(newTableWidth < document.body.clientWidth){
+                        newTableWidth = document.body.clientWidth;
+                    }
+                    headTable.style.width = newTableWidth;
+                    dataTable.style.width = newTableWidth;
+                }
+            }
+        }
+
+        function MouseUpToResize() {
+            element.releaseCapture();
+            element.mouseDownX = 0;
+        }
+
+    </script>
+</PUBLIC:COMPONENT>

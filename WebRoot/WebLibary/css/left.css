@@ -1,0 +1,32 @@
+BODY, TD {
+    OVERFLOW-Y: AUTO;
+    FONT-FACE: Courier New;
+    FONT-SIZE: 12px
+}
+
+
+A:LINK {
+    FONT-SIZE: 12px;
+    COLOR: #FFFFFF;
+    TEXT-DECORATION: NONE;
+}
+
+A:VISITED {
+    COLOR: #FFFFFF;
+    TEXT-DECORATION: NONE;
+}
+
+A:HOVER {
+    FONT-SIZE: 12px;
+    COLOR: orange;
+    TEXT-DECORATION: UNDERLINE;
+}
+
+A:ACTIVE {
+    COLOR: yellow;
+    TEXT-DECORATION: UNDERLINE;
+}
+
+DIV, SPAN {
+    white-space: nowrap;
+}

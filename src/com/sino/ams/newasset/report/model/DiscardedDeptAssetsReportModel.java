@@ -1,0 +1,566 @@
+package com.sino.ams.newasset.report.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sino.ams.appbase.model.AMSSQLProducer;
+import com.sino.ams.bean.SyBaseSQLUtil;
+import com.sino.ams.newasset.dto.AmsMisDeptDTO;
+import com.sino.ams.newasset.report.dto.DeptAssetsReportDTO;
+import com.sino.ams.system.user.dto.SfUserDTO;
+import com.sino.base.db.sql.model.SQLModel;
+import com.sino.base.dto.DTOSet;
+import com.sino.base.exception.SQLModelException;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: su
+ * Date: 2009-3-4
+ * Time: 13:29:46
+ * To change this template use File | Settings | File Templates.
+ */
+
+public class DiscardedDeptAssetsReportModel extends AMSSQLProducer {
+    private String deptCodes = "";
+
+    public DiscardedDeptAssetsReportModel(SfUserDTO userAccount, DeptAssetsReportDTO dtoParameter) {
+        super(userAccount, dtoParameter);
+        initDeptCodes();
+    }
+
+    /**
+     * 功能：初始化当前用户有权限修改资产的所属部门信息
+     */
+    private void initDeptCodes() {
+        deptCodes = "(";
+        DTOSet depts = userAccount.getPriviDeptCodes();
+        if (depts != null && !depts.isEmpty()) {
+            AmsMisDeptDTO dept = null;
+            for (int i = 0; i < depts.getSize(); i++) {
+                dept = (AmsMisDeptDTO) depts.getDTO(i);
+                deptCodes += "'" + dept.getDeptCode() + "', ";
+            }
+        }
+        deptCodes += "'')";
+    }
+
+    /**
+     * 功能：获取报废部门资产构成分布统计报表SQL
+     *
+     * @return SQLModel
+     * @throws com.sino.base.exception.SQLModelException
+     *
+     */
+    public SQLModel getPageQueryModel() throws SQLModelException {
+        SQLModel sqlModel = new SQLModel();
+        List sqlArgs = new ArrayList();
+        String sqlStr = "";
+        DeptAssetsReportDTO dto = (DeptAssetsReportDTO) dtoParameter;
+        String deptAssetsType = dto.getDeptAssetsType();
+	    sqlStr = "SELECT TOTAL.COMPANY,\n" +
+	    "       TOTAL.DEPT_NAME,\n" +
+        "       TOTAL.SUM_COUNT,\n" +
+	    "       TOTAL.SUM_COST,\n" +
+	    "       TOTAL.DEPRN_RESERVE,\n" +
+	    "       TOTAL.NET_BOOK_VALUE,\n" +
+	    "       TOTAL.IMPAIRMENT_RESERVE,\n" +
+	    "       TOTAL.LIMIT_VALUE,\n" +
+	    "       TOTAL.PTD_DEPRN,\n" +
+	    "       DECODE(SUM_COST.TOTAL, NULL, '0%', 0, '0%', (DECODE(TRUNC(100 * TOTAL.SUM_COST / SUM_COST.TOTAL),\n" +
+	    "               0,\n" +
+	    "               STR_REPLACE(ROUND(100 * TOTAL.SUM_COST / SUM_COST.TOTAL, 3),\n" +
+	    "                       '.',\n" +
+	    "                       '0.'),\n" +
+	    "               TO_CHAR(ROUND(100 * TOTAL.SUM_COST / SUM_COST.TOTAL, 3))) || '%')) ASSETS_RATE,\n" +
+	    "               \n" +
+	    "       DECODE(SUM_LAST_YEAR_COST.SUM_COST, NULL, '0%', 0, '0%', (DECODE(SUM_LAST_YEAR_COST.SUM_COST, NULL , '0', DECODE(TRUNC(100 * TOTAL.SUM_COST / SUM_LAST_YEAR_COST.SUM_COST - 100),\n" +
+            "               0,\n" +
+            "               STR_REPLACE(ROUND(100 * TOTAL.SUM_COST / SUM_LAST_YEAR_COST.SUM_COST - 100, 3),\n" +
+            "                       '.',\n" +
+            "                       '0.'),\n" +
+            "               TO_CHAR(ROUND(100 * TOTAL.SUM_COST / SUM_LAST_YEAR_COST.SUM_COST - 100, 3)))) || '%')) LAST_YEAR_RATE,\n" +
+            "       \n" +
+            "       DECODE(SUM_LAST_FOUR_YEAR_COST.SUM_COST, NULL, '0%', 0, '0%', (DECODE(SUM_LAST_FOUR_YEAR_COST.SUM_COST, NULL , '0', DECODE(TRUNC(100 * SUM_LAST_THREE_YEAR_COST.SUM_COST / SUM_LAST_FOUR_YEAR_COST.SUM_COST - 100),\n" +
+            "               0,\n" +
+            "               STR_REPLACE(ROUND(100 * SUM_LAST_THREE_YEAR_COST.SUM_COST / SUM_LAST_FOUR_YEAR_COST.SUM_COST - 100, 3),\n" +
+            "                       '.',\n" +
+            "                       '0.'),\n" +
+            "               TO_CHAR(ROUND(100 * SUM_LAST_THREE_YEAR_COST.SUM_COST / SUM_LAST_FOUR_YEAR_COST.SUM_COST - 100, 3)))) || '%')) THREE_YEER_THREE_RATE,\n" +
+            "               \n" +
+            "       DECODE(SUM_LAST_THREE_YEAR_COST.SUM_COST, NULL, '0%', 0, '0%', (DECODE(SUM_LAST_THREE_YEAR_COST.SUM_COST, NULL , '0', DECODE(TRUNC(100 * SUM_LAST_TWO_YEAR_COST.SUM_COST / SUM_LAST_THREE_YEAR_COST.SUM_COST - 100),\n" +
+            "               0,\n" +
+            "               STR_REPLACE(ROUND(100 * SUM_LAST_TWO_YEAR_COST.SUM_COST / SUM_LAST_THREE_YEAR_COST.SUM_COST - 100, 3),\n" +
+            "                       '.',\n" +
+            "                       '0.'),\n" +
+            "               TO_CHAR(ROUND(100 * SUM_LAST_TWO_YEAR_COST.SUM_COST / SUM_LAST_THREE_YEAR_COST.SUM_COST - 100, 3)))) || '%')) THREE_YEER_TWO_RATE,\n" +
+            "               \n" +
+            "       DECODE(SUM_LAST_TWO_YEAR_COST.SUM_COST, NULL, '0%', 0, '0%', (DECODE(SUM_LAST_TWO_YEAR_COST.SUM_COST, NULL , '0', DECODE(TRUNC(100 * SUM_LAST_ONE_YEAR_COST.SUM_COST / SUM_LAST_TWO_YEAR_COST.SUM_COST - 100),\n" +
+            "               0,\n" +
+            "               STR_REPLACE(ROUND(100 * SUM_LAST_ONE_YEAR_COST.SUM_COST / SUM_LAST_TWO_YEAR_COST.SUM_COST - 100, 3),\n" +
+            "                       '.',\n" +
+            "                       '0.'),\n" +
+            "               TO_CHAR(ROUND(100 * SUM_LAST_ONE_YEAR_COST.SUM_COST / SUM_LAST_TWO_YEAR_COST.SUM_COST - 100, 3)))) || '%'))  THREE_YEER_ONE_RATE\n" +
+	    " FROM   (SELECT SUM(EFAHR.COST) TOTAL\n" +
+	    "        FROM   ETS_FA_ASSETS_HIS_REP  EFAHR,\n" +
+	    "               ETS_ITEM_INFO  		   EII,\n" +
+	    "               ETS_ITEM_MATCH 		   EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED'" +
+	    "				AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)) SUM_COST,\n" +   
+	
+	    "       (SELECT AOCM.COMPANY COMPANY,\n" +
+	    "               AMD.DEPT_NAME DEPT_NAME,\n" +
+	    "               COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               SUM(EFAHR.NET_ASSET_VALUE) NET_BOOK_VALUE,\n" +
+	    "               SUM(EFAHR.DEPRN_COST) LIMIT_VALUE,\n" +
+	    "               SUM(EFAHR.IMPAIR_RESERVE) IMPAIRMENT_RESERVE,\n" +
+	    "               SUM(EFAHR.DEPRN_RESERVE) DEPRN_RESERVE,\n" +
+	    "               SUM(EFAHR.DEPRN_AMOUNT) PTD_DEPRN,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               AMD.DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "               AND EIIAC.CREATION_DATE BETWEEN\n" +
+	    "               TRUNC(TO_DATE(?, 'YYYY-MM-DD'), 'MM') AND\n" +
+	    "               TRUNC(LAST_DAY(TO_DATE(?, 'YYYY-MM-DD')) + 1)\n" +
+	    "        GROUP  BY AOCM.COMPANY,\n" +
+	    "                  AMD.DEPT_NAME,\n" +
+	    "                  AOCM.ORGANIZATION_ID,\n" +
+	    "                  AMD.DEPT_CODE\n" +
+	    "        \n" +
+	    "        UNION\n" +
+	    "        SELECT AOCM.COMPANY COMPANY,\n" +
+	    "               '' DEPT_NAME,\n" +
+	    "               COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "				SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               SUM(EFAHR.NET_ASSET_VALUE) NET_BOOK_VALUE,\n" +
+	    "               SUM(EFAHR.DEPRN_COST) LIMIT_VALUE,\n" +
+	    "               SUM(EFAHR.IMPAIR_RESERVE) IMPAIRMENT_RESERVE,\n" +
+	    "               SUM(EFAHR.DEPRN_RESERVE) DEPRN_RESERVE,\n" +
+	    "               SUM(EFAHR.DEPRN_AMOUNT) PTD_DEPRN,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               '0' DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   EII,\n" +
+	    "               AMS_MIS_DEPT    AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP AOCM,\n" +
+	    "               ETS_ITEM_MATCH  EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "               AND EIIAC.CREATION_DATE BETWEEN\n" +
+	    "               TRUNC(TO_DATE(?, 'YYYY-MM-DD'), 'MM') AND\n" +
+	    "               TRUNC(LAST_DAY(TO_DATE(?, 'YYYY-MM-DD')) + 1)\n" +
+	    "        GROUP  BY AOCM.COMPANY, AOCM.ORGANIZATION_ID) TOTAL \n" +
+	    "  LEFT JOIN \n" +
+	    "       (SELECT AOCM.COMPANY COMPANY,\n" +
+	    "               AMD.DEPT_NAME DEPT_NAME,\n" +
+	    "               COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               AMD.DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "               AND EIIAC.CREATION_DATE BETWEEN\n" +
+	    "               TRUNC(TO_DATE(?, 'YYYY-MM-DD'), 'MM') AND\n" +
+	    "               TRUNC(LAST_DAY(TO_DATE(?, 'YYYY-MM-DD')) + 1)\n" +
+	    "        GROUP  BY AOCM.COMPANY,\n" +
+	    "                  AMD.DEPT_NAME,\n" +
+	    "                  AOCM.ORGANIZATION_ID,\n" +
+	    "                  AMD.DEPT_CODE\n" +
+	    "        UNION\n" +
+	    "        SELECT AOCM.COMPANY COMPANY,\n" +
+	    "               '' DEPT_NAME,\n" +
+	    "               COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               '0' DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "               AND EIIAC.CREATION_DATE BETWEEN\n" +
+	    "               TRUNC(TO_DATE(?, 'YYYY-MM-DD'), 'MM') AND\n" +
+	    "               TRUNC(LAST_DAY(TO_DATE(?, 'YYYY-MM-DD')) + 1)\n" +
+	    "        GROUP  BY AOCM.COMPANY, AOCM.ORGANIZATION_ID) SUM_LAST_YEAR_COST\n" +
+	    "  ON TOTAL.ORGANIZATION_ID = SUM_LAST_YEAR_COST.ORGANIZATION_ID\n" +
+	    "  AND TOTAL.DEPT_CODE = SUM_LAST_YEAR_COST.DEPT_CODE\n" +
+	    
+	    "  LEFT JOIN \n" +
+	    "       (SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               AMD.DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.ORGANIZATION_ID,\n" +
+	    "                  AMD.DEPT_CODE\n" +
+	    "        UNION\n" +
+	    "        SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               '0' DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.COMPANY, AOCM.ORGANIZATION_ID) SUM_LAST_FOUR_YEAR_COST\n" +
+	    "  ON SUM_LAST_YEAR_COST.ORGANIZATION_ID = SUM_LAST_FOUR_YEAR_COST.ORGANIZATION_ID\n" +
+	    "  AND SUM_LAST_YEAR_COST.DEPT_CODE = SUM_LAST_FOUR_YEAR_COST.DEPT_CODE\n" +
+	    
+	    "  LEFT JOIN \n" +
+	    "       (SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               AMD.DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.ORGANIZATION_ID,\n" +
+	    "                  AMD.DEPT_CODE\n" +
+	    "        UNION\n" +
+	    "        SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               '0' DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.COMPANY, AOCM.ORGANIZATION_ID) SUM_LAST_THREE_YEAR_COST\n" +
+	    "  ON SUM_LAST_FOUR_YEAR_COST.ORGANIZATION_ID = SUM_LAST_THREE_YEAR_COST.ORGANIZATION_ID\n" +
+	    "  AND SUM_LAST_FOUR_YEAR_COST.DEPT_CODE = SUM_LAST_THREE_YEAR_COST.DEPT_CODE\n" +
+	    
+	    "  LEFT JOIN \n" +
+	    "       (SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               AMD.DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.ORGANIZATION_ID,\n" +
+	    "                  AMD.DEPT_CODE\n" +
+	    "        UNION\n" +
+	    "        SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               '0' DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.COMPANY, AOCM.ORGANIZATION_ID) SUM_LAST_TWO_YEAR_COST\n" +
+	    "  ON SUM_LAST_THREE_YEAR_COST.ORGANIZATION_ID = SUM_LAST_TWO_YEAR_COST.ORGANIZATION_ID\n" +
+	    "  AND SUM_LAST_THREE_YEAR_COST.DEPT_CODE = SUM_LAST_TWO_YEAR_COST.DEPT_CODE\n" +
+	    
+	    "  LEFT JOIN \n" +
+	    "       (SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               AMD.DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.ORGANIZATION_ID,\n" +
+	    "                  AMD.DEPT_CODE\n" +
+	    "        UNION\n" +
+	    "        SELECT COUNT(EII.ITEM_QTY) SUM_COUNT,\n" +
+	    "               SUM(EFAHR.COST) SUM_COST,\n" +
+	    "               AOCM.ORGANIZATION_ID,\n" +
+	    "               '0' DEPT_CODE\n" +
+	    "        FROM   ETS_ITEM_INFO   		EII,\n" +
+	    "               AMS_MIS_DEPT    		AMD,\n" +
+	    "               ETS_FA_ASSETS_HIS_REP   EFAHR,\n" +
+	    "				ETS_ITEM_INFO_ATTR_CHG  EIIAC,\n"	+
+	    "               ETS_OU_CITY_MAP 		AOCM,\n" +
+	    "               ETS_ITEM_MATCH  		EIM\n" +
+	    "        WHERE  EII.ITEM_STATUS = 'DISCARDED' \n" +
+	    "				AND EII.RESPONSIBILITY_DEPT = AMD.DEPT_CODE\n" +
+	    "               AND EII.SYSTEMID = EIM.SYSTEMID\n" +
+	    "				AND EFAHR.TAG_NUMBER = EIIAC.BAR_CODE\n"	+
+	    "				AND EIIAC.PERIOD_NAME = EFAHR.PERIOD_NAME"	+
+	    "               AND EFAHR.ASSET_ID = EIM.ASSET_ID\n" +
+	    "               AND AOCM.ORGANIZATION_ID = EFAHR.ORGANIZATION_ID\n" +
+	    "               AND EII.FINANCE_PROP = 'ASSETS'\n" +
+	    "               AND EFAHR.PERIOD_NAME = ? \n" +
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EFAHR.ORGANIZATION_ID = ?)"	+
+	    "               AND ( " + SyBaseSQLUtil.isNull() + "  OR EII.RESPONSIBILITY_DEPT = ?)\n" +
+	    "				AND EIIAC.CREATION_DATE >= TO_DATE(?, 'YY-MM-DD')"	+
+	    "				AND EIIAC.CREATION_DATE < TO_DATE(?, 'YY-MM-DD')"	+
+	    "        GROUP  BY AOCM.COMPANY, AOCM.ORGANIZATION_ID) SUM_LAST_ONE_YEAR_COST\n" +
+	    "  ON SUM_LAST_TWO_YEAR_COST.ORGANIZATION_ID = SUM_LAST_ONE_YEAR_COST.ORGANIZATION_ID\n" +
+	    "  AND SUM_LAST_TWO_YEAR_COST.DEPT_CODE = SUM_LAST_ONE_YEAR_COST.DEPT_CODE\n" +
+	    " ORDER  BY TOTAL.COMPANY,\n" +
+	    "          TOTAL.DEPT_NAME DESC";
+		
+	     sqlArgs.add(dto.getPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     
+	     sqlArgs.add(dto.getPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getYear() + "-" + dto.getMonth() + "-01");
+	     sqlArgs.add(dto.getYear() + "-" + dto.getMonth() + "-01");
+	     
+	     sqlArgs.add(dto.getPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getYear() + "-" + dto.getMonth() + "-01");
+	     sqlArgs.add(dto.getYear() + "-" + dto.getMonth() + "-01");
+	     
+	     sqlArgs.add(dto.getLastYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastYear() + "-" + dto.getMonth() + "-01");
+	     sqlArgs.add(dto.getLastYear() + "-" + dto.getMonth() + "-01");
+	     
+	     sqlArgs.add(dto.getLastYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastYear() + "-" + dto.getMonth() + "-01");
+	     sqlArgs.add(dto.getLastYear() + "-" + dto.getMonth() + "-01");
+	     
+	     sqlArgs.add(dto.getLastFourYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastFourYear() + "-01-01");
+	     sqlArgs.add(dto.getLastThreeYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastFourYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastFourYear() + "-01-01");
+	     sqlArgs.add(dto.getLastThreeYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastThreeYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastThreeYear() + "-01-01");
+	     sqlArgs.add(dto.getLastTwoYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastThreeYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastThreeYear() + "-01-01");
+	     sqlArgs.add(dto.getLastTwoYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastTwoYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastTwoYear() + "-01-01");
+	     sqlArgs.add(dto.getLastYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastTwoYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastTwoYear() + "-01-01");
+	     sqlArgs.add(dto.getLastYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastOneYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastYear() + "-01-01");
+	     sqlArgs.add(dto.getYear() + "-01-01");
+	     
+	     sqlArgs.add(dto.getLastOneYearPeriodNameByHisRep());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getOrganizationId());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getResponsibilityDept());
+	     sqlArgs.add(dto.getLastYear() + "-01-01");
+	     sqlArgs.add(dto.getYear() + "-01-01");
+        sqlModel.setSqlStr(sqlStr);
+        sqlModel.setArgs(sqlArgs);
+        return sqlModel;
+    }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<timingTasks><!--OA代办推送类任务，共1个-->
+	<tasks>
+		<task name="Eam2OATask" taskType="COMMON">
+			<taskClass>com.sino.ams.task.scheduler.oa.Eam2OATask</taskClass>
+			<taskMethod>processHNOATasks</taskMethod>
+			<taskDesc>推送河南移动代办和已办事项</taskDesc>
+			<stateful>true</stateful>
+		</task>
+		<task name="EAMShortMessageTask" taskType="COMMON">
+			<taskClass>com.sino.ams.task.scheduler.sms.EAMShortMessageTask</taskClass>
+			<taskMethod>sendShortMessage</taskMethod>
+			<taskDesc>发送手机短信</taskDesc>
+			<stateful>true</stateful>
+		</task>
+	</tasks>
+	<triggers>
+		<trigger name="Eam2OATask_Trigger">
+			<cronExpression>0 0/5 9-18 * * ?</cronExpression>
+			<triggerDesc>每5分触发一次</triggerDesc>
+		</trigger>
+		<trigger name="EAMShortMessageTask_Trigger">
+			<cronExpression>0 0/5 9-18 * * ?</cronExpression>
+			<triggerDesc>每5分触发一次</triggerDesc>
+		</trigger>
+	</triggers>
+	<schedulers>
+		<scheduler	 taskName="Eam2OATask" taskGroup="OATask_Group" triggerName="Eam2OATask_Trigger" triggerGroup="OATrigger_Group" startTask="true"/>
+		<scheduler	 taskName="EAMShortMessageTask" taskGroup="OATask_Group" triggerName="EAMShortMessageTask_Trigger" triggerGroup="OATrigger_Group" startTask="true"/>
+	</schedulers>
+</timingTasks>

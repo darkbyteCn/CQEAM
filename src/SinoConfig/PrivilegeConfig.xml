@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<privilegeConfig>
+<!--目前该配置文件不使用-->
+	<privilegeResources>
+		<privilegeResource>
+			<name>仓库</name>
+			<url>SinoETS.inv.servlet.InvProcessServlet</url>
+			<parameter>action</parameter>
+		</privilegeResource>
+		<privilegeResource>
+			<name>地点</name>
+			<url>/testApp/selectBuilder.jsp</url>
+			<parameter>action</parameter>
+		</privilegeResource>
+		<privilegeResource>
+			<name>sql测试</name>
+			<url>/testApp/sqlBuilder.jsp</url>
+			<parameter>action</parameter>
+		</privilegeResource>
+	</privilegeResources>
+</privilegeConfig>

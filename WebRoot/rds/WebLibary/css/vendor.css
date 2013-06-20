@@ -1,0 +1,57 @@
+body{
+    background: #EEF7FF;
+}
+  
+form {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+a:link {
+	color: #003399;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #003399;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #FF6600;
+	font-size: 12px;
+	text-decoration: underline;
+}
+tr.changeTR {
+    behavior: url( '/WebLibary/css/changeTR.htc' );
+    cursor:pointer;
+    height:22px;
+}
+.must {
+	color:blue;
+}
+.key {
+	color:red;
+}
+ 
+.noEmptyInputForDisabled {
+    BACKGROUND-COLOR: #EFEFEF; 
+    disabled: true;
+} 
+
+.DoubleFormat {
+    behavior: url( '/WebLibary/css/DoubleFormat.htc' ); 
+}
+
+.bsbttn { 
+	padding-top: 2px;
+	border: #6b8fc8 1px ridge;
+	font-size: 12px;
+	background: #ffffff;
+	cursor:pointer;
+	color: black;
+	font-family: ËÎÌו, MS SONG, SimSun, tahoma, sans-serif;
+	text-decoration: none;
+}
