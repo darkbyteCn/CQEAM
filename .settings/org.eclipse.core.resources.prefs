@@ -11,4 +11,3 @@ encoding//src/SinoConfig/resource/message/RDSMessageResource_zh_CN.properties=gb
 encoding//src/SinoConfig/resource/message/SamplingMessageResources_zh_CN.properties=gbk
 encoding//src/config/app.properties=gbk
 encoding//src/config/help.properties=gbk
-encoding/<project>=UTF-8

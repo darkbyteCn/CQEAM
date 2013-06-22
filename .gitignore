@@ -1,7 +1,3 @@
 *.jar
 *.class
-
-WebRoot/WEB-INF/classes/com/sino/ams/dzyh/dao/EamDhBillLDAO.class
-
-*.class
 /war

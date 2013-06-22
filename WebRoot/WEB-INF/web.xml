@@ -161,14 +161,14 @@
     <listener-class>com.sino.framework.security.servlet.SessionHandle</listener-class>
   </listener>
   
-  <!-- Huan add listener 
-  <listener>
-  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  Huan add end 
+  <!-- Huan add listener -->
+  <!--  <listener> -->
+  <!-- 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
+  <!--  </listener> -->
+  <!-- Huan add end -->
   
-  MVC servlets 
-  <servlet>
+  <!-- MVC servlets -->
+  <!--<servlet>
 	<servlet-name>appServlet</servlet-name>
 	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 	<init-param>
@@ -233,31 +233,31 @@
     </init-param>
     <init-param>
       <param-name>systemName</param-name>
-      <param-value>�ʲ����ϵͳ</param-value>
+      <param-value>资产管理系统</param-value>
     </init-param>
     <init-param>
       <param-name>sysAdminRole</param-name>
-      <param-value>ϵͳ����Ա</param-value>
+      <param-value>系统管理员</param-value>
     </init-param>
     <init-param>
       <param-name>cityAdminRole</param-name>
-      <param-value>���й���Ա</param-value>
+      <param-value>地市管理员</param-value>
     </init-param>
     <init-param>
       <param-name>provAssetsMgr</param-name>
-      <param-value>ȫʡ�ʲ����Ա</param-value>
+      <param-value>全省资产管理员</param-value>
     </init-param>
     <init-param>
       <param-name>compAssetsMgr</param-name>
-      <param-value>��˾�ʲ����Ա</param-value>
+      <param-value>公司资产管理员</param-value>
     </init-param>
     <init-param>
       <param-name>deptAssetsMgr</param-name>
-      <param-value>�����ʲ����Ա</param-value>
+      <param-value>部门资产管理员</param-value>
     </init-param>
     <init-param>
       <param-name>mtlAssetsMgr</param-name>
-      <param-value>רҵ�ʲ����Ա</param-value>
+      <param-value>专业资产管理员</param-value>
     </init-param>
     <init-param>
       <param-name>provinceOrgId</param-name>
@@ -269,7 +269,7 @@
     </init-param>
     <init-param>
       <param-name>proCompanyName</param-name>
-      <param-value>OU_ɽ��ʡ����</param-value>
+      <param-value>OU_重庆市本部</param-value>
     </init-param>
     <init-param>
       <param-name>provinceCode</param-name>
@@ -285,7 +285,7 @@
       </init-param>
       <init-param>
         <param-name>tdProCompanyName</param-name>
-        <param-value>OU_ɽ��ʡ����</param-value>
+        <param-value>OU_重庆市本部</param-value>
       </init-param>
       <init-param>
         <param-name>tdProvinceCode</param-name>
