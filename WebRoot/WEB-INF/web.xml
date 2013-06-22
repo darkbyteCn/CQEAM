@@ -161,13 +161,13 @@
     <listener-class>com.sino.framework.security.servlet.SessionHandle</listener-class>
   </listener>
   
-  <!-- Huan add listener -->
+  <!-- Huan add listener 
   <listener>
   	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <!-- Huan add end -->
+  Huan add end 
   
-  <!-- MVC servlets -->
+  MVC servlets 
   <servlet>
 	<servlet-name>appServlet</servlet-name>
 	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -182,7 +182,7 @@
   	<servlet-name>appServlet</servlet-name>
   	<url-pattern>/mvc/</url-pattern>
   </servlet-mapping>
-  <!-- MVC servlets end -->
+  MVC servlets end -->
   
   <servlet>
     <servlet-name>SinoInitServlet</servlet-name>
