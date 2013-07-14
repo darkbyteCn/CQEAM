@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GB2312"?>
+<configs>
+<!--本系统中将要加载的所有配置文件，配置文件全部位于/WEB-INF/classes/SinoConfig/目录下，包括该文件-->
+	<config loadConfig="true">
+		<name>logConfig</name><!--日志配置文件-->
+		<value>LogConfig.xml</value>
+	</config>
+	<config loadConfig="true">
+		<name>poolConfig</name><!--数据库连接池配置文件-->
+		<value>PoolConfig.xml</value>
+	</config>
+	<config loadConfig="false">
+		<name>privilegeConfig</name><!--权限配置文件，目前暂不使用-->
+		<value>PrivilegeConfig.xml</value>
+	</config>
+	<config loadConfig="true">
+		<name>uploadConfig</name><!--文件上载配置文件-->
+		<value>UploadConfig.xml</value>
+	</config>
+	<config loadConfig="true">
+		<name>pictureResourceConfig</name><!--图片资源配置文件-->
+		<value>PictureResourceConfig.xml</value>
+	</config>
+	<config loadConfig="true">
+		<name>queryConfig</name><!--图片资源配置文件-->
+		<value>QueryConfig.xml</value>
+	</config>
+	<config loadConfig="true">
+		<name>smsConfig</name><!--消息服务配置文件-->
+		<value>SmsConfig.xml</value>
+	</config>  
+	<config loadConfig="true">
+		<name>foldConfig</name><!--消息服务配置文件-->
+		<value>FoldConfig.xml</value>
+	</config>       
+</configs>

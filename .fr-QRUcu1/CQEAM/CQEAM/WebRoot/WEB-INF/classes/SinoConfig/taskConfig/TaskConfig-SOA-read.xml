@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<timingTasks> <!--SOA读取类任务，共9个-->
+	<tasks>
+        <task name="AssetsLocationReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.mis.read.AssetsLocationReadTask</taskClass>
+            <taskMethod>readAssetsLocations</taskMethod>
+            <taskDesc>读取MIS系统资产地点</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="EmployeeReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.mis.read.EmployeeReadTask</taskClass>
+            <taskMethod>readEmployees</taskMethod>
+            <taskDesc>读取MIS系统员工信息</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="OrgStructureReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.OrgStructureReadTask</taskClass>
+            <taskMethod>readOrgStructure</taskMethod>
+            <taskDesc>读取MIS和TD系统员工信息</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="ProjectReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.ProjectReadTask</taskClass>
+            <taskMethod>readProjects</taskMethod>
+            <taskDesc>读取MIS和TD系统项目信息</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="AssetPeriodReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.AccountPeriodReadTask</taskClass>
+            <taskMethod>readAccountPeriod</taskMethod>
+            <taskDesc>读取MIS和TD系统会计期间</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="ValueSetReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.mis.read.ValueSetReadTask</taskClass>
+            <taskMethod>readValueSet</taskMethod>
+            <taskDesc>读取MIS系统值集</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="TDAssetsLocationReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.td.read.TDAssetsLocationReadTask</taskClass>
+            <taskMethod>readTDAssetsLocations</taskMethod>
+            <taskDesc>读取TD系统资产地点</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="TDEmployeeReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.td.read.TDEmployeeReadTask</taskClass>
+            <taskMethod>readTDEmployees</taskMethod>
+            <taskDesc>读取TD系统员工信息</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="TDValueSetReadTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.td.read.TDValueSetReadTask</taskClass>
+            <taskMethod>readTDValueSet</taskMethod>
+            <taskDesc>读取TD系统值集</taskDesc>
+            <stateful>true</stateful>
+        </task>
+
+	</tasks>
+	<triggers>
+		<trigger name="ValueSetReadTask_Trigger">
+			<cronExpression>0 30 6,18 * * ?</cronExpression>
+			<triggerDesc>每天6点30分和18点30分触发</triggerDesc>
+		</trigger>
+		<trigger name="OrgStructureReadTask_Trigger">
+			<cronExpression>0 0 2 * * ?</cronExpression>
+			<triggerDesc>每天凌晨2点触发</triggerDesc>
+		</trigger>
+		<trigger name="ProjectReadTask_Trigger">
+			<cronExpression>0 0 2 * * ?</cronExpression>
+			<triggerDesc>每天凌晨2点触发</triggerDesc>
+		</trigger>
+		<trigger name="EmployeeReadTask_Trigger">
+			<cronExpression>0 20 2 * * ?</cronExpression>
+			<triggerDesc>每天凌晨2点20分触发</triggerDesc>
+		</trigger>
+		<trigger name="AssetPeriodReadTask_Trigger">
+			<cronExpression>0 0 2 9 * ?</cronExpression>
+			<triggerDesc>每月9号凌晨2点触发</triggerDesc>
+		</trigger>
+        <trigger name="TDEmployeeReadTask_Trigger">
+            <cronExpression>0 10 2 * * ?</cronExpression>
+            <triggerDesc>每天凌晨2点10分触发</triggerDesc>
+        </trigger>
+		<trigger name="AssetsLocationReadTask_Trigger">
+			<cronExpression>0 30 2 * * ?</cronExpression>
+			<triggerDesc>每天凌晨2点30分触发</triggerDesc>
+		</trigger>
+		<trigger name="TDAssetsLocationReadTask_Trigger">
+			<cronExpression>0 30 2 * * ?</cronExpression>
+			<triggerDesc>每天凌晨2点30分触发</triggerDesc>
+		</trigger>
+        <trigger name="TDValueSetReadTask_Trigger">
+            <cronExpression>0 30 7,19 * * ?</cronExpression>
+            <triggerDesc>每天7点30分和19点30分触发</triggerDesc>
+        </trigger>
+	</triggers>
+	<schedulers>
+		<scheduler	 taskName="AssetsLocationReadTask" taskGroup="SOAReadTask_Group" triggerName="AssetsLocationReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="EmployeeReadTask" taskGroup="SOAReadTask_Group" triggerName="EmployeeReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="OrgStructureReadTask" taskGroup="SOAReadTask_Group" triggerName="OrgStructureReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="ProjectReadTask" taskGroup="SOAReadTask_Group" triggerName="ProjectReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="AssetPeriodReadTask" taskGroup="SOAReadTask_Group" triggerName="AssetPeriodReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="ValueSetReadTask" taskGroup="SOAReadTask_Group" triggerName="ValueSetReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="TDAssetsLocationReadTask" taskGroup="SOAReadTask_Group" triggerName="TDAssetsLocationReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="TDEmployeeReadTask" taskGroup="SOAReadTask_Group" triggerName="TDEmployeeReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+		<scheduler	 taskName="TDValueSetReadTask" taskGroup="SOAReadTask_Group" triggerName="TDValueSetReadTask_Trigger" triggerGroup="SOAReadTrigger_Group" startTask="true"/>
+	</schedulers>
+</timingTasks>

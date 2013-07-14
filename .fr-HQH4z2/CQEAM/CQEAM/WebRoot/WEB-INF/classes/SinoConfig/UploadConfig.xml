@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="GB2312"?>
+<uploadConfig>
+	<permissionType>*.doc;*.jpg</permissionType><!--允许上载的文件类型-->
+	<refuseType>*.exe</refuseType><!--拒绝上载的文件类型-->
+	<sizeUnit>KB</sizeUnit><!--上载文件大小的计算单位-->
+	<totalSize>10240</totalSize><!--允许上载文件的总体大小-->
+	<singleSize>2048</singleSize><!--允许上载单个文件的大小-->
+	<saveStore>PATH_SAVE_STORE</saveStore><!--上载文件的保存方式，分为PATH_SAVE_STORE和DB_SAVE_STORE，分表表示存储在目录下和数据库中，目前仅支持保存在路径下-->
+	<savePath>/eam/app/web/uploadFiles</savePath><!--上载文件的保存路径-->
+	<autoReName>false</autoReName><!--是否对文件自动改名，用于解决中文名文件无法正确显示的问题-->
+</uploadConfig>

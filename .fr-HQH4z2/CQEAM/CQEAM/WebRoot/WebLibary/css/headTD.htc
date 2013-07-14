@@ -1,0 +1,83 @@
+<PUBLIC:COMPONENT>
+    <PUBLIC:ATTACH EVENT="onmousedown" ONEVENT="MouseDownToResize()"/>
+    <PUBLIC:ATTACH EVENT="onmousemove" ONEVENT="MouseMoveToResize()"/>
+    <PUBLIC:ATTACH EVENT="onmouseup" ONEVENT="MouseUpToResize()"/>
+    
+    <script type="text/javascript">
+		var hasTrag = false;
+        function MouseDownToResize() { 
+            dragSize = true;
+            var headTable = getHeadTable();
+            var dataTable = getDataTable();
+            if(headTable && dataTable ){
+            	hasTrag = true;
+                element.mouseDownX = event.clientX;
+                element.pareneTdW = element.parentElement.offsetWidth;
+                element.pareneTableW = dataTable.offsetWidth;
+                element.setCapture();
+            } 
+        }
+
+        function MouseMoveToResize() {
+            if( hasTrag  ){
+            	if (!element.mouseDownX) {
+                	return;
+            	} 
+            	var headTable = getHeadTable();
+            	var dataTable = getDataTable();
+            	if(headTable && dataTable){
+                	var newWidth = element.pareneTdW + event.clientX - element.mouseDownX;
+                 
+                	var newTableWidth = element.pareneTableW + newWidth - element.pareneTdW;
+                	if (newWidth > 10) {
+                    	element.parentElement.style.width = newWidth;
+                    	element.parentElement.width = newWidth;
+                    	if( dataTable.rows.length > 0 ){
+                    		dataTable.cells[element.parentElement.cellIndex].style.width = newWidth;
+							dataTable.cells[element.parentElement.cellIndex].width = newWidth;
+							resizeTableCell( dataTable, element.parentElement.cellIndex );
+						}
+                    	headTable.style.width = newTableWidth;
+                    	dataTable.style.width = newTableWidth; 
+                    	//hasTrag = false;
+                	}
+            	} 
+	    	}
+        } 
+
+        function MouseUpToResize() {
+		
+            element.releaseCapture();
+            element.mouseDownX = 0;
+            hasTrag = false;
+            //;
+            //alert("element = " + element.className); 
+        }
+
+        function resizeTable( tableObj ){
+            var tbody = tableObj.tBodies[0];
+            var colRows = tbody.rows;
+            var j ;
+            var cellSize = colRows[0].cells.length;
+            for (i = 0; i < colRows.length; i++) {
+                //SJ ADD 对表格宽度重新设定
+                for( j = 0; j < cellSize; j++) {
+                    colRows[i].cells[ j ].style.width = tableObj.cells[ j ].style.width;
+                    colRows[i].cells[ j ].width = tableObj.cells[ j ].width;
+                }
+            }
+        }
+
+        function resizeTableCell( tableObj ,cellIndex  ){
+            var tbody = tableObj.tBodies[0];
+            var colRows = tbody.rows;
+            var j ;
+            var cellSize = colRows[0].cells.length;
+            for (i = 0; i < colRows.length; i++) {
+                //SJ ADD 对表格宽度重新设定
+                colRows[i].cells[ cellIndex ].style.width = tableObj.cells[ cellIndex ].style.width;
+                colRows[i].cells[ cellIndex ].width = tableObj.cells[ cellIndex ].width;
+            }
+        }
+    </script>
+</PUBLIC:COMPONENT>

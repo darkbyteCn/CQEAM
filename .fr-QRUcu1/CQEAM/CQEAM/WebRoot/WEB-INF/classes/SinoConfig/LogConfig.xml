@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="GB2312"?>
+<logConfig>
+	<encode>GBK</encode><!--日志记录的编码格式-->
+    <logToConsole>true</logToConsole><!--是否将日志输出到控制台-->
+	<logToFile>true</logToFile><!--是否将日志输出到控制文件-->
+	<logPath>/eam/app/eamlog</logPath><!--日志文件的记录路径-->
+    <maxSize>8000000</maxSize><!--日志文件最大值，单位为字节，0表示不限制-->
+	<logInfo>true</logInfo><!--是否记录中的调试信息，多用于开发过程-->
+	<logWarn>true</logWarn><!--是否记录警告信息，多用于业务的非法操作-->
+	<logError>true</logError><!--是否记录的错误信息-->
+	<errorDetail>true</errorDetail><!--是否记录错误详细信息-->
+</logConfig>

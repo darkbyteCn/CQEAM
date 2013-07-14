@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="GB2312"?>
+<QueryConfig loadImages="true"><!--loadImages:是否加载如下图片资源-->
+	<firstImage>/images/eam_images/first_page.jpg</firstImage><!--翻页查询中的首页图片-->
+	<prevImage>/images/eam_images/previous_page.jpg</prevImage><!--翻页查询中的上一页图片-->
+	<nextImage>/images/eam_images/next_page.jpg</nextImage><!--翻页查询中的下一页图片-->
+	<lastImage>/images/eam_images/last_page.jpg</lastImage><!--翻页查询中的下一页图片-->
+	<showTurnTo>false</showTurnTo><!--是否显示跳转图片-->
+	<turnImage>/images/eam_images/last_page.jpg</turnImage><!--翻页查询中的尾页图片-->
+	<pageSize>15</pageSize><!--每页记录数-->
+	<tipPageSize>15</tipPageSize><!--当页面记录大于该值时，显示提示信息-->
+	<tipPageNo>15</tipPageNo><!--当当前页数大于等于该值时，显示提示信息-->
+	<tipPageMinus>15</tipPageMinus><!--当跳转页与当前页大于等于该值时,显示提示信息-->
+	<cusDefinePageSize>true</cusDefinePageSize><!--是否允许用户定义记录数-->
+	<showStatiInfo>true</showStatiInfo><!--是否显示统计信息-->
+    <countPages>true</countPages><!--是否计算总记录数-->
+</QueryConfig>

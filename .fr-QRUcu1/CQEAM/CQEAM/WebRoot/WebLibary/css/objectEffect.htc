@@ -1,0 +1,25 @@
+<PUBLIC:COMPONENT>
+    <PUBLIC:ATTACH EVENT="onmouseover" ONEVENT="brightIt()"/>
+    <PUBLIC:ATTACH EVENT="onmouseout" ONEVENT="noBright()"/>
+    <PUBLIC:ATTACH EVENT="onmousedown" ONEVENT="moveIt()"/>
+    <PUBLIC:ATTACH EVENT="onmouseup" ONEVENT="nomove()"/>
+    <script type="text/javascript">
+        function brightIt() {
+            element.style.filter = "alpha(opacity=0,finishopacity=100,style=3,startx=0,starty=10,finishx=20,finishy=10);";
+        }
+        function noBright() {
+            element.style.filter = "";
+            nomove();
+        }
+        function moveIt() {
+            element.style.position = "relative";
+            element.style.left = "1px";
+            element.style.top = "1px";
+        }
+        function nomove() {
+            element.style.position = "relative";
+            element.style.left = "0px";
+            element.style.top = "0px";
+        }
+    </script>
+</PUBLIC:COMPONENT>

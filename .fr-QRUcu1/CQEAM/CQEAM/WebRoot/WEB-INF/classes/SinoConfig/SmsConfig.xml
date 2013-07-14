@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="GB2312"?>
+<SmsConfig>
+	<systemName>河南移动财务信息系统支撑平台</systemName>
+	<encoding>GB2312</encoding><!--消息传递的编码设定-->
+	<host>211.138.24.54</host><!--消息网关-->
+	<port>7890</port><!--端口-->
+	<icpID>916154</icpID><!--网关用户-->
+	<icpAuth>xinxi9</icpAuth><!--网关密码-->
+    <startTime>08:00</startTime>
+    <endTime>18:00</endTime>
+    <!-- 
+	<encoding>GB2312</encoding>
+	<host>211.138.24.54</host>
+	<port>7890</port>
+	<icpID>916154</icpID>
+	<icpAuth>xinxi9</icpAuth>
+	<startTime>08:30</startTime>
+	<endTime>21:30</endTime>
+	 -->
+	 
+	<interval>6</interval>
+	<oneDayNeedSendTimes>2</oneDayNeedSendTimes>	
+	<appCode>000000</appCode>
+	<pushMailUrl>http://211.138.31.16:82/mobile_bpm/push.sso?isCM=true</pushMailUrl>	
+</SmsConfig>

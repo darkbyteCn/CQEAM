@@ -1,0 +1,8 @@
+<weblogic-web-app>
+
+    <session-descriptor>
+        <persistent-store-type>replicated</persistent-store-type>
+    </session-descriptor>
+
+    <context-root>/</context-root>
+</weblogic-web-app>

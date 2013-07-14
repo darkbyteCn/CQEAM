@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<timingTasks> <!--SOA导入类任务，共9个-->
+                <!--以下任务不再需要-->
+                <!--AssetsRetirementWriteTask-->
+                <!--TDAssetsRetirementWriteTask-->
+    <!--新增两个任务，默认不开启，需要自动同步的请自行开启-->
+    <!--TDLocationSegment2WriteTask-->
+    <!--LocationSegment2WriteTask-->
+	<tasks>
+        <task name="AssetsAllocationWriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.AssetsAllocationWriteTask</taskClass>
+            <taskMethod>writeAssetsAllocations</taskMethod>
+            <taskDesc>公司内资产调拨同步</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="AssetsDataWriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.mis.write.AssetsDataWriteTask</taskClass>
+            <taskMethod>writeAssetsChange</taskMethod>
+            <taskDesc>资产基本信息变动同步（MIS）</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <!--<task name="AssetsRetirementWriteTask" taskType="COMMON">-->
+            <!--<taskClass>com.sino.ams.task.scheduler.soa.mis.write.AssetsRetirementWriteTask</taskClass>-->
+            <!--<taskMethod>writeAssetsRetirement</taskMethod>-->
+            <!--<taskDesc>资产报废同步（MIS）</taskDesc>-->
+            <!--<stateful>true</stateful>-->
+        <!--</task>-->
+        <task name="LocationCombinationWriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.mis.write.LocationCombinationWriteTask</taskClass>
+            <taskMethod>writeLocationChanges</taskMethod>
+            <taskDesc>组合地点变动同步（MIS）</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="TDAssetsDataWriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.td.write.TDAssetsDataWriteTask</taskClass>
+            <taskMethod>writeTDAssetsChange</taskMethod>
+            <taskDesc>资产基本信息变动同步（TD）</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <!--<task name="TDAssetsRetirementWriteTask" taskType="COMMON">-->
+            <!--<taskClass>com.sino.ams.task.scheduler.soa.td.write.TDAssetsRetirementWriteTask</taskClass>-->
+            <!--<taskMethod>writeTDAssetsRetirement</taskMethod>-->
+            <!--<taskDesc>资产报废同步（TD）</taskDesc>-->
+            <!--<stateful>true</stateful>-->
+        <!--</task>-->
+        <task name="TDLocationCombinationWriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.td.write.TDLocationCombinationWriteTask</taskClass>
+            <taskMethod>writeTDLocationChanges</taskMethod>
+            <taskDesc>组合地点变动同步（TD）</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="LocationSegment2WriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.mis.write.LocationSegment2WriteTask</taskClass>
+            <taskMethod>writeLocationSegment2</taskMethod>
+            <taskDesc>物理地点变动同步</taskDesc>
+            <stateful>true</stateful>
+        </task>
+        <task name="TDLocationSegment2WriteTask" taskType="COMMON">
+            <taskClass>com.sino.ams.task.scheduler.soa.td.write.TDLocationSegment2WriteTask</taskClass>
+            <taskMethod>writeTDLocationSegment2</taskMethod>
+            <taskDesc>物理地点变动同步（TD）</taskDesc>
+            <stateful>true</stateful>
+        </task>
+	</tasks>
+	<triggers>
+        <trigger name="LocationCombinationWriteTask_Trigger">
+            <cronExpression>0 0 19 * * ?</cronExpression>
+            <triggerDesc>每天19点整触发</triggerDesc>
+        </trigger>
+        <trigger name="TDLocationCombinationWriteTask_Trigger">
+            <cronExpression>0 10 19 * * ?</cronExpression>
+            <triggerDesc>每天19点10分触发</triggerDesc>
+        </trigger>
+		<trigger name="AssetsAllocationWriteTask_Trigger">
+			<cronExpression>0 25/15 19-21 * * ?</cronExpression>
+			<triggerDesc>每天19点25分触发</triggerDesc>
+		</trigger>
+		<trigger name="AssetsDataWriteTask_Trigger">
+			<cronExpression>0 15/15 21-23 * * ?</cronExpression>
+			<triggerDesc>每天21点整触发</triggerDesc>
+		</trigger>
+		<!--<trigger name="AssetsRetirementWriteTask_Trigger">-->
+			<!--<cronExpression>0 40 19 * * ?</cronExpression>-->
+			<!--<triggerDesc>每天19点40分触发</triggerDesc>-->
+		<!--</trigger>-->
+        <trigger name="TDAssetsDataWriteTask_Trigger">
+            <cronExpression>0 55 19 * * ?</cronExpression>
+            <triggerDesc>每天19点55分触发</triggerDesc>
+        </trigger>
+		<!--<trigger name="TDAssetsRetirementWriteTask_Trigger">-->
+			<!--<cronExpression>0 0 20 * * ?</cronExpression>-->
+			<!--<triggerDesc>每天20点整触发</triggerDesc>-->
+		<!--</trigger>-->
+        <trigger name="LocationSegment2WriteTask_Trigger">
+            <cronExpression>0 30 12 * * ?</cronExpression>
+            <triggerDesc>每天12点30触发</triggerDesc>
+        </trigger>
+        <trigger name="TDLocationSegment2WriteTask_Trigger">
+            <cronExpression>0 0 13 * * ?</cronExpression>
+            <triggerDesc>每天13点整触发</triggerDesc>
+        </trigger>
+	</triggers>
+	<schedulers>
+		<scheduler	 taskName="AssetsAllocationWriteTask" taskGroup="SOAWriteTask_Group" triggerName="AssetsAllocationWriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="AssetsDataWriteTask" taskGroup="SOAWriteTask_Group" triggerName="AssetsDataWriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="LocationCombinationWriteTask" taskGroup="SOAWriteTask_Group" triggerName="LocationCombinationWriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="TDAssetsDataWriteTask" taskGroup="SOAWriteTask_Group" triggerName="TDAssetsDataWriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="TDLocationCombinationWriteTask" taskGroup="SOAWriteTask_Group" triggerName="TDLocationCombinationWriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="LocationSegment2WriteTask" taskGroup="SOAWriteTask_Group" triggerName="LocationSegment2WriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+		<scheduler	 taskName="TDLocationSegment2WriteTask" taskGroup="SOAWriteTask_Group" triggerName="TDLocationSegment2WriteTask_Trigger" triggerGroup="SOAWriteTrigger_Group" startTask="false"/>
+	</schedulers>
+</timingTasks>

@@ -1,0 +1,141 @@
+STYLE typetextcss.bai {
+	COLOR: #ffffff; FONT-SIZE: 9pt
+}
+.hei {
+	COLOR: #000000; FONT-SIZE: 9pt
+}
+.td1 {
+	BORDER-BOTTOM: 2px dotted; BORDER-LEFT: 0px dotted; BORDER-RIGHT: 0px dotted; BORDER-TOP: 0px dotted
+}
+.red {
+	COLOR: #ff643e; FONT-SIZE: 9pt; FONT-WEIGHT: normal
+}
+.red1 {
+	COLOR: #009900; FONT-SIZE: 9pt
+}
+.td2 {
+	BORDER-BOTTOM: black 0px solid; BORDER-LEFT: black 0px solid; BORDER-RIGHT: black 0px solid; BORDER-TOP: #000000 1px solid
+}
+.td3 {
+	BORDER-BOTTOM: #000000 1px solid; BORDER-LEFT: black 0px solid; BORDER-RIGHT: black 0px solid; BORDER-TOP: black 0px solid
+}
+.td4 {
+	BORDER-BOTTOM: #0066cc 1px ridge; BORDER-LEFT: black 0px ridge; BORDER-RIGHT: black 0px ridge; BORDER-TOP: black 0px ridge
+}
+A:hover {
+	COLOR: #6666ff; FONT-SIZE: 9pt; TEXT-DECORATION: underline
+}
+A {
+	TEXT-DECORATION: none
+}
+.blue {
+	COLOR: #333333; FONT-SIZE: 9pt; FONT-WEIGHT: bolder; TEXT-DECORATION: none
+}
+TYLE.b {
+	COLOR: #ffffff; FONT-SIZE: 9pt
+}
+.b {
+	COLOR: #ffffff; FONT-SIZE: 9pt
+}
+
+<style type="text/css">
+A
+{
+    COLOR: navy;
+    FONT: 9pt ËÎÌו,sans-serif;
+    TEXT-DECORATION: none
+}
+A:active
+{
+    BORDER-BOTTOM: medium none;
+    BORDER-LEFT: medium none;
+    BORDER-RIGHT: medium none;
+    BORDER-TOP: medium none;
+    COLOR: navy
+}
+A:hover
+{
+    COLOR: red;
+    TEXT-DECORATION: underline
+}
+TD
+{
+    FONT-SIZE: 9pt
+}
+.c
+{
+    FONT: 9pt/12pt &Euml;
+    Icirc;&Igrave;&aring;;: none
+}
+.d
+{
+    FONT: 9pt/12pt &Euml;
+    Icirc;&Igrave;&aring;;: none
+}
+.TextBox
+{
+    BACKGROUND-COLOR: white;
+    COLOR: #000080;
+    FONT-SIZE: 9pt
+}
+.PasswordBox
+{
+    BACKGROUND-COLOR: white;
+    COLOR: #000080;
+    FONT-SIZE: 9pt
+}
+.TextArea
+{
+    BACKGROUND-COLOR: white;
+    COLOR: #000080;
+    FONT-SIZE: 9pt
+}
+.Checkbox
+{
+    BACKGROUND-COLOR: white;
+    COLOR: #000080;
+    FONT-SIZE: 9pt
+}
+.Radio
+{
+    BACKGROUND-COLOR: white;
+    COLOR: #000080;
+    FONT-SIZE: 9pt
+}
+.Select
+{
+    BACKGROUND-COLOR: #d2e9ff;
+    COLOR: #000080;
+    FONT-SIZE: 9pt
+}
+.Button
+{
+    BACKGROUND-COLOR: #e0e1d2;
+    COLOR: #000000;
+    FONT-SIZE: 9pt
+}
+.text {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
+}
+.title {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
+}
+.readonlyInput {BACKGROUND-COLOR:#EFEFEF}
+.noEmptyInput {BACKGROUND-COLOR:yellow}
+</style>
