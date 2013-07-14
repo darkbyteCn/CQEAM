@@ -68,6 +68,7 @@
 <input type="hidden" name="act" value="">
 <input type="hidden" name="procdureName" value="<%=batchDTO.getProcdureName()%>">
 <input type="hidden" name="checkDept" value="<%=batchDTO.getCheckDept()%>">
+<input type="hidden" name="taskNumber" value="<%=batchDTO.getTaskNumber()%>">
 <div id="buttonDiv" style="position:absolute;top:195px;left:1px;width:100%">
 
         <img src="/images/eam_images/choose.jpg" alt="点击选择盘点地点" onClick="do_SelectCheckLocation(); return false;">

@@ -67,7 +67,8 @@
 </script>
 <head>
     <title>工单任务登记</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+    <meta http-equiv="Content-Type" content="text/html; charset=GBK"/>
+	<meta charset=GBK/>
 </head>
 
 <body bgcolor="#FFFFFF" text="#000000" LANGUAGE="javascript" topMargin=0 leftMargin=0 onload="initPage();">

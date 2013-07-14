@@ -27,7 +27,9 @@ import com.sino.ams.newasset.dto.AmsOpeDTO;
 import com.sino.ams.newasset.dto.AmsSnDTO;
 import com.sino.ams.newasset.lease.dto.LeaseLineDTO;
 import com.sino.ams.newasset.rolequery.dto.SfRoleQueryDTO;
+import com.sino.ams.plan.dto.AmsWorkPlanDTO;
 import com.sino.ams.system.basepoint.dto.EtsObjectDTO;
+import com.sino.ams.system.cost.dto.CostCenterDTO;
 import com.sino.ams.system.fixing.dto.EtsItemInfoDTO;
 import com.sino.ams.system.item.dto.EtsSystemItemDTO;
 import com.sino.ams.system.procedure.dto.MisDeptDTO;
@@ -35,6 +37,7 @@ import com.sino.ams.system.project.dto.EtsPaProjectsAllDTO;
 import com.sino.ams.system.user.dto.EtsOuCityMapDTO;
 import com.sino.ams.system.user.dto.SfUserDTO;
 import com.sino.ams.workorder.dto.ZeroTurnLineDTO;
+import com.sino.ams.yearchecktaskmanager.dto.EtsObjectTaskDTO;
 import com.sino.base.constant.message.MessageConstant;
 import com.sino.base.constant.web.WebConstant;
 import com.sino.base.db.conn.DBManager;
@@ -381,9 +384,24 @@ public class AssetsLookUpServlet extends BaseServlet {
 
 					lookProp.setTotalWidth(700);
 					lookProp.setMultipleChose(false);
-					lookProp.setDtoClass(AmsAssetsPriviDTO.class);
-					
-				} else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH)) { //资产盘点单任务批，选择归档人
+					lookProp.setDtoClass(AmsAssetsPriviDTO.class);					
+				}
+				else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
+				{
+					dispNames = new String[]{"LOGIN_NAME","USER_NAME","DEPT_NAME","GROUP_NAME"};
+					dispLabels = new String[]{"登陆名","用户名","部门","组名"};
+					retFields = new String[]{"LOGIN_NAME","USER_ID", "USER_NAME", "DEPT_NAME","DEPT_CODE","GROUP_NAME","GROUP_ID"};
+					viewPercent = new String[]{"20%", "20%","30%","30%"};
+					qryNames = new String[]{"LOGIN_NAME","USER_NAME"};
+					qryLabels = new String[]{"登陆名", "用户名"};
+					primaryKeys = new String[]{"USER_ID"};
+
+					lookProp.setMultipleChose(false);
+					lookProp.setTotalWidth(750);
+					lookProp.setMemorySpan(true);
+					lookProp.setDtoClass(AmsAssetsPriviDTO.class);								
+				}
+				else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH)) { //资产盘点单任务批，选择归档人
 					dispNames = new String[] {"USER_NAME", "EMPLOYEE_NUMBER",
 								"LOGIN_NAME", "COMPANY_CODE", "COMPANY_NAME"};
 					dispLabels = new String[] {"用户姓名", "用户员工号", "用户登录名", "公司代码",
@@ -1128,7 +1146,49 @@ public class AssetsLookUpServlet extends BaseServlet {
 					lookProp.setTotalWidth(700);
 					lookProp.setMultipleChose(false);
 					lookProp.setDtoClass(AmsAssetsPriviDTO.class);					
-				}
+				}else if (lookUpName.equals("LOOK_UP_CITY")) { //资产管理员
+					dispNames = new String[] {"COMPANY", "BOOK_TYPE_NAME"};
+				    dispLabels = new String[] {"公司名称", "资产账簿"};
+				    viewPercent = new String[] { "50%", "50%"};
+				    retFields = new String[] {"COMPANY_CODE", "BOOK_TYPE_CODE"};
+				    qryNames = new String[] {"COMPANY_CODE", "COMPANY"
+						   };
+				    qryLabels = new String[] {"公司编码", "公司名称"};
+				    primaryKeys = new String[] {"COMPANY_CODE"};
+
+					lookProp.setTotalWidth(700);
+					lookProp.setMultipleChose(true);
+					lookProp.setDtoClass(AmsAssetsPriviDTO.class);
+				
+			   }else if (lookUpName.equals("LOOK_UP_LOCATION_TASK")) { //查找地点
+					dispNames = new String[] {"COMPANY_NAME", "COUNTY_NAME",
+								"OBJECT_CATEGORY", "OBJECT_CODE", "OBJECT_NAME"};
+					dispLabels = new String[] {"公司名称", "成本中心", "地点专业", "地点代码","地点名称"};
+					viewPercent = new String[] {"10%", "19%", "10%", "18%", "40%"};
+					retFields = new String[] {"CHECK_LOCATION", "OBJECT_CODE",	"OBJECT_NAME"};
+					qryNames = new String[] {"WORKORDER_OBJECT_CODE",
+							   "WORKORDER_OBJECT_NAME", "COUNTY_NAME"};
+					qryLabels = new String[] {"地点代码", "地点名称", "成本中心"};
+					primaryKeys = new String[] {"CHECK_LOCATION"};
+
+//                   contentReadio = "Y";
+
+                   lookProp.setTotalWidth(950);
+					lookProp.setMultipleChose(true);
+					lookProp.setDtoClass(EtsObjectTaskDTO.class);
+				} else if (lookUpName.equals("LOOK_UP_TASK")) {//查找成本中心
+					dispLabels = new String[] {"成本中心代码", "成本中心名称"};
+					viewPercent = new String[] {"30%", "60%"};
+					retFields = new String[] {"COST_CENTER_CODE", "COST_CENTER_NAME"};
+					qryNames = new String[] {"COST_CENTER_CODE",
+							   "COST_CENTER_NAME"};
+					qryLabels = new String[] {"成本中心代码", "成本中心名称"};
+					primaryKeys = new String[] {"COST_CENTER_CODE"};
+	
+	               lookProp.setTotalWidth(950);
+					lookProp.setMultipleChose(true);
+					lookProp.setDtoClass(EtsObjectTaskDTO.class);
+				} 
 				lookProp.setCalPattern(LINE_PATTERN);
 				lookProp.setDisFieldNames(dispNames);
 				lookProp.setDisFieldLabels(dispLabels);

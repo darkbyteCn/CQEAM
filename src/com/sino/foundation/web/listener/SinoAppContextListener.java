@@ -30,12 +30,12 @@ public class SinoAppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent contextEvent) {
         ServletContext context = contextEvent.getServletContext();
         try {
-            ConfigLoader.loadConfig(context.getInitParameter("contextConfigLocation"));
-            startListener(context);
-            serverName = context.getServletContextName();
-            if (StrUtil.isEmpty(serverName)) {
-                serverName = "Web";
-            }
+//            ConfigLoader.loadConfig(context.getInitParameter("contextConfigLocation"));
+//            startListener(context);
+//            serverName = context.getServletContextName();
+//            if (StrUtil.isEmpty(serverName)) {
+//                serverName = "Web";
+//            }
             System.out.println("SinoProf " + serverName + " Server Context Listener Started Successfully...");
         } catch (Throwable ex) {
             Logger.logError(ex);
@@ -49,7 +49,7 @@ public class SinoAppContextListener implements ServletContextListener {
      *
      * @param context ServletConfig
      */
-    private void startListener(ServletContext context) {
+    private void startListener(ServletContext context) {/*
         String startListener = context.getInitParameter("startConfigListener");
         if (!StrUtil.isEmpty(startListener)) {
             if (startListener.equalsIgnoreCase("TRUE") ||
@@ -67,9 +67,9 @@ public class SinoAppContextListener implements ServletContextListener {
                 listener.start();
             }
         }
-    }
+    */}
 
-    public void contextDestroyed(ServletContextEvent contextEvent) {
+    public void contextDestroyed(ServletContextEvent contextEvent) {/*
         try {
             System.out.println("SinoProf " + serverName + " Server Context Listener Started to Stop...");
             if (listener != null) {
@@ -81,5 +81,5 @@ public class SinoAppContextListener implements ServletContextListener {
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
-    }
+    */}
 }

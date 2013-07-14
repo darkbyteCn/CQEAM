@@ -12,11 +12,11 @@
 	<script type="text/javascript" src="/WebLibary/js/SinoToolBar.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/SinoToolBarConst.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/CommonUtil.js"></script>
-
+	<script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/util.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/util2.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/BarVarSX.js"></script>
-	<script type="text/javascript" src="/WebLibary/js/AssetsLookUp.js"></script>
+	<script type="text/javascript" src="/WebLibary/js/AssetsLookUp.js"></script>	
     <script type="text/javascript">
         printTitleBar("选择执行人");
         var ArrAction0 = new Array(true, "确定", "action_save.gif", "确定", "chooseUser");
@@ -37,7 +37,7 @@
         <tr height=20px>
             <td width="70px" align = "right">部&nbsp&nbsp门：</td>
             <td style="border:none">
-                <select name="dept" style="width:80%;">
+                <select name="dept" id="dept" style="width:80%;">
                     <%=groupOpt%>
                 </select>
             </td>
@@ -82,18 +82,20 @@
     
     function do_SelectPerson(){
         with(mainFrm){
-            var lookUpName = "LOOK_UP_USER";
+            var lookUpName = "LOOK_UP_USER_WITH_DEPT";
             var dialogWidth = 47;
             var dialogHeight = 30;
-            var userPara = "groupId=" + mainFrm.dept.value;
+            var userPara = "groupId=" +$("#dept").val();
             var users = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
             if (users) {
                 var user = users[0];
-                implementName.value = user["userName"];
-                implement.value = user["userId"];
+                $("#implementName").val(user["userName"]);
+                $("#implement").val(user["userId"]);               
+                $("#dept").val(user["groupId"]);
             } else {
-                implementName.value = "";
-                implement.value = "";
+                $("#implementName").val("");
+                $("#implement").val("");
+                $("#dept").val("");
             }
         }
     }

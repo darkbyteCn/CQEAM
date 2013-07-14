@@ -3,7 +3,6 @@ package com.sino.ams.newasset.bean;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import com.sino.ams.bean.OptionProducer;
 import com.sino.ams.newasset.constant.AssetsDictConstant;
@@ -1733,4 +1732,6 @@ public class AssetsOptProducer extends OptionProducer {
   		  DatabaseForWeb webFieldProducer=new DatabaseForWeb(sqlModel, conn);
   		  return webFieldProducer.getOptionHtml(selectedOption,false);
   	}
+  	
+  	
 }

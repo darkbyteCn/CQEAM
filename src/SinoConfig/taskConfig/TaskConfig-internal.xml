@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="GB2312" ?>
 <timingTasks><!--EAM系统内部任务，共7个-->
-	<tasks>
+	<!--<tasks>
         <task name="ZTEAssetsData2EAMTask" taskType="COMMON">
             <taskClass>com.sino.ams.task.scheduler.internal.ZTEAssetsData2EAMTask</taskClass>
             <taskMethod>readZTEAssetsData2EAM</taskMethod>
@@ -83,4 +83,4 @@
 		<scheduler	 taskName="ZTEAssetsRetirement2EAMTask" taskGroup="INTERNAL_GROUP" triggerName="ZTEAssetsRetirement2EAMTask_Trigger" triggerGroup="INTERNAL_TRIGGER" startTask="true"/>
 		<scheduler	 taskName="ReportDataProduceTask" taskGroup="INTERNAL_GROUP" triggerName="ReportDataProduceTask_Trigger" triggerGroup="INTERNAL_TRIGGER" startTask="true"/>
 	</schedulers>
-</timingTasks>
+--></timingTasks>

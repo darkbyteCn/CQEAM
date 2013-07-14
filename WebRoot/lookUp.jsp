@@ -74,6 +74,9 @@
 %>
 <html>
 <head><title>通用查询页面</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+	<meta charset=GBK/>
     <link href="/WebLibary/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="/WebLibary/css/eam.css" rel="stylesheet" type="text/css"/>
 	<script type="text/javascript" src="/WebLibary/js/Constant.js"></script>
@@ -87,6 +90,7 @@
     <script type="text/javascript" src="/WebLibary/js/SinoToolBar.js"></script>
     <script type="text/javascript" src="/WebLibary/js/SinoToolBarConst.js"></script>
     <script type="text/javascript" src="/WebLibary/js/BarVarSX.js"></script>
+    <script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
 </head>
 <base target="_self">
 <body leftmargin="0" topmargin="0" onload="do_SetPageWidth()" onkeydown="autoExeFunction('do_Search()');">

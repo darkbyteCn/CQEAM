@@ -25,7 +25,7 @@
 		<echo>Copy lib folder</echo>
 		<copydir dest="${build.dir}/lib" src="${webroot.dir}/WEB-INF/lib" />
 		
-		<javac destdir="${build.dir}/classes" failonerror="true" encoding="GBK">
+		<javac destdir="${build.dir}/classes"  encoding="GBK" debug="true">
 			<src path="${src.dir}" />
 			<classpath refid="master-classpath" />
 		</javac>

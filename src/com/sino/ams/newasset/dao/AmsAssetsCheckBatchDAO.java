@@ -6,18 +6,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sino.base.data.RowSet;
-import com.sino.base.db.query.SimpleQuery;
-import com.sino.base.db.sql.model.SQLModel;
-import com.sino.base.db.util.DBOperator;
-import com.sino.base.db.util.SeqProducer;
-import com.sino.base.dto.DTO;
-import com.sino.base.dto.DTOSet;
-import com.sino.base.exception.*;
-import com.sino.base.log.Logger;
-import com.sino.base.util.StrUtil;
 import com.sino.ams.appbase.dao.AMSProcedureBaseDAO;
-import com.sino.ams.bean.OrderNumGenerator;
+import com.sino.ams.newasset.allocation.model.AmsAssetsAllocationApproveModel;
 import com.sino.ams.newasset.bean.AssetsOptProducer;
 import com.sino.ams.newasset.constant.AssetsDictConstant;
 import com.sino.ams.newasset.constant.AssetsMessageKeys;
@@ -26,6 +16,21 @@ import com.sino.ams.newasset.dto.AmsAssetsCheckHeaderDTO;
 import com.sino.ams.newasset.dto.AmsAssetsCheckLineDTO;
 import com.sino.ams.newasset.model.AmsAssetsCheckBatchModel;
 import com.sino.ams.system.user.dto.SfUserDTO;
+import com.sino.ams.yearchecktaskmanager.util.AssetsCheckTaskOrderGeneretor;
+import com.sino.base.data.RowSet;
+import com.sino.base.db.query.SimpleQuery;
+import com.sino.base.db.sql.model.SQLModel;
+import com.sino.base.db.util.DBOperator;
+import com.sino.base.db.util.SeqProducer;
+import com.sino.base.dto.DTO;
+import com.sino.base.dto.DTOSet;
+import com.sino.base.exception.ContainerException;
+import com.sino.base.exception.DTOException;
+import com.sino.base.exception.DataHandleException;
+import com.sino.base.exception.QueryException;
+import com.sino.base.exception.SQLModelException;
+import com.sino.base.log.Logger;
+import com.sino.base.util.StrUtil;
 import com.sino.flow.bean.FlowAction;
 import com.sino.flow.dto.FlowDTO;
 import com.sino.framework.dto.BaseUserDTO;
@@ -145,11 +150,16 @@ public class AmsAssetsCheckBatchDAO extends AMSProcedureBaseDAO {
 				batchDTO.setCurrCreationDate();
                 String companyCode = userAccount.getCompanyCode();
                 String transType = AssetsDictConstant.ASS_CHK_TASK;
-                OrderNumGenerator numberProducer = new OrderNumGenerator(conn, companyCode, transType);
+                AssetsCheckTaskOrderGeneretor numberProducer = new AssetsCheckTaskOrderGeneretor(conn, companyCode, transType);
                 numberProducer.setOrderLength(3);
                 batchDTO.setBatchNo(numberProducer.getOrderNum());
                 setDTOParameter(batchDTO);
                 createData();
+                //jeffery
+                AmsAssetsCheckBatchModel modelProducer = (AmsAssetsCheckBatchModel) sqlProducer;
+                SQLModel sqlModel = modelProducer.getInsertTaskModel(batchId, batchDTO.getTaskNumber());
+                DBOperator.updateRecord(sqlModel, conn);
+                //jeffery
             } else {
                 batchDTO.setBatchStatus(AssetsDictConstant.IN_PROCESS);
                 if (batchDTO.getSf_end().equals("1")) {

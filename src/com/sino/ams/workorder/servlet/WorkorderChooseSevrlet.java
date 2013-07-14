@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sino.base.data.Row;
 import com.sino.base.constant.message.MessageConstant;
 import com.sino.base.constant.web.WebActionConstant;
 import com.sino.base.data.RowSet;
@@ -104,7 +105,7 @@ public class WorkorderChooseSevrlet extends BaseServlet {
                 projectOpt = optProducer.getProjectOption(etsObject.getProjectId());
             }
             OrderExtendModel orderExtend = new OrderExtendModel();
-            SQLModel sqlModel = new SQLModel();
+            SQLModel sqlModel = null;
             RowSet rowSet = null;
             if (action.equals(WebActionConstant.NEW_ACTION)) {
                 int groupId = StrUtil.strToInt(req.getParameter("distributeGroupId"));
@@ -163,6 +164,9 @@ public class WorkorderChooseSevrlet extends BaseServlet {
                 // etsWorkorderDAO.existHandoverWorkorder(workorderObjectNos,
                 // workorder);
                 boolean operatorResult = etsWorkorderDAO.createTmpData(workorderObjectNos, workorder, userAccount);
+                
+           
+                
                 forwardURL = "/public/windowClose.jsp?retValue=1";
             } else if (action.equals("CHOOSE")) {// —°‘Ò÷¥––»À
                 String groupId = StrUtil.nullToString(req.getParameter("groupId"));

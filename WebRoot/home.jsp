@@ -10,6 +10,11 @@
 <%@ page import="com.sino.ams.system.important.servlet.PublishInfoServlet" %>
 <%@ page import="com.sino.ams.system.user.dto.SfUserDTO" %>
 <%@ page import="com.sino.framework.security.bean.SessionUtil" %>
+<%@ page import="com.sino.ams.yearchecktaskmanager.dao.*" %>
+<%@ page import="com.sino.ams.yearchecktaskmanager.util.AssetsCheckTaskConstant" %>
+<%@ page import="com.sino.ams.newasset.constant.AssetsLookUpConstant"%>
+
+
 
 <%@ page contentType="text/html;charset=GBK" language="java" %>
 <html>
@@ -45,7 +50,7 @@
     Date date2 = new Date();
     int days = 0;
     int rowCount = 0;
-    int count = 5;
+    int count = 2;
     if (rs != null && !rs.isEmpty()) {
         rowCount = rs.getSize()>10?10:rs.getSize();
     }
@@ -54,6 +59,23 @@
     String publishId = "";
     String title = "";
     String date = "";
+    
+    //-------
+    ASSCHKTaskRemainDAO taskRemainDAO = new ASSCHKTaskRemainDAO(userDTO,null,null,request);
+    RowSet taskRowSet = taskRemainDAO.getAllData();
+    int taskRowCount = 0;
+    int defautlTaskCount = 1;
+    String taskBeginDate ="";
+    String taskEndDate ="";
+    String code = "";
+    if (taskRowSet != null && !taskRowSet.isEmpty()) {
+    	taskRowCount = rs.getSize()>10?10:taskRowSet.getSize();
+    }
+   
+    
+    String taskRemainAction="/servlet/com.sino.ams.yearchecktaskmanager.servlet.ASSCHKTaskRemainServlet";
+    //
+    
 %>
 <body bgcolor="#F3FAFF" topMargin=5 leftMargin=0>
 <table border="1" cellpadding="20" height="100%"  width="98%" style="border:#666666;table-layout:fixed;word-wrap:break-word">
@@ -114,6 +136,89 @@
                         </table>
                     </td>
                 </tr>
+                <!-- 新增任务提醒列表 -->
+                <tr style="background-color:#DBEBFB;border:1;border-color:#D4CCB0">
+                    <td width="20" align="left">&nbsp;</td>
+                    <td width="20" align="justify" background="/images/main/tb_bg.jpg" nowrap>&nbsp; </td>
+                    <td width="60" align="justify" background="/images/main/tb_bg.jpg" nowrap> 任务待办</td>
+                    <td align="right">
+                        <a href="#" onClick="do_more_taskRemain()" alt="查看更多信息"><img src="/images/main/more.gif"  border="0px"></a>
+                    </td>
+                </tr>
+                <tr style="border-color:RED">
+                    <td>&nbsp;</td>
+                    <td colspan="3" valign="top">
+
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"  >
+                    <%
+                    	if(taskRowCount>0){
+                    		if(taskRowCount<defautlTaskCount){
+                    			defautlTaskCount = taskRowCount;
+                    		}
+                    %>
+                    <tr height="24px" >
+                    	<td width="20%">任务名称</td>
+                    	<td width="20%">任务编码</td>
+                    	<td width="20%">任务发布日期</td>
+                    	<td width="20%">任务开始日期</td>
+                    	<td width="20%">任务完成日期</td>
+                    </tr>
+                    <%
+                    	}
+                    %>
+                <%
+                    for (int i = 0; i <defautlTaskCount; i++) {
+                %>
+                        
+                    <%
+                       if(taskRowSet.getSize()>0){
+                                row = taskRowSet.getRow(i);
+                                title = StrUtil.nullToString(row.getValue("ORDER_NAME"));
+                                code = StrUtil.nullToString(row.getValue("ORDER_NUMBER"));
+                                date = StrUtil.nullToString(row.getValue("CREATION_DATE"));
+                                taskBeginDate =  StrUtil.nullToString(row.getValue("CHECK_TASK_DATE_FROM"));
+                                taskEndDate = StrUtil.nullToString(row.getValue("CHECK_TASK_DATE_END"));
+                                String orderType=StrUtil.nullToString(row.getValue("ORDER_TYPE"));
+                                String roleName =StrUtil.nullToString(row.getValue("IMPLEMNET_ROLE_NAME"));
+                                date1 = f.parse(date);
+                                days = (int) ((date2.getTime() - date1.getTime()) / 86400000);    
+                    %>
+                     <tr height="24px" onclick="do_showTaskDetail('<%=code%>','<%=orderType%>','<%=title%>','<%=roleName%>');"
+                                title="点击查看任务“<%=title%>”详细信息">
+                            <td width="20%" class="font-hui" style="cursor:pointer"  
+                               >
+                            <%=title.length() < 18 ? title : title.substring(0, 17) + "..."%>
+                           
+                            <%if (days < 7) { %><img src="/images/main/new.jpg" width="32" height="11"/><%} %>
+                            </td>
+                            <td width="20%" class="font-hui" style="cursor:pointer" align="left">
+                                [<%=code%>]
+                            </td>
+                            <td width="20%" class="font-hui" style="cursor:pointer" align="left">
+                                [<%=date%>]
+                            </td>
+                             <td width="20%" class="font-hui" style="cursor:pointer" align="left">
+                                [<%=taskBeginDate%>]
+                            </td>
+                              <td width="20%" class="font-hui" style="cursor:pointer" align="left">
+                                [<%=taskEndDate%>]
+                            </td>
+                            <input type="hidden" name="orderType" value="<%=orderType%>>"/>
+                            <input type="hidden" name="roleName" value="<%=roleName%>>"/>
+                       </tr>
+                <%
+                       }
+	                title="";
+                    code="";
+                    date="";
+	            	taskBeginDate="";
+	            	taskEndDate="";
+                }
+                %>
+                        </table>
+                    </td>
+                </tr>
+                <!-- 新增任务提醒列表 end -->
                 <tr >
                     <td width="20"align="left">&nbsp;</td>
                     <td colspan="3">
@@ -227,6 +332,50 @@
         var url = "<%=inforAction%>?forward=show_all";
         window.open(url);
     }
+
+    function do_more_taskRemain(){
+    	 var url = "<%=taskRemainAction%>?forward=show_all";
+         window.open(url);
+    }
+
+    function do_showTaskDetail(orderNumber,orderType,orderName,roleName){
+	   //实地
+	   //非实地
+       //从省公司下发
+       //从地市公司下发
+       //从部门经理下发
+       
+    //地市公司资产管理员接受省下发盘点任务
+    var url="";
+    if(orderType=="ASS-CHK-TASK"){
+    	var url ="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskCityServlet"
+    //实地无线[盘点责任人]
+    }else if(orderType=="ADDRESS-WIRELESS"){
+    	var url ="/servlet/com.sino.sinoflow.servlet.NewCase?sf_appName=checkapp&taskType=y"
+    //实地非无线[先到部门，部门在处理]
+    }else if(orderType=="ADDRESS-NON-WIRELESS"){
+		var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
+    //非实地[软件类]
+    }else if(
+    	    (orderType=="NON-ADDRESS-SOFTWARE"||orderType=="NON-ADDRESS-CLIENT"||orderType=="NON-ADDRESS-PIPELINE")
+            &&roleName=="部门资产管理员")
+        {
+   	    //if(confirm("确定要继续下发吗？继续请点击“确定”按钮，否则请点击“取消”按钮进行资产确认")){
+   		//	var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
+   		//}else{
+   		//	var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckFaServlet";
+   		//}	
+    	var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
+    }
+      if(!url==""){
+    	  if(orderType=="ADDRESS-WIRELESS"){
+			url+="&action=fromRemain&parentOrderNumber="+orderNumber+"&orderType="+orderType+"&orderName="+orderName+"&roleName="+roleName;
+    	  }else{
+           url+="?action=fromRemain&parentOrderNumber="+orderNumber+"&orderType="+orderType+"&orderName="+orderName+"&roleName="+roleName;
+    	  }
+    	  window.open(url);
+      }
+   }
     
     function do_more(){
     }

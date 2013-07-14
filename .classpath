@@ -60,7 +60,7 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-javamail_1.4_spec-1.3.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-jaxws_2.1_spec-1.0.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-jms_1.1_spec-1.1.1.jar"/>
-	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-servlet_2.5_spec-1.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-servlet_2.5_spec-1.2.jar" sourcepath="/home/huangxuelun/.m2/repository/org/apache/geronimo/specs/geronimo-servlet_2.5_spec/1.2/geronimo-servlet_2.5_spec-1.2-sources.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-stax-api_1.0_spec-1.0.1.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/geronimo-ws-metadata_2.0_spec-1.1.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/gnujaxp.jar"/>
@@ -160,24 +160,5 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xpp3_min-1.1.3.4.O.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xstream-1.2.2.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xstream-benchmark-1.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/jar/aspectjrt-1.6.10.jar"/>
-	<classpathentry kind="lib" path="C:/jar/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="C:/jar/jcl-over-slf4j-1.6.6.jar"/>
-	<classpathentry kind="lib" path="C:/jar/jsp-api-2.1.jar"/>
-	<classpathentry kind="lib" path="C:/jar/jstl-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/jar/junit-4.7.jar"/>
-	<classpathentry kind="lib" path="C:/jar/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="C:/jar/servlet-api-2.5.jar"/>
-	<classpathentry kind="lib" path="C:/jar/slf4j-api-1.6.6.jar"/>
-	<classpathentry kind="lib" path="C:/jar/slf4j-log4j12-1.6.6.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-aop-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-asm-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-beans-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-context-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-context-support-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-core-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-expression-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-web-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/jar/spring-webmvc-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

@@ -445,4 +445,18 @@ public class AmsAssetsCheckBatchModel extends AMSSQLProducer {
 		sqlModel.setArgs(sqlArgs);
 		return sqlModel;
 	}
+	
+	public SQLModel getInsertTaskModel(String batchId,String orderNumber) {
+		SQLModel sqlModel = new SQLModel();
+		String sqlStr = 
+			" INSERT INTO  AMS_ASSETS_TASH_BATCH(BATCH_ID, ORDER_NUMBER) " +
+			" VALUES(?, ?)";
+
+		List sqlArgs = new ArrayList();
+		sqlArgs.add(batchId);
+		sqlArgs.add(orderNumber);
+		sqlModel.setSqlStr(sqlStr);
+		sqlModel.setArgs(sqlArgs);
+		return sqlModel;
+	}
 }

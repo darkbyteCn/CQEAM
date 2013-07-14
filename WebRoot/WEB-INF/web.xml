@@ -1,14 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-<!-- 
+<?xml version="1.0" encoding="GB2312"?>
 <web-app version="2.4"
          xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" >  -->
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" >
   <display-name>SinoEAM</display-name> 
-  <description>ÈáçÂ∫ÜÁßªÂä®ËµÑ‰∫ßÁÆ°ÁêÜ</description>
+  <description>…ΩŒ˜“∆∂Ø◊ ≤˙ µŒÔπ‹¿ÌœµÕ≥</description>
      <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:SinoConfig/EntryConfig.xml</param-value>
@@ -38,74 +34,74 @@
         </init-param>
     </filter>
   <filter>
-    <filter-name>WebAccessFilter</filter-name>
+    <filter-name>WebAccessFilter</filter-name><!--Õ®”√◊ ‘¥»®œﬁ—È÷§∆˜π˝¬À∆˜£¨µ´ƒø«∞Ωˆœﬁ”⁄∏˜÷÷URL◊ ‘¥°£∆‰À˚œµÕ≥“≤ø…”√£¨µ´±ÿ–Î∑˚∫œœ¬√Êµƒ±Í◊º-->
     <filter-class>com.sino.framework.security.filter.WebAccessFilter</filter-class>
     <init-param>
-      <param-name>userDTO</param-name>
+      <param-name>userDTO</param-name><!--SinoAMSœµÕ≥ π”√µƒ”√ªß∂‘œÛ°£”√ªß¿‡ø…»»≤Â∞Œ£¨µ´±ÿ–ÎºÃ≥–com.sino.framework.dto.BaseUserDTO¿‡-->
       <param-value>com.sino.ams.system.user.dto.SfUserDTO</param-value>
     </init-param>
     <init-param>
-      <param-name>loginName</param-name>
+      <param-name>loginName</param-name><!--SinoAMSœµÕ≥ π”√µƒ”√ªß∂‘œÛµ«¬º’ ∫≈µƒ±Ìµ•”Ú√˚£¨SfUserDTO Ù–‘√˚-->
       <param-value>loginName</param-value>
     </init-param>
     <init-param>
-      <param-name>loginPwd</param-name>
+      <param-name>loginPwd</param-name><!--SinoAMSœµÕ≥ π”√µƒ”√ªß∂‘œÛµ«¬º√‹¬Îµƒ±Ìµ•”Ú√˚£¨SfUserDTO Ù–‘√˚-->
       <param-value>password</param-value>
     </init-param>
 	 <init-param>
-      <param-name>modulePath</param-name>
+      <param-name>modulePath</param-name><!--SinoAMSœµÕ≥ π”√µƒƒ£–Õ¬∑æ∂-->
       <param-value>D:\module</param-value>
     </init-param>
     <init-param>
-      <param-name>loginDAO</param-name>
+      <param-name>loginDAO</param-name><!--SinoAMSœµÕ≥ π”√µƒ”√ªß”––ß–‘—È÷§∆˜£¨±æ¿‡÷ª—È÷§”√ªß «∑Ò¥Ê‘⁄£¨≤ª—È÷§»®œﬁ°£±æ¿‡±ÿ–ÎºÃ≥–com.sino.framework.security.dao.BaseLoginDAO°£-->
       <param-value>com.sino.ams.log.dao.UserLoginDAO</param-value>
     </init-param>
      <init-param>
-      <param-name>loginSuccessURL</param-name>
+      <param-name>loginSuccessURL</param-name><!--SinoAMSœµÕ≥ π”√µƒ”√ªßµ«¬º≥…π¶∫ÛµƒµºœÚ“≥√Ê-->
       <param-value>/servlet/com.sino.sinoflow.framework.security.servlet.LoginFrmServlet</param-value>
     </init-param>
     <init-param>
-      <param-name>authenticator</param-name>
+      <param-name>authenticator</param-name><!--SinoAMSœµÕ≥ π”√µƒ”√ªß◊ ‘¥∑√Œ »®œﬁ—È÷§∆˜£¨±æ¿‡—È÷§”√ªß∂‘÷∏∂®◊ ‘¥ «∑Ò»®œﬁ°£±æ¿‡±ÿ–ÎºÃ≥–com.sino.framework.security.dao.PrivilegeAuthenticator°£-->
       <param-value>com.sino.sinoflow.framework.security.dao.SFPriviAuthenticator</param-value>
     </init-param>
     <init-param>
-      <param-name>loginUrl</param-name>
+      <param-name>loginUrl</param-name><!--SinoAMSœµÕ≥µƒµ«¬º“≥√Ê-->
       <param-value>/login.jsp</param-value>
     </init-param>
     <init-param>
-      <param-name>loginServlet</param-name>
+      <param-name>loginServlet</param-name><!--SinoAMSœµÕ≥µƒµ«¬º“≥√ÊÃ·ΩªµƒServlet£¨≤ª‘ –Ì∏¸∏ƒ°£ø…Õ®”√-->
       <param-value>/servlet/com.sino.framework.security.servlet.UserLoginServlet</param-value>
     </init-param>
     <init-param>
-      <param-name>logOutServlet</param-name>
+      <param-name>logOutServlet</param-name><!--SinoAMSœµÕ≥÷–¥¶¿ÌÕÀ≥ˆµ«¬º«Î«ÛµƒServlet£¨≤ª‘ –Ì∏¸∏ƒ°£ø…Õ®”√-->
       <param-value>/servlet/com.sino.framework.security.servlet.UserLogOutServlet</param-value>
     </init-param>
     <init-param>
-      <param-name>sessionServlet</param-name>
+      <param-name>sessionServlet</param-name><!--SinoAMSœµÕ≥÷–ª·ª∞ ˝æ›–¯¥´µƒServlet£¨≤ª‘ –Ì∏¸∏ƒ°£ø…Õ®”√-->
       <param-value>/servlet/com.sino.framework.security.servlet.SessionSetServlet</param-value>
     </init-param>
     <init-param>
-      <param-name>timeOutUrl</param-name>
+      <param-name>timeOutUrl</param-name><!--SinoAMSœµÕ≥”√ªßª·ª∞π˝∆⁄ ±µºœÚµƒ“≥√Ê-->
       <param-value>/timeOutPage.jsp</param-value>
     </init-param>
     <init-param>
-      <param-name>noPriviledgeURL</param-name>
+      <param-name>noPriviledgeURL</param-name><!--SinoAMSœµÕ≥”√ªß∂‘÷∏∂®◊ ‘¥Œﬁ»®œﬁ ±µºœÚµƒ“≥√Ê-->
       <param-value>/noPriviPage.jsp</param-value>
     </init-param>
     <init-param>
-      <param-name>exceptServlets</param-name>
+      <param-name>exceptServlets</param-name><!--SinoAMSœµÕ≥≤ª–Ë“™—È÷§µƒServlet◊ ‘¥-->
       <param-value>OACountServlet;SSOForward;OAInboxServlet;OABoxServlet;GetShareDic;GetOPE;GetNLE;GetLNE;GetCountry;GetManufacturer;GetBTS;GetCEX;GetConstructDic;GetContent;GetContentCEX;GetContentLNE;GetContentNLE;GetContentOPE;GISQueryServlet;GISServlet;GetPDAConfig;logOutServlet;SessionSetServlet;PortalLoginServlet;FirstLoginServlet;GetGroups;GetProjs;GetRoles;FlowSubmit;FetchProject;ValidateUser;GetServerTime;GetWorkOrders;GetItemCategory;GetItemInfo;GetETSInfo;GetFAInfo;GetGroupUsers;GetLocationInfo;CreateWorkOrder;SignWorkOrder;WorkOrderSubmit;AssignWorkOrders;GetAssignGroups;SMSServlet;GetSpareOrders;GetSpareInfo;QueryAssets;SubmitSpareOrder;CreateSpareOrder;GetSpareLoc;QueryUpdate;BillDownload;BillCreate;GetChkTask;GetArchiveUser;GetSpecialityDept;GetTaskServlet;GetProject;GetImplementUser</param-value>
     </init-param>
     <init-param>
-      <param-name>exceptPackages</param-name>
+      <param-name>exceptPackages</param-name><!--SinoAMSœµÕ≥≤ª–Ë“™—È÷§µƒpackage◊ ‘¥-->
       <param-value>GISQueryServlet;GISServlet;SMSTestServlet;logOutServlet;SessionSetServlet;PortalLoginServlet;FirstLoginServlet;GetGroups;GetProjs;GetRoles;FlowSubmit;ValidateUser;GetServerTime;GetWorkOrders;GetItemCategory;GetItemInfo;GetETSInfo;GetFAInfo;GetGroupUsers;GetLocationInfo;CreateWorkOrder;SignWorkOrder;WorkOrderSubmit;AssignWorkOrders;GetAssignGroups;SMSServlet;GetSpareOrders;GetSpareInfo;QueryAssets;SubmitSpareOrder;CreateSpareOrder;GetSpareLoc;QueryUpdate;BillDownload;BillCreate;GetChkTask;GetArchiveUser;GetSpecialityDept;GetTaskServlet</param-value>
     </init-param>
     <init-param>
-      <param-name>exceptJSPs</param-name>
+      <param-name>exceptJSPs</param-name><!--SinoAMSœµÕ≥≤ª–Ë“™—È÷§µƒjsp◊ ‘¥-->
       <param-value>testPortal.jsp;portalLogin.jsp;oa.jsp;index.jsp;gisInfoStatic.jsp</param-value>
     </init-param>
     <init-param>
-      <param-name>exceptions</param-name>
+      <param-name>exceptions</param-name><!--SinoAMSœµÕ≥≤ª–Ë“™—È÷§µƒ∆‰À¸∏˜÷÷∫Û◊∫√˚÷∏∂®µƒ◊ ‘¥£¨¿˝»Á∏˜÷÷æ≤Ã¨Œƒº˛-->
       <param-value>htm;html;css;js;jpg;gif;ico;htc;faces</param-value>
     </init-param>
   </filter>
@@ -161,29 +157,6 @@
     <listener-class>com.sino.framework.security.servlet.SessionHandle</listener-class>
   </listener>
   
-  <!-- Huan add listener -->
-  <!--  <listener> -->
-  <!-- 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
-  <!--  </listener> -->
-  <!-- Huan add end -->
-  
-  <!-- MVC servlets -->
-  <!--<servlet>
-	<servlet-name>appServlet</servlet-name>
-	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	<init-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
-	</init-param>
-	<load-on-startup>3</load-on-startup>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>appServlet</servlet-name>
-  	<url-pattern>/mvc/</url-pattern>
-  </servlet-mapping>
-  MVC servlets end -->
-  
   <servlet>
     <servlet-name>SinoInitServlet</servlet-name>
     <servlet-class>com.sino.base.web.init.SinoInitServlet</servlet-class>
@@ -192,15 +165,15 @@
       <param-value>true</param-value>
     </init-param>
     <init-param>
-      <param-name>loadMessages</param-name>
+      <param-name>loadMessages</param-name><!-- «∑Òº”‘ÿœ˚œ¢Ã· æ–≈œ¢-->
       <param-value>true</param-value>
     </init-param>
     <init-param>
-      <param-name>startSMSService</param-name>
+      <param-name>startSMSService</param-name><!--∑¢ÀÕ∂Ãœ˚œ¢-->
       <param-value>false</param-value>
     </init-param>
     <init-param>
-      <param-name>startWorkorderDefineService</param-name>
+      <param-name>startWorkorderDefineService</param-name><!--—≤ºÏπ§µ•-->
       <param-value>false</param-value>
     </init-param>
     <init-param>
@@ -233,115 +206,115 @@
     </init-param>
     <init-param>
       <param-name>systemName</param-name>
-      <param-value>ËµÑ‰∫ßÁÆ°ÁêÜÁ≥ªÁªü</param-value>
+      <param-value>◊ ≤˙π‹¿ÌœµÕ≥</param-value>
     </init-param>
     <init-param>
-      <param-name>sysAdminRole</param-name>
-      <param-value>Á≥ªÁªüÁÆ°ÁêÜÂëò</param-value>
+      <param-name>sysAdminRole</param-name><!--œµÕ≥ƒ⁄÷√µƒπ‹¿ÌΩ«…´£¨œµÕ≥π‹¿Ì‘±”µ”–Œﬁœﬁ»®œﬁ£¨√ø∏ˆ °∏˘æ›æﬂÃÂ«Èøˆ…Ë÷√£¨µ´±ÿ–Î”Î ˝æ›ø‚±ÌSF_ROLE÷–º«¬º“ª÷¬-->
+      <param-value>œµÕ≥π‹¿Ì‘±</param-value>
     </init-param>
     <init-param>
-      <param-name>cityAdminRole</param-name>
-      <param-value>Âú∞Â∏ÇÁÆ°ÁêÜÂëò</param-value>
+      <param-name>cityAdminRole</param-name><!--œµÕ≥ƒ⁄÷√π‹¿ÌΩ«…´£¨µÿ –π‹¿Ì‘±”µ”–±æµÿ –œµÕ≥Œ¨ª§»®œﬁ£¨√ø∏ˆ °∏˘æ›æﬂÃÂ«Èøˆ…Ë÷√£¨µ´±ÿ–Î”Î ˝æ›ø‚±ÌSF_ROLE÷–º«¬º“ª÷¬-->
+      <param-value>µÿ –π‹¿Ì‘±</param-value>
     </init-param>
     <init-param>
-      <param-name>provAssetsMgr</param-name>
-      <param-value>ÂÖ®ÁúÅËµÑ‰∫ßÁÆ°ÁêÜÂëò</param-value>
+      <param-name>provAssetsMgr</param-name><!--π‹¿Ì»´ °◊ ≤˙£¨√ø∏ˆ °∏˘æ›æﬂÃÂ«Èøˆ…Ë÷√£¨µ´±ÿ–Î”Î ˝æ›ø‚±ÌSF_ROLE÷–º«¬º“ª÷¬-->
+      <param-value>»´ °◊ ≤˙π‹¿Ì‘±</param-value>
     </init-param>
     <init-param>
-      <param-name>compAssetsMgr</param-name>
-      <param-value>ÂÖ¨Âè∏ËµÑ‰∫ßÁÆ°ÁêÜÂëò</param-value>
+      <param-name>compAssetsMgr</param-name><!--π‹¿Ìœ‡”¶π´Àæ◊ ≤˙£¨√ø∏ˆ °∏˘æ›æﬂÃÂ«Èøˆ…Ë÷√£¨µ´±ÿ–Î”Î ˝æ›ø‚±ÌSF_ROLE÷–º«¬º“ª÷¬-->
+      <param-value>π´Àæ◊ ≤˙π‹¿Ì‘±</param-value>
     </init-param>
     <init-param>
-      <param-name>deptAssetsMgr</param-name>
-      <param-value>ÈÉ®Èó®ËµÑ‰∫ßÁÆ°ÁêÜÂëò</param-value>
+      <param-name>deptAssetsMgr</param-name><!--π‹¿Ì≤ø√≈◊ ≤˙£¨√ø∏ˆ °∏˘æ›æﬂÃÂ«Èøˆ…Ë÷√£¨µ´±ÿ–Î”Î ˝æ›ø‚±ÌSF_ROLE÷–º«¬º“ª÷¬-->
+      <param-value>≤ø√≈◊ ≤˙π‹¿Ì‘±</param-value>
     </init-param>
     <init-param>
-      <param-name>mtlAssetsMgr</param-name>
-      <param-value>‰∏ì‰∏öËµÑ‰∫ßÁÆ°ÁêÜÂëò</param-value>
+      <param-name>mtlAssetsMgr</param-name><!--∏˘æ›◊ ≤˙¿‡±…Ë÷√µƒπ‹¿Ì‘±£¨√ø∏ˆ °∏˘æ›æﬂÃÂ«Èøˆ…Ë÷√£¨µ´±ÿ–Î”Î ˝æ›ø‚±ÌSF_ROLE÷–º«¬º“ª÷¬-->
+      <param-value>◊®“µ◊ ≤˙π‹¿Ì‘±</param-value>
     </init-param>
     <init-param>
-      <param-name>provinceOrgId</param-name>
+      <param-name>provinceOrgId</param-name><!-- °π´ÀæOU◊È÷ØID£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>82</param-value>
     </init-param>
     <init-param>
-      <param-name>proCompanyCode</param-name>
+      <param-name>proCompanyCode</param-name><!-- °π´ÀæOUπ´Àæ¥˙¬Î£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>4110</param-value>
     </init-param>
     <init-param>
-      <param-name>proCompanyName</param-name>
-      <param-value>OU_ÈáçÂ∫ÜÂ∏ÇÊú¨ÈÉ®</param-value>
+      <param-name>proCompanyName</param-name><!-- °π´ÀæOU◊È÷ØID£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
+      <param-value>OU_…ΩŒ˜ °±æ≤ø</param-value>
     </init-param>
     <init-param>
-      <param-name>provinceCode</param-name>
+      <param-name>provinceCode</param-name><!-- °π´ÀæOU◊È÷ØID£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>41</param-value>
     </init-param>
       <init-param>
-        <param-name>tdProvinceOrgId</param-name>
+        <param-name>tdProvinceOrgId</param-name><!-- °π´ÀæOU◊È÷ØID£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
         <param-value>101</param-value>
       </init-param>
       <init-param>
-        <param-name>tdProCompanyCode</param-name>
+        <param-name>tdProCompanyCode</param-name><!-- °π´ÀæOUπ´Àæ¥˙¬Î£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
         <param-value>8110</param-value>
       </init-param>
       <init-param>
-        <param-name>tdProCompanyName</param-name>
-        <param-value>OU_ÈáçÂ∫ÜÂ∏ÇÊú¨ÈÉ®</param-value>
+        <param-name>tdProCompanyName</param-name><!-- °π´ÀæOU◊È÷ØID£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
+        <param-value>OU_…ΩŒ˜ °±æ≤ø</param-value>
       </init-param>
       <init-param>
-        <param-name>tdProvinceCode</param-name>
+        <param-name>tdProvinceCode</param-name><!-- °π´ÀæOU◊È÷ØID£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
         <param-value>81</param-value>
       </init-param>
     <init-param>
-      <param-name>loginImage</param-name>
+      <param-name>loginImage</param-name><!--µ«¬Ω“≥√Ê±≥æ∞Õº∆¨£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>/images/index-1-xian.jpg</param-value>
     </init-param>
     <init-param>
-      <param-name>topImage</param-name>
+      <param-name>topImage</param-name><!--µ«¬Ω∫ÛøÚº‹“≥√Ê±≥æ∞Õº∆¨£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>/images/top-1-xian.jpg</param-value>
     </init-param>
 
     <init-param>
-      <param-name>faCategory1</param-name>
+      <param-name>faCategory1</param-name><!--◊ ≤˙¿‡±1÷µºØ√˚≥∆£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>CMCC_FA_CAT_1</param-value>
     </init-param>
     <init-param>
-      <param-name>faCategory2</param-name>
+      <param-name>faCategory2</param-name><!--◊ ≤˙¿‡±2÷µºØ√˚≥∆£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>CMCC_FA_CAT_2</param-value>
     </init-param>
     <init-param>
-      <param-name>faCategory3</param-name>
+      <param-name>faCategory3</param-name><!--◊ ≤˙¿‡±3÷µºØ√˚≥∆£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>CMCC_FA_CAT_3</param-value>
     </init-param>
     <init-param>
-      <param-name>companySegment</param-name>
+      <param-name>companySegment</param-name><!--’ ªßπ´Àæ∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_CO</param-value>
     </init-param>
     <init-param>
-      <param-name>costCenterSegment</param-name>
+      <param-name>costCenterSegment</param-name><!--’ ªß≥…±æ÷––ƒ∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_CC</param-value>
     </init-param>
     <init-param>
-      <param-name>accountSegment</param-name>
+      <param-name>accountSegment</param-name><!--’ ªßª·º∆ø∆ƒø∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_AC</param-value>
     </init-param>
     <init-param>
-      <param-name>bandSegment</param-name>
+      <param-name>bandSegment</param-name><!--’ ªß∆∑≈∆∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_SB</param-value>
     </init-param>
     <init-param>
-      <param-name>projectSegment</param-name>
+      <param-name>projectSegment</param-name><!--’ ªßœÓƒø∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_PJ</param-value>
     </init-param>
     <init-param>
-      <param-name>internalComeSegment</param-name>
+      <param-name>internalComeSegment</param-name><!--’ ªßƒ⁄≤øÕ˘¿¥∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_IC</param-value>
     </init-param>
     <init-param>
-      <param-name>spareSegment</param-name>
+      <param-name>spareSegment</param-name><!--’ ªß±∏”√∂Œ£¨∏˘æ›œµÕ≥ µ ©µƒ µº  °∑›–ﬁ∏ƒ-->
       <param-value>SXMC_COA_SP</param-value>
     </init-param>
     <!--<init-param>-->
-      <!--<param-name>initRunner</param-name>&lt;!&ndash;ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÃ¨ÔøΩÔøΩÔøΩ–µÔøΩÔøΩ‡£¨ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÃ≥ÔøΩcom.sino.base.web.init.SinoInitialRunner&ndash;&gt;-->
+      <!--<param-name>initRunner</param-name>&lt;!&ndash;∏˘æ›…œ ˆ≤Œ ˝∂ØÃ¨‘À––µƒ¿‡£¨∏√¿‡±ÿ–ÎºÃ≥–com.sino.base.web.init.SinoInitialRunner&ndash;&gt;-->
       <!--<param-value>com.sino.ams.init.AMSInitialRunner</param-value>-->
     <!--</init-param>-->
     <load-on-startup>1</load-on-startup>

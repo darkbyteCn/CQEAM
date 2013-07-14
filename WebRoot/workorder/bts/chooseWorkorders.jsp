@@ -41,7 +41,9 @@
 <base target="_self">
 <head>
     <title>选择工单地点页面</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=GBK">
+  	<meta http-equiv="Content-Type" content="text/html; charset=GBK"/>
+	<meta charset="GBK"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
 </head>
 
 <%--<link href="/WebLibary/css/view.css" rel="stylesheet" type="text/css">--%>

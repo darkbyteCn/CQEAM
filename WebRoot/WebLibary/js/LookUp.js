@@ -53,3 +53,5 @@ function LookUpOrderValues(lookUpName, dialogWidth, dialogHeight, userPara) {
             + "px;center:yes;status:no;scrollbars:no;help:no;resizable:yes";
     return window.showModalDialog(url, null, popscript);
 }
+
+

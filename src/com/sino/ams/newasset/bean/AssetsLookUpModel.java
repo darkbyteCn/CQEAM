@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.sino.ams.bean.SyBaseSQLUtil;
 import com.sino.ams.constant.DictConstant;
+import com.sino.ams.constant.LookUpConstant;
 import com.sino.ams.newasset.assetsharing.dto.AssetSharingLineDTO;
 import com.sino.ams.newasset.bean.sql.AssetsLookupSQL;
 import com.sino.ams.newasset.constant.AssetsDictConstant;
@@ -25,7 +26,9 @@ import com.sino.ams.newasset.dto.AmsSnDTO;
 import com.sino.ams.newasset.lease.constant.LeaseAppConstant;
 import com.sino.ams.newasset.lease.dto.LeaseLineDTO;
 import com.sino.ams.newasset.rolequery.dto.SfRoleQueryDTO;
+import com.sino.ams.plan.dto.AmsWorkPlanDTO;
 import com.sino.ams.system.basepoint.dto.EtsObjectDTO;
+import com.sino.ams.system.cost.dto.CostCenterDTO;
 import com.sino.ams.system.fixing.dto.EtsItemInfoDTO;
 import com.sino.ams.system.item.dto.EtsSystemItemDTO;
 import com.sino.ams.system.procedure.dto.MisDeptDTO;
@@ -33,6 +36,7 @@ import com.sino.ams.system.project.dto.EtsPaProjectsAllDTO;
 import com.sino.ams.system.user.dto.EtsOuCityMapDTO;
 import com.sino.ams.system.user.dto.SfUserDTO;
 import com.sino.ams.workorder.dto.ZeroTurnLineDTO;
+import com.sino.ams.yearchecktaskmanager.dto.EtsObjectTaskDTO;
 import com.sino.base.db.sql.model.SQLModel;
 import com.sino.base.dto.DTO;
 import com.sino.base.dto.DTOSet;
@@ -1114,26 +1118,21 @@ if(!dto.getResponsibilityUserName().equals("")){
 					+ " WHERE"
 					+ " SU.ENABLED = 'Y'"
 					+ " AND SU.ORGANIZATION_ID *= EOCM.ORGANIZATION_ID"
-					// + " AND (SU.DISABLE_DATE " +
-					// SyBaseSQLUtil.isNullNoParam() + " OR SU.DISABLE_DATE > "
-					// + SyBaseSQLUtil.getCurDate() + ")"
 					+ " AND SU.ORGANIZATION_ID = ?" + " AND ("
 					+ SyBaseSQLUtil.isNull() + "  OR SU.USERNAME LIKE ?)"
 					+ " AND (" + SyBaseSQLUtil.isNull()
 					+ " OR SU.LOGIN_NAME LIKE UPPER(?))" + " AND ( "
 					+ SyBaseSQLUtil.isNull()
-					+ "  OR SU.EMPLOYEE_NUMBER LIKE ?)"
-//					+ " AND (" +SyBaseSQLUtil.isNull()
-//					+ " OR SU.DEPT_CODE = ?)"
-					+ " AND EXISTS("
-					+ " SELECT"
-					+ " NULL"
-					+ " FROM"
-					+ " SF_USER_RIGHT SUR"
-					+ " WHERE"
-					+ " SUR.USER_ID = SU.USER_ID"
-					+ " AND SUR.GROUP_ID = CONVERT(INT, dbo.NVL( (CASE ? WHEN '-1' THEN NULL WHEN '0' THEN NULL ELSE ? END), CONVERT(VARCHAR, SUR.GROUP_ID))))"
-					+ " ORDER BY SU.LOGIN_NAME ";
+					+ "  OR SU.EMPLOYEE_NUMBER LIKE ?)";
+//					+ " AND EXISTS("
+//					+ " SELECT"
+//					+ " NULL"
+//					+ " FROM"
+//					+ " SF_USER_RIGHT SUR"
+//					+ " WHERE"
+//					+ " SUR.USER_ID = SU.USER_ID"
+//					+ " AND SUR.GROUP_ID = CONVERT(INT, dbo.NVL( (CASE ? WHEN '-1' THEN NULL WHEN '0' THEN NULL ELSE ? END), CONVERT(VARCHAR, SUR.GROUP_ID))))"
+//					+ " ORDER BY SU.LOGIN_NAME ";
 			sqlArgs.add(user.getOrganizationId());
 			sqlArgs.add(dto.getUserName());
 			sqlArgs.add(dto.getUserName());
@@ -1141,16 +1140,34 @@ if(!dto.getResponsibilityUserName().equals("")){
 			sqlArgs.add(dto.getLoginName());
 			sqlArgs.add(dto.getEmployeeNumber());
 			sqlArgs.add(dto.getEmployeeNumber());
-//			sqlArgs.add(dto.getDeptCode());
-//			sqlArgs.add(dto.getDeptCode());
-			// if (proCode.equals("42")) {
-			// sqlArgs.add("");
-			// }else{
-			sqlArgs.add("" + dto.getGroupId());
-			sqlArgs.add("" + dto.getGroupId());
-			// }
+//			sqlArgs.add("" + dto.getGroupId());
+//			sqlArgs.add("" + dto.getGroupId());
 			
-		}else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH)) {//资产盘点单任务批，选择归档人
+		}
+		else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
+		{
+			AmsAssetsPriviDTO dto = (AmsAssetsPriviDTO) dtoParameter;
+			sqlStr="SELECT SU.LOGIN_NAME,SU.USER_ID,SU.USERNAME USER_NAME,AMD.DEPT_NAME,AMD.DEPT_CODE, SG.GROUP_NAME,SG.GROUP_ID FROM SF_USER SU,SF_GROUP SG,SF_USER_AUTHORITY SUA, SINO_GROUP_MATCH SGM, AMS_MIS_DEPT AMD WHERE AMD.DEPT_CODE=SGM.DEPT_ID AND SGM.GROUP_ID=SG.GROUP_ID AND SG.GROUP_NAME=SUA.GROUP_NAME AND SUA.USER_ID=SU.USER_ID AND SU.LOGIN_NAME LIKE ? AND SU.USERNAME LIKE ?";
+			String loginName=dto.getLoginName();
+			String userName=dto.getUserName();
+			if(loginName.endsWith("%"))
+			{
+				sqlArgs.add(loginName.trim());
+			}
+			else
+			{
+				sqlArgs.add(loginName.trim()+"%");
+			}
+			if(userName.endsWith("%"))
+			{
+				sqlArgs.add(userName.trim());
+			}
+			else
+			{
+				sqlArgs.add(userName.trim()+"%");
+			}
+		}
+		else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH)) {//资产盘点单任务批，选择归档人
 			AmsAssetsPriviDTO dto = (AmsAssetsPriviDTO) dtoParameter;
 			sqlStr = "SELECT"
 					+ " EOCM.COMPANY_CODE,"
@@ -2835,7 +2852,94 @@ if(!dto.getResponsibilityUserName().equals("")){
 			sqlArgs.add("" + dto.getGroupId());
 			sqlArgs.add("" + dto.getGroupId());
 			
-		} 
+		} else if (lookUpName.equals("LOOK_UP_CITY")) { //普通用户或者有特殊权限的用户
+			AmsAssetsPriviDTO dto = (AmsAssetsPriviDTO) dtoParameter;
+			 sqlStr = "SELECT"
+		        + " EOC.COMPANY_CODE,EOC.COMPANY,EOC.BOOK_TYPE_CODE, EOC.BOOK_TYPE_NAME,0 RECEIVD_BY,'' RECEIVD_BY_NAME "
+		        + " FROM"
+		        + " ETS_OU_CITY_MAP EOC"
+		        + " WHERE"
+		        + " EOC.IS_TD='N' " ;//为了测试注释掉
+		}/* else if (lookUpName.equals("LOOK_UP_LOCATION_TASK")) {
+            EtsObjectTaskDTO dto = (EtsObjectTaskDTO) dtoParameter;
+            String contentBlurred = dto.getContentBlurred();
+            String taskId=dto.getTaskId();
+            String [] taskIds=taskId.split(",");//query one above address
+            sqlStr = "SELECT"
+					 + " EOCM.COMPANY COMPANY_NAME,"
+					 + " EC.COUNTY_NAME,"
+					 + " EFV.VALUE OBJECT_CATEGORY,"
+					 + " EO.WORKORDER_OBJECT_NO CHECK_LOCATION,"
+					 + " EO.WORKORDER_OBJECT_CODE OBJECT_CODE,"
+					 + " EO.WORKORDER_OBJECT_NAME OBJECT_NAME,"
+					 + " EO.WORKORDER_OBJECT_LOCATION OBJECT_LOCATION"
+					 + " FROM"
+					 + " ETS_OBJECT         EO,"
+					 + " ETS_COUNTY         EC,"
+					 + " ETS_FLEX_VALUE_SET EFVS,"
+					 + " ETS_FLEX_VALUES    EFV,"
+					 + " ETS_OU_CITY_MAP    EOCM"
+					 + " WHERE"
+					 + " EO.COUNTY_CODE *= EC.COUNTY_CODE"
+					 + " AND EO.ORGANIZATION_ID *= EC.ORGANIZATION_ID"
+					 + " AND EO.ORGANIZATION_ID = EOCM.ORGANIZATION_ID"
+					 + " AND EO.OBJECT_CATEGORY = EFV.CODE"
+					 + " AND EFV.FLEX_VALUE_SET_ID = EFVS.FLEX_VALUE_SET_ID"
+                     + " AND EFVS.CODE = ?"
+					 + " AND EO.ORGANIZATION_ID = ?"
+					 + " AND (EO.DISABLE_DATE "+SyBaseSQLUtil.isNullNoParam()+" OR EO.DISABLE_DATE > GETDATE() OR EO.DISABLE_DATE IS NULL)" +
+                    "    AND NOT EXISTS\n" +
+                    " (SELECT 'A'\n" +
+                    "          FROM AMS_ASSETS_CHECK_HEADER AACH\n" +
+                    "         WHERE AACH.CHECK_LOCATION = EO.WORKORDER_OBJECT_NO\n" +
+                    "           AND AACH.ORDER_STATUS NOT IN ('CANCELED', 'ARCHIEVED')" +
+                    "           AND AACH.CHECK_CATEGORY ='')";
+           sqlArgs.add(AssetsDictConstant.OBJECT_CATEGORY);
+		   sqlArgs.add(dto.getOrganizationId());
+            sqlStr +=    //" AND (? ='' OR EC.COUNTY_NAME LIKE ?)"
+					     " AND (? ='' OR EO.WORKORDER_OBJECT_CODE LIKE ?)"
+					   + " AND (? ='' OR EO.WORKORDER_OBJECT_NAME LIKE ?)"
+            		   + " AND (? ='' OR EO.COST_CODE = ?)";
+            sqlStr+= " AND NOT EXISTS(SELECT 'A'\n" +
+                          "                  FROM AMS_ASSETS_CHECK_HEADER AACH1\n" +
+                          "                 WHERE AACH1.CHECK_LOCATION = EO.WORKORDER_OBJECT_NO\n" +
+                          "                   AND (AACH1.ORDER_STATUS  = 'DOWNLOADED' OR AACH1.ORDER_STATUS  = 'UPLOADED')" +
+                          "                   AND AACH1.CHECK_CATEGORY ='')";
+               //sqlArgs.add(dto.getCountyName());
+               //sqlArgs.add(dto.getCountyName());
+			   sqlArgs.add(dto.getWorkorderObjectCode());
+			   sqlArgs.add(dto.getWorkorderObjectCode());
+			   sqlArgs.add(dto.getWorkorderObjectName());
+			   sqlArgs.add(dto.getWorkorderObjectName());
+               sqlArgs.add(dto.getCountyName());
+               sqlArgs.add(dto.getCountyName());
+			   //sqlArgs.add(dto.getCostCenterCode());
+			   //sqlArgs.add(dto.getCostCenterCode());
+		}*/ else if (lookUpName.equals(LookUpConstant.COST_CENTER)) { // 查找成本中心
+			CostCenterDTO dto = (CostCenterDTO) dtoParameter;
+			sqlStr = "SELECT"
+					+ " ACCV.COST_CENTER_CODE,"
+					+ " ACCV.COST_CENTER_NAME,"
+					+ " ACCV.COMPANY_CODE,"
+					+ " ACCV.ORGANIZATION_ID"
+					+ " FROM"
+					+ " AMS_COST_CENTER_V ACCV"
+					+ " WHERE"
+					+ " ACCV.ORGANIZATION_ID = ?"
+					+ " AND ACCV.ENABLED_FLAG = 'Y'"
+					// + " AND ACCV.COST_CENTER_CODE LIKE dbo.NVL(?,
+					// ACCV.COST_CENTER_CODE)"
+					// + " AND ACCV.COST_CENTER_NAME LIKE dbo.NVL(?,
+					// ACCV.COST_CENTER_NAME)"
+					+ "	AND (? = '' OR CONVERT(VARCHAR,ACCV.COST_CENTER_CODE) LIKE ?)"
+					+ " AND (? = '' OR ACCV.COST_CENTER_NAME LIKE ?)"
+					+ " ORDER BY" + " ACCV.COST_CENTER_CODE";
+			sqlArgs.add(user.getOrganizationId());
+			sqlArgs.add(dto.getCostCenterCode());
+			sqlArgs.add(dto.getCostCenterCode());
+			sqlArgs.add(dto.getCostCenterName());
+			sqlArgs.add(dto.getCostCenterName());
+		}
 
 		sqlModel.setArgs(sqlArgs);
 		sqlModel.setSqlStr(sqlStr);

@@ -95,6 +95,22 @@ public class AmsAssetsCheckBatchServlet extends BaseServlet {
             batchDAO.setServletConfig(getServletConfig(req));
             String orderType = dtoParameter.getOrderType();
             AssetsOptProducer optProducer = new AssetsOptProducer(user, conn);
+            
+            //jeffery
+            String taskType=req.getParameter("taskType");
+            if(taskType==null||taskType.isEmpty()){
+            	taskType="";
+            	System.out.println("非年度盘点任务");
+            }else {
+            	System.out.println("年度盘点任务");
+            }
+            
+        	String pattern=req.getParameter("action");//页面跳转方式
+			String orderNumber=req.getParameter("parentOrderNumber");//工单编码
+			String orderTypes=req.getParameter("orderType");//工单类型
+			String orderName=req.getParameter("orderName");//工单名称
+            
+            //jeffery
 
             String sf_isNew = (String) req.getAttribute(WebAttrConstant.SINOFLOW_NEW_CASE);
             if (sf_isNew != null && sf_isNew.equals("1")) {
@@ -140,7 +156,19 @@ public class AmsAssetsCheckBatchServlet extends BaseServlet {
                 if (chkOrders != null) {
                     req.setAttribute(AssetsWebAttributes.CHECK_HEADER_DATAS, chkOrders);
                 }
-                forwardURL = AssetsURLList.BATCH_EDIT_PAGE;
+//                forwardURL = AssetsURLList.BATCH_EDIT_PAGE;
+                //jeffery
+                if(taskType.equals("y")){
+                	if(pattern==null){pattern="";}
+                    if(pattern.equals("fromRemain")){
+                    	dto.setTaskName(orderName);
+                    	dto.setTaskNumber(orderNumber);
+                    	dto.setTaskType(orderType);
+                    }	
+                  forwardURL = "/yearchecktaskmanager/assetsYearCheckBatchEdit.jsp";
+                }else {
+                  forwardURL = AssetsURLList.BATCH_EDIT_PAGE;
+                }
             } else if (action.equals(AssetsActionConstant.EDIT_ACTION)) {
                 AmsAssetsCheckBatchDTO dto = (AmsAssetsCheckBatchDTO) req.getAttribute(AssetsWebAttributes.CHECK_BATCH_DATA);
                 DTOSet chkOrders = (DTOSet) req.getAttribute(AssetsWebAttributes.CHECK_HEADER_DATAS);

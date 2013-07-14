@@ -1056,4 +1056,23 @@ public class OrderExtendModel {
 
         return sqlModel;
     }
+    /**
+     * 获取当前有效的资产管理员。
+     * @param workorderObjNo	地点编码ID
+     * @organizationId			组织ID
+     * @return SQLModel
+     */
+    public SQLModel getAvailableAssetsAdmin(String workorderObjNo,int organizationId)
+    {
+    	SQLModel sqlModel = new SQLModel();
+        List sqlArgs = new ArrayList();
+        String sqlStr ="SELECT SG.GROUP_NAME,SG.GROUP_ID,SU.USERNAME,SU.USER_ID FROM ETS_OBJECT EO,ETS_OU_CITY_MAP EOCM,AMS_MIS_DEPT AMD,SINO_GROUP_MATCH SGM,SF_GROUP SG,SF_USER_AUTHORITY SUA,SF_USER SU WHERE SUBSTRING(EO.WORKORDER_OBJECT_CODE,1,6)=AMD.COST_CENTER_CODE AND EO.ORGANIZATION_ID=EOCM.ORGANIZATION_ID AND AMD.COMPANY_CODE=EOCM.COMPANY_CODE AND AMD.DEPT_CODE=SGM.DEPT_ID AND SGM.GROUP_ID=SG.GROUP_ID AND SG.GROUP_NAME=SUA.GROUP_NAME AND SUA.USER_ID=SU.USER_ID AND SUA.ROLE_NAME='单位资产管理员' AND EO.WORKORDER_OBJECT_NO=? AND EO.ORGANIZATION_ID=?";
+        sqlArgs.add(workorderObjNo);
+        sqlArgs.add(organizationId);
+        sqlModel.setArgs(sqlArgs);
+       
+        sqlModel.setSqlStr(sqlStr);
+
+        return sqlModel;
+    }
 }

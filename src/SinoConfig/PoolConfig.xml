@@ -5,7 +5,8 @@
         <!--recycleCheck：对本连接池是否进行强行回收检查-->
          <dataSource>
             <dbDriver>com.sybase.jdbc3.jdbc.SybDriver</dbDriver>
-            <dbUrl>jdbc:sybase:Tds:Huan-PC:5000/eamcq</dbUrl>
+           <!--  <dbUrl>jdbc:sybase:Tds:10.1.13.195:5000/eamcp</dbUrl> -->
+            <dbUrl>jdbc:sybase:Tds:LONGDREAM1:5000/eamcq</dbUrl>
             <!--<dbUrl>jdbc:sybase:Tds:10.204.7.70:5000/shanxi</dbUrl>-->
             <dbUser>sa</dbUser>
             <encrypt>FALSE</encrypt>

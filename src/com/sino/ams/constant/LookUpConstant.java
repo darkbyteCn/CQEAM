@@ -78,6 +78,7 @@ public interface LookUpConstant {
 	String LOOK_UP_EXACT_EQUIP = "LOOK_UP_EXACT_EQUIP"; // 正式的设备（相对临时）
 	String LOOK_UP_INSTRUMENT = "LOOK_UP_INSTRUMENT";  //仪器仪表
 	String LOOK_UP_USER1 = "LOOK_UP_USER1";//找人
+	String LOOK_UP_USER_WITH_DEPT="LOOK_UP_USER_WITH_DEPT";//查找用户及部门
 	String LOOK_UP_INSTR_ITEM = "LOOK_UP_INSTR_ITEM";//仪器仪表找类别
 	String LOOK_UP_RETURN = "LOOK_UP_RETURN"; //仪器仪表找归还人
 	String LOOK_UP_CITYINSTR = "LOOK_UP_CITYINSTR";   //查找地市仪器仪表人员

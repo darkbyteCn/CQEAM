@@ -46,6 +46,10 @@
 
 
 <html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=GBK"/>
+	<meta charset=GBK/>
+</head>
 <link href="/WebLibary/css/view.css" rel="stylesheet" type="text/css">
 <link href="/WebLibary/css/css.css" rel="stylesheet" type="text/css">
 <link href="/WebLibary/css/eam.css" rel="stylesheet" type="text/css">

@@ -8,17 +8,47 @@ import com.sino.base.calen.SimpleCalendar;
 import com.sino.base.exception.CalendarException;
 
 /**
- * <p>Title: 资产盘点批表(AMS) AmsAssetsCheckBatch</p>
+ * <p>Title: 年度资产盘点批表(AMS) AmsAssetsCheckBatch</p>
  * <p>Description: 程序自动生成DTO数据传输对象</p>
  * <p>Copyright: 北京思诺博信息科技有限公司 Copyright (c) 2006</p>
  * <p>Company: 北京思诺博信息科技有限公司</p>
- * @author 唐明胜
+ * @author jeffery
  * @version 1.0
  */
 
 public class AmsAssetsCheckBatchDTO extends AMSFlowDTO {
-
+	
+	//
+	  private String taskNumber ="";//盘点任务编码
+	  private String taskName = ""; //盘点任务名称
+	  private String taskType = "";//盘点类型
+	//
+	  
 	private String batchId = "";
+	public String getTaskType() {
+		return taskType;
+	}
+
+	public void setTaskType(String taskType) {
+		this.taskType = taskType;
+	}
+
+	public String getTaskNumber() {
+		return taskNumber;
+	}
+
+	public void setTaskNumber(String taskNumber) {
+		this.taskNumber = taskNumber;
+	}
+
+	public String getTaskName() {
+		return taskName;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
 	private String batchNo = "";
 	private String checkDept="";
 	private String batchCheckLocation = "";
