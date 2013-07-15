@@ -119,7 +119,29 @@ public class AMSLookUpModel extends LookUpModel {
 				sqlArgs.add(user.getOrganizationId());
 			}
 
-		} else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_NAME)) {
+		} else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
+		{
+			AmsWorkPlanDTO dto = (AmsWorkPlanDTO) dtoParameter;
+			sqlStr="SELECT SU.LOGIN_NAME,SU.USER_ID EXECUTE_USER,SU.USERNAME EXECUTE_USER_NAME,AMD.DEPT_NAME,AMD.DEPT_CODE, SG.GROUP_NAME,SG.GROUP_ID FROM SF_USER SU,SF_GROUP SG,SF_USER_AUTHORITY SUA, SINO_GROUP_MATCH SGM, AMS_MIS_DEPT AMD WHERE AMD.DEPT_CODE=SGM.DEPT_ID AND SGM.GROUP_ID=SG.GROUP_ID AND SG.GROUP_NAME=SUA.GROUP_NAME AND SUA.USER_ID=SU.USER_ID AND SU.LOGIN_NAME LIKE ? AND SU.USERNAME LIKE ?";
+			String loginName=dto.getLoginName();
+			String userName=dto.getExecuteUserName();
+			if(loginName.endsWith("%"))
+			{
+				sqlArgs.add(loginName.trim());
+			}
+			else
+			{
+				sqlArgs.add(loginName.trim()+"%");
+			}
+			if(userName.endsWith("%"))
+			{
+				sqlArgs.add(userName.trim());
+			}
+			else
+			{
+				sqlArgs.add(userName.trim()+"%");
+			}
+		}else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_NAME)) {
 			EtsWorkorderDTO dto = (EtsWorkorderDTO) dtoParameter;
 			sqlStr = "SELECT" + " SU.EMPLOYEE_NUMBER,"
 					+ " SU.LOGIN_NAME," + " SU.USERNAME USER_NAME"

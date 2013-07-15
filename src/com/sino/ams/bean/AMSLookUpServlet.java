@@ -98,7 +98,23 @@ public class AMSLookUpServlet extends BaseServlet {
 					lookProp.setTotalWidth(750);
 					lookProp.setMemorySpan(true);
 					lookProp.setDtoClass(AmsWorkPlanDTO.class);
-				} else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_NAME)) {
+				}
+				else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
+				{
+					dispFieldNames = new String[]{"LOGIN_NAME","EXECUTE_USER_NAME","DEPT_NAME","GROUP_NAME"};
+					dispFieldLabels = new String[]{"登陆名","用户名","部门","组名"};
+					retFields = new String[]{"LOGIN_NAME","EXECUTE_USER", "EXECUTE_USER_NAME", "DEPT_NAME","DEPT_CODE","GROUP_NAME","GROUP_ID"};
+					viewPercent = new String[]{"20%", "20%","30%","30%"};
+					qryFieldNames = new String[]{"LOGIN_NAME","EXECUTE_USER_NAME"};
+					qryFieldLabels = new String[]{"登陆名", "用户名"};
+					primaryKeys = new String[]{"EXECUTE_USER"};
+
+					lookProp.setMultipleChose(false);
+					lookProp.setTotalWidth(750);
+					lookProp.setMemorySpan(true);
+					lookProp.setDtoClass(AmsWorkPlanDTO.class);
+				}
+				else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_NAME)) {
 					dispFieldNames = new String[]{"LOGIN_NAME", "USER_NAME"};
 					dispFieldLabels = new String[]{"登陆名", "用户名"};
 					retFields = new String[]{"LOGIN_NAME", "USER_NAME", "EMPLOYEE_NUMBER"};
