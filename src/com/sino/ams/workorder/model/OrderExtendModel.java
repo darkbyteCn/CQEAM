@@ -796,22 +796,29 @@ public class OrderExtendModel {
 
         String inStr = ArrUtil.arrToSqlStr(systemids);
 
-        String sqlStr = "";
-        if (implementBy.equals("")) {
+        StringBuilder sqlStr = new StringBuilder();
+   /*     if (implementBy.equals("")) {
             sqlStr = "UPDATE ETS_WORKORDER_TMP " +
                     " SET CHECKOVER_BY = " + checkoverBy + "" +
                     " WHERE SYSTEMID IN" +
                     " (" + inStr + ")";
         }
         if (checkoverBy.equals("")) {
-            sqlStr = "UPDATE ETS_WORKORDER_TMP " +
-                    " SET IMPLEMENT_BY = " + implementBy + ", GROUP_ID = " + groupId + "" +
-                    " WHERE SYSTEMID IN" +
-                    " (" + inStr + ")";
-        }
+        */
+            sqlStr.append("UPDATE ETS_WORKORDER_TMP SET IMPLEMENT_BY = "); 
+            sqlStr.append(implementBy);
+            sqlStr.append(",CHECKOVER_BY = ");
+            sqlStr.append(checkoverBy);
+            sqlStr.append(", GROUP_ID = ");
+            sqlStr.append(groupId);
+            sqlStr.append(" WHERE SYSTEMID IN");
+            sqlStr.append(" (");
+            sqlStr.append(inStr);
+            sqlStr.append(")");
+ //       }
 
 
-        sqlModel.setSqlStr(sqlStr);
+        sqlModel.setSqlStr(sqlStr.toString());
         sqlModel.setArgs(sqlArgs);
 
         return sqlModel;

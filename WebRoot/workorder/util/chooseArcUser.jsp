@@ -8,6 +8,7 @@
 <html>
 <head><title>选择归档人</title>
  <link rel="stylesheet" type="text/css" href="/WebLibary/css/main.css">
+ 	<script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
     <script language="javascript" src="/WebLibary/js/SinoToolBar.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/SinoToolBar.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/SinoToolBarConst.js"></script>
@@ -35,7 +36,7 @@
         <tr height=20px>
             <td width="70px" align = "right">部 门：</td>
             <td style="border:none">
-                <select name="dept" style="width:80%;">
+                <select name="dept" id="dept" style="width:80%;">
                     <%=groupOpt%>
                 </select>
             </td>
@@ -62,12 +63,11 @@
 
 <script type="text/javascript">
     function chooseUser(){
-        var userId = mainFrm.implement.value;
+        var userId = $("#implement").val();
         if(userId == ""){
             alert("请选择归档人。");
             return;
-        }
-        var groupId = mainFrm.dept.value;
+        }        
         window.returnValue=userId;
         window.close();
     }
@@ -76,22 +76,20 @@
         window.close();
     }
 
-    function do_SelectPerson(){
-        with(mainFrm){
+    function do_SelectPerson(){      
             var lookUpName = "LOOK_UP_USER_ACHIEVE";
             var dialogWidth = 47;
             var dialogHeight = 30;
-            var userPara = "groupId=" + mainFrm.dept.value;
-            var users = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
+            var groupId = "groupId=" + $("#dept").val();
+            var users = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, groupId);
             if (users) {
                 var user = users[0];
-                implementName.value = user["userName"];
-                implement.value = user["userId"];
+                $("#implementName").val(user["userName"]);
+                $("#implement").val(user["userId"]);
             } else {
-                implementName.value = "";
-                implement.value = "";
-            }
-        }
+                $("#implementName").val("");
+                $("#implement").val("");
+            }       
     }
 
 </script>

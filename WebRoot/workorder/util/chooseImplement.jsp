@@ -8,11 +8,11 @@
 <html>
 <head><title>选择执行人</title>
  <link rel="stylesheet" type="text/css" href="/WebLibary/css/main.css">
+ 	<script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
     <script language="javascript" src="/WebLibary/js/SinoToolBar.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/SinoToolBar.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/SinoToolBarConst.js"></script>
-	<script type="text/javascript" src="/WebLibary/js/CommonUtil.js"></script>
-	<script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
+	<script type="text/javascript" src="/WebLibary/js/CommonUtil.js"></script>	
 	<script type="text/javascript" src="/WebLibary/js/util.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/util2.js"></script>
 	<script type="text/javascript" src="/WebLibary/js/BarVarSX.js"></script>
@@ -64,12 +64,12 @@
 
 <script type="text/javascript">
     function chooseUser(){
-        var userId = mainFrm.implement.value;
+        var userId = $("#implement").val();
         if(userId == ""){
             alert("请选择执行人。");
             return;
         }
-        var groupId = mainFrm.dept.value;
+        var groupId = $("#dept").val();
         //var groupNmae = mainFrm.dept.options[mainFrm.dept.selectedIndex].text;
         //window.returnValue = userId;
         window.returnValue = userId + ";" + groupId ;
@@ -85,8 +85,8 @@
             var lookUpName = "LOOK_UP_USER_WITH_DEPT";
             var dialogWidth = 47;
             var dialogHeight = 30;
-            var userPara = "groupId=" +$("#dept").val();
-            var users = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
+            var groupId = "groupId=" +$("#dept").val();
+            var users = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, groupId);
             if (users) {
                 var user = users[0];
                 $("#implementName").val(user["userName"]);

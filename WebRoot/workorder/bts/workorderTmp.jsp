@@ -33,6 +33,7 @@
 </head>
 
 <link href="/WebLibary/css/main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
 <script type="text/javascript" src="/WebLibary/js/CheckboxProcess.js"></script>
 <script type="text/javascript" src="/WebLibary/js/Constant.js"></script>
 <script type="text/javascript" src="/WebLibary/js/AppStandard.js"></script>
@@ -49,7 +50,7 @@
 %>
 <body leftmargin="1" topmargin="0" onload="do_SetPageWidth();">
 
-<form name="mainFrm"  method="post" action="/servlet/com.sino.ams.workorder.servlet.WorkOrderTmpServlet">
+<form name="mainFrm" id="mainFrm"  method="post" action="/servlet/com.sino.ams.workorder.servlet.WorkOrderTmpServlet">
 <%
     if(isFirstNode && !fromPage.equals("DETAIL_PAGE")){
 %>
@@ -120,17 +121,17 @@
     </table>
 </div>
 
-    <input type="hidden" name="act">
-    <input type="hidden" name="implementBy">
-    <input type="hidden" name="arcUser">
-    <input type="hidden" name="systemid">
-    <input type="hidden" name="isFirstNode" value="<%=isFirstNode%>">
-    <input type="hidden" name="workorderBatchNo" value="<%=workorderBatchNo%>">
-    <input type="hidden" name="workorderType" value="<%=workorderType%>">
-    <input type="hidden" name="distributeGroupId" value="<%=groupId%>">
-    <input type="hidden" name="groupId" value="<%=groupId%>">
-    <input type="hidden" name="objectCategory" value="<%=category%>">
-    <input type="hidden" name="hasTransObject" value="<%=hasTransObject%>">
+    <input type="hidden" name="act" id="act">
+    <input type="hidden" name="implementBy" id="implementBy">
+    <input type="hidden" name="arcUser" id="arcUser">
+    <input type="hidden" name="systemid" id="systemid">
+    <input type="hidden" name="isFirstNode" value="<%=isFirstNode%>" id="isFirstNode">
+    <input type="hidden" name="workorderBatchNo" value="<%=workorderBatchNo%>" id="workorderBatchNo">
+    <input type="hidden" name="workorderType" value="<%=workorderType%>" id="workorderType">
+    <input type="hidden" name="distributeGroupId" value="<%=groupId%>" id="distributeGroupId">
+    <input type="hidden" name="groupId" value="<%=groupId%>" id="groupId">
+    <input type="hidden" name="objectCategory" value="<%=category%>" id="">
+    <input type="hidden" name="hasTransObject" value="<%=hasTransObject%>" id="hasTransObject">
 </form>
 <div id="pageNaviDiv" style="position:absolute;top:428px;left:0; right:20"><%=StrUtil.nullToString(request.getAttribute(QueryConstant.SPLIT_PAGE_HTML))%></div>
 <%
@@ -142,7 +143,7 @@
 <script type="text/javascript">
     function deleteOrders() {
         if (getCheckedBoxCount("systemids")>0) {
-            document.mainFrm.act.value = "<%=WebActionConstant.DELETE_ACTION%>";
+            $("#act").val("<%=WebActionConstant.DELETE_ACTION%>");
             document.mainFrm.submit();
         }else{
             alert(DELETE_CHECK_MSG);
@@ -180,14 +181,14 @@
                     + "px;dialogHeight:"
                     + dialogHeight
                     + "px;center:yes;status:no;scrollbars:no;help:no;resizable:yes";
-            var retVal = window.showModalDialog(url, null, winstyle);
-            
-			var rets = retVal.split(";");
+            var retVal = window.showModalDialog(url, null, winstyle);            
+			
             if (retVal) {
-                document.mainFrm.implementBy.value = rets[0];
-                document.mainFrm.groupId.value = rets[1];
-                document.mainFrm.act.value = "<%=WebActionConstant.UPDATE_ACTION%>";
-                document.mainFrm.submit();
+                var rets = retVal.split(";");
+                $("#implementBy").val(rets[0]);                
+                $("#groupId").val(rets[1]);
+                $("#act").val("<%=WebActionConstant.UPDATE_ACTION%>");
+                $("#mainFrm").submit();
             }
         } else {
             alert(UPDATE_CHECK_MSG);
@@ -208,9 +209,9 @@
                     + "px;center:yes;status:no;scrollbars:no;help:no;resizable:yes";
             var retVal = window.showModalDialog(url, null, winstyle);
             if (retVal) {
-                document.mainFrm.arcUser.value = retVal;
-                document.mainFrm.act.value = "<%=WebActionConstant.UPDATE_ACTION%>";
-                document.mainFrm.submit();
+                $("#arcUser").val(retVal);
+                $("#act").val("<%=WebActionConstant.UPDATE_ACTION%>");
+                $("#mainFrm").submit();
             }
         } else {
             alert(UPDATE_CHECK_MSG);

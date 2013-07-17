@@ -388,12 +388,12 @@ public class AssetsLookUpServlet extends BaseServlet {
 				}
 				else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
 				{
-					dispNames = new String[]{"LOGIN_NAME","USER_NAME","DEPT_NAME","GROUP_NAME"};
-					dispLabels = new String[]{"登陆名","用户名","部门","组名"};
-					retFields = new String[]{"LOGIN_NAME","USER_ID", "USER_NAME", "DEPT_NAME","DEPT_CODE","GROUP_NAME","GROUP_ID"};
-					viewPercent = new String[]{"20%", "20%","30%","30%"};
-					qryNames = new String[]{"LOGIN_NAME","USER_NAME"};
-					qryLabels = new String[]{"登陆名", "用户名"};
+					dispNames = new String[]{"USER_NAME","EMPLOYEE_NUMBER","LOGIN_NAME","DEPT_NAME","GROUP_NAME"};
+					dispLabels = new String[]{"用户姓名","用户员工号","登陆名","部门","组名"};
+					retFields = new String[]{"USER_ID", "USER_NAME","EMPLOYEE_NUMBER","LOGIN_NAME", "DEPT_NAME","DEPT_CODE","GROUP_NAME","GROUP_ID"};
+					viewPercent = new String[]{"15%", "15%","15%","27%","28%"};
+					qryNames = new String[]{"USER_NAME","EMPLOYEE_NUMBER","LOGIN_NAME"};
+					qryLabels = new String[]{"姓名","员工号","登陆名" };
 					primaryKeys = new String[]{"USER_ID"};
 
 					lookProp.setMultipleChose(false);

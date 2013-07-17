@@ -4,7 +4,7 @@ var g_dialogHeight = window.screen.availHeight * factor;
 
 function lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara) {
     var url = "/servlet/com.sino.ams.newasset.bean.AssetsLookUpServlet?lookUpName=" + lookUpName;
-    if(userPara != "undefined" && userPara != null){
+    if(userPara != undefined && userPara != null){
         url += "&" + userPara;
     }
     dialogWidth = g_dialogWidth;

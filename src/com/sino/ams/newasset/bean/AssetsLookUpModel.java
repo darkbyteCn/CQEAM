@@ -1147,9 +1147,10 @@ if(!dto.getResponsibilityUserName().equals("")){
 		else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
 		{
 			AmsAssetsPriviDTO dto = (AmsAssetsPriviDTO) dtoParameter;
-			sqlStr="SELECT SU.LOGIN_NAME,SU.USER_ID,SU.USERNAME USER_NAME,AMD.DEPT_NAME,AMD.DEPT_CODE, SG.GROUP_NAME,SG.GROUP_ID FROM SF_USER SU,SF_GROUP SG,SF_USER_AUTHORITY SUA, SINO_GROUP_MATCH SGM, AMS_MIS_DEPT AMD WHERE AMD.DEPT_CODE=SGM.DEPT_ID AND SGM.GROUP_ID=SG.GROUP_ID AND SG.GROUP_NAME=SUA.GROUP_NAME AND SUA.USER_ID=SU.USER_ID AND SU.LOGIN_NAME LIKE ? AND SU.USERNAME LIKE ?";
+			sqlStr="SELECT SU.USER_ID,SU.USERNAME USER_NAME,SU.EMPLOYEE_NUMBER,SU.LOGIN_NAME,AMD.DEPT_NAME,AMD.DEPT_CODE, SG.GROUP_NAME,SG.GROUP_ID FROM SF_USER SU,SF_GROUP SG,SF_USER_AUTHORITY SUA, SINO_GROUP_MATCH SGM, AMS_MIS_DEPT AMD WHERE AMD.DEPT_CODE=SGM.DEPT_ID AND SGM.GROUP_ID=SG.GROUP_ID AND SG.GROUP_NAME=SUA.GROUP_NAME AND SUA.USER_ID=SU.USER_ID AND SU.LOGIN_NAME LIKE ? AND SU.USERNAME LIKE ? AND SU.EMPLOYEE_NUMBER LIKE ?";
 			String loginName=dto.getLoginName();
 			String userName=dto.getUserName();
+			String employeeNumber=dto.getEmployeeNumber();
 			if(loginName.endsWith("%"))
 			{
 				sqlArgs.add(loginName.trim());
@@ -1165,6 +1166,14 @@ if(!dto.getResponsibilityUserName().equals("")){
 			else
 			{
 				sqlArgs.add(userName.trim()+"%");
+			}	
+			if(employeeNumber.endsWith("%"))
+			{
+				sqlArgs.add(employeeNumber.trim());
+			}
+			else
+			{
+				sqlArgs.add(employeeNumber.trim()+"%");
 			}
 		}
 		else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH)) {//资产盘点单任务批，选择归档人
@@ -1329,7 +1338,7 @@ if(!dto.getResponsibilityUserName().equals("")){
 					+ " SU.USERNAME USER_NAME,"
 					+ " SU.EMPLOYEE_NUMBER"
 					+ " FROM"
-					+ " SF_USER         SU,"
+					+ " SF_USER SU,"
 					+ " ETS_OU_CITY_MAP EOCM"
 					+ " WHERE"
 					+ " SU.ORGANIZATION_ID = EOCM.ORGANIZATION_ID"

@@ -54,8 +54,8 @@ public class WorkorderChooseSevrlet extends BaseServlet {
 
         String forwardURL = "";
         Message message = SessionUtil.getMessage(req);
-        PrintWriter pw = null;
-        JSONArray retArray = new JSONArray();
+      //  PrintWriter pw = null;
+      //  JSONArray retArray = new JSONArray();
         String action = req.getParameter("act");
         action = StrUtil.nullToString(action);
         Connection conn = null;
