@@ -12,6 +12,7 @@
 <%@ page import="com.sino.base.util.StrUtil" %>
 <%@ page import="com.sino.ams.constant.AmsOrderConstant" %>
 <%@ page import="com.sino.ams.constant.DictConstant" %>
+<%@ page import="com.sino.ams.constant.LookUpConstant"%>
 <%@ page import="com.sino.ams.constant.WebAttrConstant" %>
 <%@ page import="com.sino.ams.workorder.dto.EtsWorkorderBatchDTO" %>
 <%@ page import="com.sino.ams.workorder.dto.EtsWorkorderDTO" %>
@@ -278,7 +279,7 @@
 <input type="hidden" name="act" value="">
 <input type="hidden" name="showAllDiv" value="<%=showAllDiv%>">
 <input type="hidden" name="firstPendingOrder" value="<%=firstPendingOrder%>">
- <input type="hidden" name="prjId" value="<%=workorderDTO.getPrjId()%>">
+<input type="hidden" name="prjId" value="<%=workorderDTO.getPrjId()%>">
 
 <div id="currDt" style="display:none">
     <table border="1" style="border-style:dotted;border:1px;border-color:white;" cellpadding="1" width="100%">
@@ -392,13 +393,14 @@
         <tr>
             <td height="22" colspan="7">
                 <fieldset style="border:1px solid #226E9B;width:auto;height:450">
-                    <legend>设备明细差异<img src="/images/eam_images/scan_result.jpg" onclick="chgDealWin(true);"> <img src="/images/eam_images/system_status.jpg" onclick="chgDealWin(false);"> </legend>
+                    <legend>设备明细差异<img src="/images/eam_images/scan_result.jpg" onclick="chgDealWin(true);"> <img src="/images/eam_images/system_status.jpg" onclick="chgDealWin(false);"><input type="checkbox" name="setAllcheckedSpecialDept" onclick="chooseSpecialDeptForChecked();"/>统一设置专业管理部门 </legend>
                 <div id="headDiv" style="overflow:scroll;left:1px;height:88%;width:100%">
                     <table border="1" align="left" cellpadding="1" id="dataT" style="border-style:dotted;border:1px;border-color:white;width:150%">
                         <tr class="eamDbHeaderTable" bgcolor="#FEFFE8" height="22">
                             <td height="22" rowspan="2"><input type="checkbox" name="checkCtrl" value='' onclick="checkAll(this.name,'barcodes');"/></td>
                             <td height="22" rowspan="2"><font color="white">条形码</font></td>
                             <td height="22" rowspan="2"><font color="white">核实结果</font></td>
+                            <td height="22" rowspan="2"><font color="white">专业管理部门</font></td>
                             <td height="22" colspan="1" align="center"><font color="white">状态</font></td>
                             <td height="22" colspan="3" align="center"><font color="white">扫描属性</font></td>
                             <%if(workorderDTO.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)){%>
@@ -436,6 +438,9 @@
                             <td height="20" onclick="<%=jsPara%>"><%=orderDiffDTO.getBarcode()%></td>
                             <td height="20" onclick="<%=jsPara%>">
                                 <input type="text" name="dealResult" class="input_style2" onclick="chooseResult(this);" value="<%=AmsOrderConstant.CONFIRM_NONE%>" readOnly="true" size='15'>
+                            </td>
+                            <td>
+                            	<input type="text" name="specialDept" class="input_style2" onclick="chooseSpecialDept(this);" value="<%=AmsOrderConstant.CONFIRM_SPECIAL_DEPT%>" readOnly="true" size="40">
                             </td>
                             <td height="20" onclick="<%=jsPara%>">
                                 <%=orderDiffDTO.getScanStatusDesc()%>
@@ -587,6 +592,60 @@
         var winstyle = "dialogWidth:20.1;dialogHeight:10.8;center:yes;status:no";
         var result = window.showModalDialog(targetAction, null, winstyle);
         if (result) obj.value = result;
+    }
+    
+    //统一选择专业管理部门（所有选中的记录）
+    function chooseSpecialDeptForChecked() 
+    {
+    	if(!mainFrm.setAllcheckedSpecialDept.checked) return;
+    	
+        var workorderNo = "<%=workorderDTO.getWorkorderNo()%>";
+        var lookUpName = "<%=LookUpConstant.LOOK_UP_SPECIALITY_DEPT%>";
+        var winstyle = "dialogWidth:40.1;dialogHeight:35.8;center:yes;status:no";
+        var targetAction = "/servlet/com.sino.ams.bean.AMSLookUpServlet?lookUpName=" + lookUpName + "&workorderNo=" + workorderNo;
+        //the result is deptid or deptname, or a struct including both.
+        var result = window.showModalDialog(targetAction, null, winstyle);
+        //set specialDept for all of the checked record.
+
+		//var chkArr = document.mainFrm.barcodes;
+		if(!result) return;
+		
+		var deptCode=result[0].deptCode;
+		var deptName=result[0].deptName;
+    	var allCheckObj = document.mainFrm.barcodes;//document.all["barcodes"];
+    	var allDeptObj = document.mainFrm.specialDept;//document.all["specialDept"];
+    	var checkboxLength = allCheckObj.length;
+	    if (checkboxLength) 
+	    {
+	        for (var i = 0; i < checkboxLength; i++) 
+	        {
+		        if (allCheckObj[i].type == "checkbox" && allCheckObj[i].checked) 
+		        {
+		            allDeptObj[i].value = result[0].deptName+" ["+result[0].deptCode+"]";
+		        }
+	        }
+	    } 
+		else 
+		{
+		    alert("请选择一条记录后，再执行本操作！");
+		}
+	}
+    
+    //选择专业管理部门（单条记录）
+    function chooseSpecialDept(obj) {
+        var workorderNo = "<%=workorderDTO.getWorkorderNo()%>";
+        var lookUpName = "<%=LookUpConstant.LOOK_UP_SPECIALITY_DEPT%>";
+        var winstyle = "dialogWidth:40.1;dialogHeight:35.8;center:yes;status:no";
+        var targetAction = "/servlet/com.sino.ams.bean.AMSLookUpServlet?lookUpName=" + lookUpName +"&workorderNo=" + workorderNo;
+        var result = window.showModalDialog(targetAction, null, winstyle);
+        if(result)
+        {
+        	obj.value = result[0].deptName+" ["+result[0].deptCode+"]";
+        }
+        else
+        {
+        	obj.value="<%=AmsOrderConstant.CONFIRM_SPECIAL_DEPT%>";
+        }
     }
 
     function to_def() {

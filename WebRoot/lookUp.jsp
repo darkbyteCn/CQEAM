@@ -172,6 +172,7 @@
 	out.print(userParameters.toString());
 %>
 	<input type="hidden" name="act">
+	<input type="hidden" id="workorderNo" name="workorderNo">
 </div>
 </form>
 <div id="headDiv" style="overflow-x:hidden;overflow-y:scroll;position:absolute;top:48px;left:1px;width:100%">
@@ -247,6 +248,10 @@
 function do_Search(){
 	document.getElementById("$$$waitTipMsg$$$").style.visibility = "visible";
 	mainFrm.act.value = "<%=WebActionConstant.QUERY_ACTION%>";
+	if(mainFrm.workorderNo)
+	{
+	    mainFrm.workorderNo.value="<%=request.getParameter("workorderNo")%>";
+	}
 	mainFrm.submit();
 }
 

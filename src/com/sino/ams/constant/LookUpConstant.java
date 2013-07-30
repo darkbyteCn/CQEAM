@@ -88,6 +88,7 @@ public interface LookUpConstant {
 	String LOOK_UP_ASSETS_SYSITEM_S = "LOOK_UP_ASSETS_SYSITEM_S";//管理资产设备名称、规格，单选用
 	String LOOK_UP_MIS_USER = "LOOK_UP_MIS_USER";//MIS责任人
 	String LOOK_UP_MIS_DEPT = "LOOK_UP_MIS_DEPT";//MIS责任部门
+	String LOOK_UP_SPECIALITY_DEPT = "LOOK_UP_SPECIALITY_DEPT";//专业管理部门
     String LOOK_UP_COUNTY = "LOOK_UP_COUNTY";
     String LOOK_UP_BJBF = "LOOK_UP_BJBF"; //查找报废备件
 	String LOOK_UP_FXSQ = "LOOK_UP_FXSQ";

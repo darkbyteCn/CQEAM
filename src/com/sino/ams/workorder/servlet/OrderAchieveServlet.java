@@ -82,6 +82,7 @@ public class OrderAchieveServlet extends BaseServlet {
 				if (dtoParameter.getWorkorderType().equals(DictConstant.ORDER_TYPE_CHECK)||dtoParameter.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)) { //巡检、交接
 					String[] barcodes = req.getParameterValues("barcodes");
 					String[] results = req.getParameterValues("dealResult");
+					//String[] specialityDeptCodes=req.getParameterValues("specialDept");
 					String[] itemStatus = req.getParameterValues("itemStatus");
 					String[] remarks = req.getParameterValues("remarks");
 					Map mp = new HashMap();
@@ -96,7 +97,7 @@ public class OrderAchieveServlet extends BaseServlet {
 
 						List sqlModels = doAchieveCheck(conn, userAccount, dtoParameter, mp, changedBarcodes);//归档
 						DBOperator.updateBatchRecords(sqlModels, conn);
-						sqlModels = getInsertDiffResult(workorderNo, barcodes, results, itemStatus, diffReason,remarks);//记录差异结果
+						sqlModels = getInsertDiffResult(workorderNo, barcodes, results, /*specialityDeptCodes,*/ itemStatus, diffReason,remarks);//记录差异结果
 						DBOperator.updateBatchRecords(sqlModels, conn);
 					}
 					
@@ -570,7 +571,7 @@ public class OrderAchieveServlet extends BaseServlet {
 		return isAfter;
 	}
 
-	private List getInsertDiffResult(String workorderNo, String[] barcodes, String[] dealResults, String[] itemStatus, String diffReason,String[] remarks) {
+	private List getInsertDiffResult(String workorderNo, String[] barcodes, String[] dealResults,/*specialityDeptCodes,*/ String[] itemStatus, String diffReason,String[] remarks) {
 		List sqlModList = new ArrayList();
 		SQLModel sqlModel = new SQLModel();
 		OrderDiffModel orderDiffModel = new OrderDiffModel();
@@ -578,9 +579,10 @@ public class OrderAchieveServlet extends BaseServlet {
 		for (int i = 0; i < barcodes.length; i++) {
 			String barcode = barcodes[i];
 			String dealResult = dealResults[i];
+			//String specialityDeptCode=specialityDeptCodes[i];
 			String itemStatu = itemStatus[i];
 			String remark = remarks[i];
-			sqlModList.add(orderDiffModel.getUpdateDiffModel(workorderNo, barcode, itemStatu, dealResult, diffReason,remark));
+			sqlModList.add(orderDiffModel.getUpdateDiffModel(workorderNo, barcode, itemStatu, dealResult,/*specialityDeptCode,*/ diffReason,remark));
 		}
 		return sqlModList;
 	}

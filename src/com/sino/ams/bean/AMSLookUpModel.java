@@ -1860,7 +1860,19 @@ public class AMSLookUpModel extends LookUpModel {
 			sqlArgs.add(user.getCompanyCode());
 			sqlArgs.add(dto.getDeptCode());
 			sqlArgs.add(dto.getDeptName());
-		} else if (lookUpName.equals(LookUpConstant.LOOK_UP_BJBF)) {//山西备件出库
+		} else if (lookUpName.equals(LookUpConstant.LOOK_UP_SPECIALITY_DEPT)) { // 查找专业管理部门
+			EtsWorkorderDTO dto = (EtsWorkorderDTO) dtoParameter;
+			sqlStr="SELECT SMD.DEPT_CODE,SMD.DEPT_NAME \n " +
+					"FROM ETS_WORKORDER EW,SINO_MIS_DEPT SMD \n " +
+					"WHERE SMD.ORG_ID=EW.ORGANIZATION_ID \n " +
+					"AND SMD.SPECIALITY_DEPT='Y' \n " +
+					"AND EW.WORKORDER_NO=? \n " +
+					"AND SMD.DEPT_CODE LIKE dbo.NVL(?, SMD.DEPT_CODE)\n " +
+					"AND SMD.DEPT_NAME LIKE dbo.NVL(?, SMD.DEPT_NAME)\n ";
+			sqlArgs.add(dto.getWorkorderNo());
+			sqlArgs.add(dto.getDeptCode());
+			sqlArgs.add(dto.getDeptName());
+		}else if (lookUpName.equals(LookUpConstant.LOOK_UP_BJBF)) {//山西备件出库
 			AmsSpareCategoryDTO dto = (AmsSpareCategoryDTO) dtoParameter;
 			sqlStr = "SELECT ASI.SPARE_ID,\n" +
                     "       ASI.BARCODE,\n" +

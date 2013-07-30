@@ -27,6 +27,7 @@ import com.sino.ams.inv.storeman.dto.EamInvStoremanDTO;
 import com.sino.ams.net.statistic.dto.EquipStatDTO;
 import com.sino.ams.newasset.dto.AmsMisDeptDTO;
 import com.sino.ams.newasset.dto.AmsMisEmployeeDTO;
+import com.sino.ams.newasset.dto.AmsWorkOrderDTO;
 import com.sino.ams.newasset.dto.AssetsTagNumberQueryDTO;
 import com.sino.ams.newasset.dto.GroupDTO;
 import com.sino.nm.ams.others.cabel.dto.AmsCabelInfoDTO;
@@ -1172,7 +1173,20 @@ public class AMSLookUpServlet extends BaseServlet {
 					lookProp.setTotalWidth(750);
 					lookProp.setMemorySpan(true);
 					lookProp.setDtoClass(AmsMisDeptDTO.class);
-				} else if (lookUpName.equals(LookUpConstant.LOOK_UP_BJBF)) {//备件报废
+				} else if (lookUpName.equals(LookUpConstant.LOOK_UP_SPECIALITY_DEPT)) {  //查找专业管理部门
+					//String workorderNo = req.getParameter("workorderNo");
+					dispFieldNames = new String[]{"DEPT_CODE", "DEPT_NAME"};
+					dispFieldLabels = new String[]{"部门代码", "部门名称"};
+					retFields = new String[]{"DEPT_CODE", "DEPT_NAME"};
+					viewPercent = new String[]{"35%", "55%"};
+					qryFieldNames = new String[]{"DEPT_CODE", "DEPT_NAME"};
+					qryFieldLabels = new String[]{"部门代码", "部门名称"};
+					primaryKeys = new String[]{"DEPT_CODE"};
+					lookProp.setMultipleChose(false);
+					lookProp.setTotalWidth(750);
+					lookProp.setMemorySpan(true);
+					lookProp.setDtoClass(EtsWorkorderDTO.class);
+				}else if (lookUpName.equals(LookUpConstant.LOOK_UP_BJBF)) {//备件报废
 					lookProp.setMultipleChose(true);
 					dispFieldNames = new String[]{"BARCODE", "ITEM_NAME", "ITEM_SPEC", "SPARE_USAGE", "VENDOR_NAME", "ONHAND_QTY"};
 					dispFieldLabels = new String[]{"部件号", "设备名称", "规格型号", "设备类别", "设备厂商", "可用量"};

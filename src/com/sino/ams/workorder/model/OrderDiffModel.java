@@ -642,7 +642,8 @@ public class OrderDiffModel {
                 "       RESPONSIBILITY_DEPT  = ?,\n" +
                 "       RESPONSIBILITY_USER  = ?,\n" +
                 "       MAINTAIN_USER  = ?,\n" +
-                "       ITEM_CODE  = ?,\n" ;
+                "       ITEM_CODE  = ?,\n" ;//+
+                //"       SPECIALITY_DEPT  = ?,\n" ;
         		if (workorderDtlDTO.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)) {
         			sqlStr += " ITEM_STATUS = ?,\n" ;
         		}
@@ -659,6 +660,7 @@ public class OrderDiffModel {
         sqlArgs.add(workorderDtlDTO.getResponsibilityUser());
         sqlArgs.add(workorderDtlDTO.getMaintainUser());
         sqlArgs.add(workorderDtlDTO.getItemCode());
+        //sqlArgs.add(""/*workorderDtlDTO.getSpecialityDept()SPECIALITY_DEPT*/);
         if (workorderDtlDTO.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)) {
             sqlArgs.add(DictConstant.ITEM_STATUS_TO_ASSETS);
         }
@@ -771,12 +773,13 @@ public class OrderDiffModel {
      * @param dealResult
      * @return
      */
-    public SQLModel getUpdateDiffModel(String workorderNo, String barcode, String itemStatus, String dealResult, String diffReason, String remark) {
+    public SQLModel getUpdateDiffModel(String workorderNo, String barcode, String itemStatus, String dealResult,/*String specialityDept,*/ String diffReason, String remark) {
         SQLModel sqlModel = new SQLModel();
         List sqlArgs = new ArrayList();
         String sqlStr = "UPDATE ETS_WORKORDER_DIFF_DTL SET\n" +
                 "  ITEM_NEW_STATUS=CONVERT(INT,?),\n" +
                 "  VERIFY_RESULT=?,\n" +
+                //"  SPECIALITY_DEPT=?,\n" +
                 "  DIFFERENCE_REASON=?,\n" +
                 "  REMARK=?\n" +
                 "   WHERE BARCODE=?\n" +
@@ -784,6 +787,7 @@ public class OrderDiffModel {
 
         sqlArgs.add(itemStatus);
         sqlArgs.add(dealResult);
+        //sqlArgs.add(specialityDept);
         sqlArgs.add(diffReason);
         sqlArgs.add(remark);
         sqlArgs.add(barcode);
