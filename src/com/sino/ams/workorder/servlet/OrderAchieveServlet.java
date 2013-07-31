@@ -82,22 +82,24 @@ public class OrderAchieveServlet extends BaseServlet {
 				if (dtoParameter.getWorkorderType().equals(DictConstant.ORDER_TYPE_CHECK)||dtoParameter.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)) { //巡检、交接
 					String[] barcodes = req.getParameterValues("barcodes");
 					String[] results = req.getParameterValues("dealResult");
-					//String[] specialityDeptCodes=req.getParameterValues("specialDept");
+					String[] specialityDeptCodes=req.getParameterValues("specialDept");
 					String[] itemStatus = req.getParameterValues("itemStatus");
 					String[] remarks = req.getParameterValues("remarks");
 					Map mp = new HashMap();
+					Map mp_speciality_dept = new HashMap();
 					if (barcodes != null) {
 						for (int i = 0; i < barcodes.length; i++) {
 							String barcode = barcodes[i];
 							String dealResult = results[i];
 							String remark = remarks[i];
 							mp.put(barcode, dealResult);
+							mp_speciality_dept.put(barcode, specialityDeptCodes[i]);
 //                            changedBarcodes.add(barcode);
 						}
 
-						List sqlModels = doAchieveCheck(conn, userAccount, dtoParameter, mp, changedBarcodes);//归档
+						List sqlModels = doAchieveCheck(conn, userAccount, dtoParameter, mp, mp_speciality_dept, changedBarcodes);//归档
 						DBOperator.updateBatchRecords(sqlModels, conn);
-						sqlModels = getInsertDiffResult(workorderNo, barcodes, results, /*specialityDeptCodes,*/ itemStatus, diffReason,remarks);//记录差异结果
+						sqlModels = getInsertDiffResult(workorderNo, barcodes, results, specialityDeptCodes, itemStatus, diffReason,remarks);//记录差异结果
 						DBOperator.updateBatchRecords(sqlModels, conn);
 					}
 					
@@ -366,7 +368,7 @@ public class OrderAchieveServlet extends BaseServlet {
 	 * @throws ContainerException
 	 * @throws CalendarException
 	 */
-	private List doAchieveCheck(Connection conn, SfUserDTO user, EtsWorkorderDTO workorderDTO, Map mp, List changedBarcodes) throws QueryException, ContainerException, CalendarException {
+	private List doAchieveCheck(Connection conn, SfUserDTO user, EtsWorkorderDTO workorderDTO, Map mp, Map mp_speciality_dept, List changedBarcodes) throws QueryException, ContainerException, CalendarException {
 		String workorderNo = workorderDTO.getWorkorderNo();
 		String objectNo = StrUtil.nullToString(workorderDTO.getWorkorderObjectNo());
 
@@ -391,6 +393,9 @@ public class OrderAchieveServlet extends BaseServlet {
 
 			if (mp.keySet().contains(barcode)) {
 				String confirmResult = mp.get(barcode).toString();
+				String deptCode = mp_speciality_dept.get(barcode).toString();
+				workorderDtl.setSpecialityDept(deptCode);
+				
 //                confirmResult="系统结果为准";
 				if (!confirmResult.equals(AmsOrderConstant.CONFIRM_SYSTEM)) {
 					addressId = getAddress(workorderDTO.getWorkorderObjectNo(),conn);//当前地点
@@ -571,7 +576,7 @@ public class OrderAchieveServlet extends BaseServlet {
 		return isAfter;
 	}
 
-	private List getInsertDiffResult(String workorderNo, String[] barcodes, String[] dealResults,/*specialityDeptCodes,*/ String[] itemStatus, String diffReason,String[] remarks) {
+	private List getInsertDiffResult(String workorderNo, String[] barcodes, String[] dealResults, String[] specialityDeptCodes, String[] itemStatus, String diffReason,String[] remarks) {
 		List sqlModList = new ArrayList();
 		SQLModel sqlModel = new SQLModel();
 		OrderDiffModel orderDiffModel = new OrderDiffModel();
@@ -579,14 +584,26 @@ public class OrderAchieveServlet extends BaseServlet {
 		for (int i = 0; i < barcodes.length; i++) {
 			String barcode = barcodes[i];
 			String dealResult = dealResults[i];
-			//String specialityDeptCode=specialityDeptCodes[i];
+			String specialityDeptCode=getSpecialityDeptCode(specialityDeptCodes[i]);
 			String itemStatu = itemStatus[i];
 			String remark = remarks[i];
-			sqlModList.add(orderDiffModel.getUpdateDiffModel(workorderNo, barcode, itemStatu, dealResult,/*specialityDeptCode,*/ diffReason,remark));
+			sqlModList.add(orderDiffModel.getUpdateDiffModel(workorderNo, barcode, itemStatu, dealResult,specialityDeptCode, diffReason,remark));
 		}
 		return sqlModList;
 	}
 
+	private String getSpecialityDeptCode(String dept) {
+		int start = dept.lastIndexOf("[");
+    	int end = dept.lastIndexOf("]");
+    	String code = "";
+    	
+    	if(start != -1 && end != -1 && start < end - 1) {
+    		code = dept.substring(start + 1, end);
+    	}
+    	
+    	return code;
+	}
+	
 	private String getAddress(String workorderNo, Connection conn) throws QueryException, ContainerException {
 		String address = "";
 		OrderDiffModel orderDiffModel = new OrderDiffModel();
