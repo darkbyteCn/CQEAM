@@ -523,12 +523,41 @@
             if (!checkDeal()) {
                 return;
             }
+            
+            if(!checkDeptCode()) {
+            	return;
+            }
+            
             document.mainFrm.act.value = "confirm";
             document.getElementById("checkCtrl").checked = true;
             checkAll("checkCtrl", "barcodes");
             document.mainFrm.submit()
         }
     }
+    
+    //zhanghuan
+    function checkDeptCode() {
+    	var allCheckObj = document.mainFrm.barcodes;//document.all["barcodes"];
+    	var allDeptObj = document.mainFrm.specialDept;//document.all["specialDept"];
+    	var checkboxLength = allCheckObj.length;
+	    if (checkboxLength) 
+	    {
+	        for (var i = 0; i < checkboxLength; i++) 
+	        {
+		        if (allCheckObj[i].type == "checkbox" && allCheckObj[i].checked) 
+		        {
+		        	if(allDeptObj[i].value == "<%=AmsOrderConstant.CONFIRM_SPECIAL_DEPT%>")
+		           	{
+		        		alert("请先输入专业管理部门");
+		        		allDeptObj[i].focus();
+		        		return false;
+		           	}
+		        }
+	        }
+	    }
+	    return true;
+    }
+    
     function checkDeal() {
         //    if (document.all('isInitScan').value != '') {
         //        return true;
