@@ -158,7 +158,7 @@
             alert("ÇëÑ¡Ôñ×Ê²úÕË²¾£¡");
             return false;
         }
-    	var lookUpName = "PROJECT_NO";
+    	var lookUpName = "PROJECT_NO_AUTHORIZED";
 	    var dialogWidth = 55;
 	    var dialogHeight = 30;
 	    var userParameters = "multipleChose=true&bookTypeCode="+bookTypeCode;

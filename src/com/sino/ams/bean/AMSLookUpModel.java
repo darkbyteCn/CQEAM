@@ -280,6 +280,20 @@ public class AMSLookUpModel extends LookUpModel {
 			sqlArgs.add(dto.getItemCategory());
 			sqlArgs.add(user.getOrganizationId());
 
+		} else if (lookUpName.equals(LookUpConstant.LOOK_UP_PROJECT_AUTHORIZED)) {
+			EtsPaProjectsAllDTO dtoParameter = (EtsPaProjectsAllDTO) super.dtoParameter;
+			sqlStr = "SELECT "
+					+ " EPPA.PROJECT_ID PRJ_ID, EPPA.NAME PRJ_NAME, EPPA.SEGMENT1, EPPA.PROJECT_TYPE "
+					+ " FROM ETS_PA_PROJECTS_ALL EPPA INNER JOIN SF_PROJECT_MANAGER_MAPPING SPMM " +
+					" ON EPPA.SEGMENT1=SPMM.PROJECT_ID " + " WHERE SPMM.USER_ID=? AND ( "
+					+ SyBaseSQLUtil.isNull() + "  OR EPPA.SEGMENT1 LIKE ?)"
+					+ "   AND ( " + SyBaseSQLUtil.isNull()
+					+ "  OR EPPA.NAME LIKE ?)" + "  ORDER BY EPPA.SEGMENT1 ";
+			sqlArgs.add(user.getUserId());
+			sqlArgs.add(dtoParameter.getSegment1());
+			sqlArgs.add(dtoParameter.getSegment1());
+			sqlArgs.add(dtoParameter.getName());
+			sqlArgs.add(dtoParameter.getName());
 		} else if (lookUpName.equals(LookUpConstant.LOOK_UP_PROJECT)) {
 			EtsPaProjectsAllDTO dtoParameter = (EtsPaProjectsAllDTO) super.dtoParameter;
 			sqlStr = "SELECT "

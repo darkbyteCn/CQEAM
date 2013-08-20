@@ -48,12 +48,13 @@
 
 <body bgcolor="#FFFFFF" text="#000000" leftmargin=0 topmargin=0 onkeydown="do_check();" onload="helpInit('4.4.5');">
 <input type="hidden" name="helpId" value="">
-<form name="mainFrm" action="/servlet/com.sino.ams.zz.proj2mgr.mapping.bean.ProjectManagerMappingServlet">
+<form name="mainFrm">
 <script type="text/javascript">
     printTitleBar("项目设置 ")
     printToolBar();
 </script>
  	<input type="hidden" name="projectNumber">
+ 	<input type="hidden" name="userId">
     <table border="0" width="100%" class="queryTable" id="table1">
         <tr>            
             <td width="20%"  align="left" colspan="2">
@@ -62,8 +63,8 @@
         </tr>
     </table>
 <script type="text/javascript">
-    var columnArr = new Array("项目编号", "项目名称", "处理状态", "操作");
-    var widthArr = new Array("12%", "52%", "24%", "12%");
+    var columnArr = new Array("项目编号", "项目名称", "处理状态", "负责人", "操作");
+    var widthArr = new Array("12%", "42%", "17%", "17%", "12%");
     printTableHead(columnArr, widthArr);
 </script>
 
@@ -94,13 +95,15 @@
 %>
 			<tr class="dataTR">
 				<td style="word-wrap:break-word" height="22" width="12%"><%=row.getValue("SEGMENT1") %></td>
-				<td style="word-wrap:break-word" height="22" width="52%"><%=row.getValue("NAME") %></td>
-				<td style="word-wrap:break-word" height="22" width="24%"><%=status %></td>
+				<td style="word-wrap:break-word" height="22" width="42%"><%=row.getValue("NAME") %></td>
+				<td style="word-wrap:break-word" height="22" width="17%"><%=status %></td>
+				<td style="word-wrap:break-word" height="22" width="17%"><%=row.getValue("USERNAME") %></td>
 				<td style="word-wrap:break-word" text-align="center" height="22" width="12%">
-				<center color="blue">
+					<center>
+						<a href="#" onclick="javascript:do_ClickProj('<%=row.getValue("SEGMENT1") %>')">选择项目负责人</a>
 						<a href="/servlet/com.sino.ams.zz.proj2mgr.mapping.bean.ProjectManagerMappingServlet?method=0&projectNumber=<%=row.getValue("SEGMENT1") %>">删除</a>
 					</center>
-			</td>
+				</td>
 			</tr>
 <%
 		}
@@ -139,6 +142,24 @@
             }
         }
         
+        function do_ClickProj(project) {
+        	var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_PROJECT_MANAGER%>";
+        	var dialogWidth = 55;
+            var dialogHeight = 30;
+            var userPara = "";
+            var objs = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
+            
+            if (objs) {            	
+                var obj = objs[0];
+                dto2Frm(obj, "mainFrm");
+               document.mainFrm.userId.value = obj["userId"];
+            }else {
+                document.mainFrm.userId.value = "";
+            }
+            var url = "/servlet/com.sino.ams.zz.proj2mgr.mapping.bean.ProjectManagerMappingServlet?user=" + document.mainFrm.userId.value + "&method=1&projectNumber=" + project;
+            window.location.href=url;
+        }
+        
         function do_SelectProj() {
      	   var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_PROJECT%>";
              var dialogWidth = 55;
@@ -152,8 +173,8 @@
              }else {
                  document.mainFrm.projectNumber.value = "";
              }
-             document.mainFrm.action="/servlet/com.sino.ams.zz.proj2mgr.mapping.bean.ProjectManagerMappingServlet?method=1&projectNumber=" + document.mainFrm.projectNumber.value;
-             document.mainFrm.submit();
+             var url="/servlet/com.sino.ams.zz.proj2mgr.mapping.bean.ProjectManagerMappingServlet?user=&method=1&projectNumber=" + document.mainFrm.projectNumber.value;
+             window.location.href=url;
          }
 </script>
 </html>

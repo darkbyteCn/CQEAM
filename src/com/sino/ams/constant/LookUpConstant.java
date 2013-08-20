@@ -7,6 +7,8 @@ package com.sino.ams.constant;
  * Time: 10:26:17
  */
 public interface LookUpConstant {
+	String LOOK_UP_PROJECT_MANAGER="LOOK_UP_PROJECT_MANAGER"; //转资项目负责人(重庆)
+	String LOOK_UP_PROJECT_AUTHORIZED="LOOK_UP_PROJECT_AUTHORIZED"; //转资项目，权限验证
 	String LOOK_UP_CHAN_MIS_DEPT="LOOK_UP_CHAN_MIS_DEPT";//MIS责任部门
 	String LOOK_UP_KEEP = "LOOK_UP_KEEP";
 	String LOOK_UP_USER = "LOOK_UP_USER";

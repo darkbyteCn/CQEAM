@@ -37,6 +37,7 @@ import com.sino.ams.system.user.dto.EtsOuCityMapDTO;
 import com.sino.ams.system.user.dto.SfUserDTO;
 import com.sino.ams.workorder.dto.ZeroTurnLineDTO;
 import com.sino.ams.yearchecktaskmanager.dto.EtsObjectTaskDTO;
+import com.sino.ams.zz.proj2mgr.mapping.bean.FilteredEtsPaProjectsAllDTO;
 import com.sino.base.db.sql.model.SQLModel;
 import com.sino.base.dto.DTO;
 import com.sino.base.dto.DTOSet;
@@ -1144,6 +1145,10 @@ if(!dto.getResponsibilityUserName().equals("")){
 //			sqlArgs.add("" + dto.getGroupId());
 			
 		}
+		else if(lookUpName.equals(LookUpConstant.LOOK_UP_PROJECT_MANAGER)) { //转资优化
+			sqlStr = "SELECT B.USERNAME, A.USER_ID, A.GROUP_NAME, A.ROLE_NAME, A.PROJECT_NAME FROM SF_USER_AUTHORITY A INNER JOIN SF_USER B ON A.USER_ID=B.USER_ID " +
+					" WHERE A.ROLE_NAME='单位资产管理员' OR A.ROLE_NAME='项目经理' ORDER BY A.GROUP_NAME";
+		}
 		else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
 		{
 			AmsAssetsPriviDTO dto = (AmsAssetsPriviDTO) dtoParameter;
@@ -1608,7 +1613,34 @@ if(!dto.getResponsibilityUserName().equals("")){
 			sqlArgs.add( StrUtil.nullToString( dto.getVendorName() ) );
 			sqlArgs.add( StrUtil.nullToString(  dto.getVendorNumber() ) );
 			sqlArgs.add( StrUtil.nullToString(  dto.getVendorNumber() ) );
-		} else if(lookUpName.equals("PROJECT_NO")){
+		}
+		else if(lookUpName.equals("PROJECT_NO_AUTHORIZED")){
+			EtsPaProjectsAllDTO dto = (EtsPaProjectsAllDTO) super.dtoParameter;
+			sqlStr = "SELECT EPPA.PROJECT_ID,"
+				+ " EPPA.MIS_PROJECT_ID,"         
+				+ " EPPA.NAME PROJECT_NAME,"
+				+ " EPPA.SEGMENT1 PROJECT_NUMBER,"
+				+ " EPPA.PROJECT_TYPE "
+				+ " FROM ETS_PA_PROJECTS_ALL EPPA INNER JOIN SF_PROJECT_MANAGER_MAPPING SPMM " +
+				" ON EPPA.SEGMENT1=SPMM.PROJECT_ID "
+				+ " WHERE SPMM.USER_ID=? AND ORGANIZATION_ID IN" 
+				+ " (SELECT ORGANIZATION_ID FROM ETS_OU_CITY_MAP WHERE BOOK_TYPE_CODE=?)";
+			sqlStr+= "AND EPPA.MIS_PROJECT_ID LIKE dbo.NVL(?,EPPA.MIS_PROJECT_ID)"
+				+ " AND EPPA.SEGMENT1 LIKE dbo.NVL(?, EPPA.SEGMENT1)"
+				+ " AND EPPA.PROJECT_TYPE LIKE dbo.NVL(?, EPPA.PROJECT_TYPE)"
+				+ " AND EPPA.NAME LIKE dbo.NVL(?, EPPA.NAME) ORDER BY EPPA.PROJECT_ID";
+			sqlArgs.add(user.getUserId());
+			sqlArgs.add(dto.getBookTypeCode());
+			if(dto.getMisProjectId()<=0){
+				sqlArgs.add("");
+			}else{
+				sqlArgs.add(dto.getMisProjectId()+"");
+			}
+			sqlArgs.add(dto.getProjectNumber());
+			sqlArgs.add(dto.getProjectType());
+			sqlArgs.add(dto.getName());
+		}
+		else if(lookUpName.equals("PROJECT_NO")){
 			EtsPaProjectsAllDTO dto = (EtsPaProjectsAllDTO) super.dtoParameter;
 			sqlStr = "SELECT EPPA.PROJECT_ID,"
 				+ " EPPA.MIS_PROJECT_ID,"         
@@ -1631,7 +1663,31 @@ if(!dto.getResponsibilityUserName().equals("")){
 			sqlArgs.add(dto.getProjectNumber());
 			sqlArgs.add(dto.getProjectType());
 			sqlArgs.add(dto.getName());
-		} else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT)) {
+		} 
+		else if(lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT_AUTHORIZED)) {
+			EtsPaProjectsAllDTO dto = (EtsPaProjectsAllDTO) super.dtoParameter;
+			sqlStr = "SELECT" + " EPPA.PROJECT_ID,"
+					+ " EPPA.NAME PROJECT_NAME,"
+					+ " EPPA.SEGMENT1 PROJECT_NUMBER," + " EPPA.PROJECT_TYPE "
+					+ " FROM" + " ETS_PA_PROJECTS_ALL EPPA INNER JOIN SF_PROJECT_MANAGER_MAPPING SPMM " 
+					+ " ON EPPA.SEGMENT1=SPMM.PROJECT_ID WHERE SPMM.USER_ID=? AND "
+					+ " EPPA.SEGMENT1 LIKE dbo.NVL(?, EPPA.SEGMENT1)" ;
+            if(user.getIsTd().equals("Y")){
+                  sqlStr+= "  AND  EPPA.SOURCE LIKE '%TD%'";
+            } else if(user.getIsTt().equals("Y")){
+              sqlStr+= "  AND  EPPA.SOURCE LIKE '%TD%'";
+            }else{
+               sqlStr+= "  AND  EPPA.SOURCE='MIS'";
+            }
+					 sqlStr+= " AND EPPA.PROJECT_TYPE LIKE dbo.NVL(?, EPPA.PROJECT_TYPE)"
+					+ " AND EPPA.NAME LIKE dbo.NVL(?, EPPA.NAME) ORDER BY EPPA.PROJECT_ID";
+			sqlArgs.add(user.getUserId());
+			sqlArgs.add(dto.getProjectNumber());
+			sqlArgs.add(dto.getProjectType());
+			sqlArgs.add(dto.getName());
+
+		}
+		else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT)) {
 			EtsPaProjectsAllDTO dto = (EtsPaProjectsAllDTO) super.dtoParameter;
 			sqlStr = "SELECT" + " EPPA.PROJECT_ID,"
 					+ " EPPA.NAME PROJECT_NAME,"

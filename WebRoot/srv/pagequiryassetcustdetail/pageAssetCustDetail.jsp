@@ -59,7 +59,7 @@
 	    mainFrm.submit();
 	}
      function do_SelectProj() {
-	   var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_PROJECT%>";
+	   var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_PROJECT_AUTHORIZED %>";
         var dialogWidth = 55;
         var dialogHeight = 30;
         var userPara = "";
@@ -67,7 +67,7 @@
         if (objs) {
             var obj = objs[0];
             dto2Frm(obj, "mainFrm");
-            document.mainFrm.projectNumber.value = obj["projectNumber"];
+           	document.mainFrm.projectNumber.value = obj["projectNumber"];            
         }else {
             document.mainFrm.projectNumber.value = "";
         }

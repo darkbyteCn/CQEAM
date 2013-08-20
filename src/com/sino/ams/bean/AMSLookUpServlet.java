@@ -208,6 +208,21 @@ public class AMSLookUpServlet extends BaseServlet {
 					lookProp.setTotalWidth(750);
 					lookProp.setMemorySpan(true);
 					lookProp.setDtoClass(EtsSystemItemDTO.class);
+				} else if(lookUpName.equals(LookUpConstant.LOOK_UP_PROJECT_AUTHORIZED)) {
+					this.setOptions(req, res, LookUpConstant.LOOK_UP_PROJECT_AUTHORIZED );
+					
+					dispFieldNames = new String[]{"SEGMENT1", "PRJ_NAME", "PROJECT_TYPE"};
+					dispFieldLabels = new String[]{"项目编号", "项目名称", "项目类型"};
+					retFields = new String[]{"PRJ_ID", "PRJ_NAME"};
+					viewPercent = new String[]{"10%", "60%", "30%"};
+					qryFieldNames = new String[]{"SEGMENT1", "NAME"};
+					qryFieldLabels = new String[]{"项目编号", "项目名称" };
+					primaryKeys = new String[]{"PRJ_ID"};
+
+					lookProp.setTotalWidth(800);
+					lookProp.setMultipleChose(false);
+					lookProp.setMemorySpan(true);
+					lookProp.setDtoClass(EtsPaProjectsAllDTO.class);
 				} else if (lookUpName.equals(LookUpConstant.LOOK_UP_PROJECT)) {
 					this.setOptions(req, res, LookUpConstant.LOOK_UP_PROJECT );
 					

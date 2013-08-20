@@ -260,7 +260,7 @@
     }
 
    	function choosePrj() {
-        var lookUpName = "<%=LookUpConstant.LOOK_UP_PROJECT%>";
+        var lookUpName = "<%=LookUpConstant.LOOK_UP_PROJECT_AUTHORIZED %>";
         var dialogWidth = 50.6;
         var dialogHeight = 30;
         var projects = getLookUpValues(lookUpName, dialogWidth, dialogHeight);

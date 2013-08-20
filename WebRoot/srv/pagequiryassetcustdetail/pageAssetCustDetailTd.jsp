@@ -58,7 +58,7 @@
 	    mainFrm.submit();
 	}
     function do_SelectProj() {
-	   var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_PROJECT%>";
+	   var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_PROJECT_AUTHORIZED %>";
         var dialogWidth = 55;
         var dialogHeight = 30;
         var userPara = "";

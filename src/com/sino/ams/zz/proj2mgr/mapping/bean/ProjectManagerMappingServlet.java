@@ -46,23 +46,30 @@ public class ProjectManagerMappingServlet extends BaseServlet {
             Request2DTO req2DTO = new Request2DTO();            
             String projectNumber = StrUtil.nullToString(req.getParameter("projectNumber"));
             String method = StrUtil.nullToString(req.getParameter("method"));
-            int ret = 1;
-            
+            String userId = StrUtil.nullToString(req.getParameter("user"));
+            int ret = 1, userAssigned = -1;
+                
             if(projectNumber != "") {
-            	CallableStatement cs = conn.prepareCall("{call EDIT_MANAGER_PROJECT_MAPPING ?, ?, ?, ?}");
-            	cs.registerOutParameter(4, Types.INTEGER);
-            	int csMethod = 1; //1 is insert, 0 is delete
+            	
+            	if(userId != "") { //update user
+            		userAssigned = Integer.parseInt(userId);
+            	} 
+           	
+            	CallableStatement cs = conn.prepareCall("{call EDIT_MANAGER_PROJECT_MAPPING (?, ?, ?, ?)}");
+            	int csMethod = 1; //1 is insert/update (user=-1, insert, else update), 0 is delete
             	if(method == "") csMethod = 1;
             	else csMethod = Integer.parseInt(method);
             	cs.setInt(1, csMethod);
-            	cs.setInt(2, user.getUserId());
+            	cs.setInt(2, userAssigned);
             	cs.setString(3, projectNumber);
-            	cs.execute();
+            	cs.registerOutParameter(4,Types.INTEGER);
+            	cs.executeUpdate();
             	ret = cs.getInt(4);
             	
             	if(ret == 0) {
-            		//error
+            		throw new Exception("Failure in calling EDIT_MANAGER_PROJECT_MAPPING" + csMethod + "," + userAssigned + "," + projectNumber);
             	}
+            	
             }
             
             if(ret == 1) {            
@@ -72,11 +79,11 @@ public class ProjectManagerMappingServlet extends BaseServlet {
 	            BaseSQLProducer sqlProducer = new ProjectManagerMappingModel(user, dto);
 	            PageQueryDAO pageDAO = new PageQueryDAO(req, conn, sqlProducer);
 	            pageDAO.produceWebData();	            
-	            RowSet rs = (RowSet) req.getAttribute(QueryConstant.SPLIT_DATA_VIEW);	            
+	            RowSet rs = (RowSet) req.getAttribute(QueryConstant.SPLIT_DATA_VIEW);
+	            req.setAttribute("projectNumber", projectNumber);
+	            req.setAttribute("user", userId);
 	            forwardURL = "/mgrProjMapping/list.jsp";
-            } 
-            
-            
+            }            
         } catch (Throwable ex) {
             Logger.logError(ex);
             message = getMessage(MsgKeyConstant.SUBMIT_DATA_FAILURE);

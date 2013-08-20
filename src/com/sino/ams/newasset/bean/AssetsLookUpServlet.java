@@ -38,6 +38,8 @@ import com.sino.ams.system.user.dto.EtsOuCityMapDTO;
 import com.sino.ams.system.user.dto.SfUserDTO;
 import com.sino.ams.workorder.dto.ZeroTurnLineDTO;
 import com.sino.ams.yearchecktaskmanager.dto.EtsObjectTaskDTO;
+import com.sino.ams.zz.proj2mgr.mapping.bean.FilteredEtsPaProjectsAllDTO;
+import com.sino.ams.zz.proj2mgr.mapping.bean.ProjectManagerMappingDTO;
 import com.sino.base.constant.message.MessageConstant;
 import com.sino.base.constant.web.WebConstant;
 import com.sino.base.db.conn.DBManager;
@@ -401,6 +403,20 @@ public class AssetsLookUpServlet extends BaseServlet {
 					lookProp.setMemorySpan(true);
 					lookProp.setDtoClass(AmsAssetsPriviDTO.class);								
 				}
+				else if(lookUpName.equals(LookUpConstant.LOOK_UP_PROJECT_MANAGER)) //项目转资优化
+				{
+					dispNames = new String[]{"USER_ID", "USERNAME","GROUP_NAME","ROLE_NAME","PROJECT_NAME"};
+					dispLabels = new String[]{"用户ID", "用户名","组名","角色","项目"};
+					retFields = new String[]{"USER_ID", "USERNAME","GROUP_NAME","ROLE_NAME","PROJECT_NAME"};
+					viewPercent = new String[]{"10%", "22%", "22%","22%","24%"};
+					qryNames = new String[]{"USERNAME"};
+					qryLabels = new String[]{"用户名"};
+					primaryKeys = new String[]{"USER_ID"};
+					
+					lookProp.setTotalWidth(700);
+					lookProp.setMultipleChose(false);
+					lookProp.setDtoClass(ProjectManagerMappingDTO.class);
+				}
 				else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH)) { //资产盘点单任务批，选择归档人
 					dispNames = new String[] {"USER_NAME", "EMPLOYEE_NUMBER",
 								"LOGIN_NAME", "COMPANY_CODE", "COMPANY_NAME"};
@@ -591,7 +607,8 @@ public class AssetsLookUpServlet extends BaseServlet {
 					lookProp.setTotalWidth(600);
 					lookProp.setMultipleChose(false);
 					lookProp.setDtoClass(AmsAssetsAddressVDTO.class);
-				}else if (lookUpName.equals("PROJECT_NO")) {           //项目编号
+				}
+				else if (lookUpName.equals("PROJECT_NO_AUTHORIZED")) {           //项目编号
 					dispNames = new String[] {"PROJECT_NUMBER","MIS_PROJECT_ID", "PROJECT_NAME","PROJECT_TYPE"};
 					dispLabels = new String[] {"项目编号","MIS项目Id", "项目名称", "项目类型"};
 					retFields = new String[] {"PROJECT_NUMBER", "MIS_PROJECT_ID", "PROJECT_NAME"};
@@ -608,7 +625,46 @@ public class AssetsLookUpServlet extends BaseServlet {
 			            lookProp.setMultipleChose(false);
 			        }
 					lookProp.setDtoClass(EtsPaProjectsAllDTO.class);
-				} else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT)) {
+				} 
+				else if (lookUpName.equals("PROJECT_NO")) {           //项目编号
+					dispNames = new String[] {"PROJECT_NUMBER","MIS_PROJECT_ID", "PROJECT_NAME","PROJECT_TYPE"};
+					dispLabels = new String[] {"项目编号","MIS项目Id", "项目名称", "项目类型"};
+					retFields = new String[] {"PROJECT_NUMBER", "MIS_PROJECT_ID", "PROJECT_NAME"};
+					viewPercent = new String[] {"10%", "10%", "50%", "30%"};
+					qryNames = new String[] {"PROJECT_NUMBER","MIS_PROJECT_ID", "NAME","PROJECT_TYPE"};
+					qryLabels = new String[] {"项目编号","MIS项目Id", "项目名称", "项目类型"};
+					primaryKeys = new String[] {"PROJECT_ID"};
+			
+					lookProp.setTotalWidth(700);
+			        String multipleChose = req.getParameter("multipleChose");
+			        if(!StrUtil.isEmpty(multipleChose) && multipleChose.equalsIgnoreCase("true")){
+			            lookProp.setMultipleChose(true);
+			        } else {
+			            lookProp.setMultipleChose(false);
+			        }
+					lookProp.setDtoClass(EtsPaProjectsAllDTO.class);
+				} 
+				else if(lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT_AUTHORIZED)) {
+
+					dispNames = new String[] {"PROJECT_NUMBER", "PROJECT_NAME",
+								"PROJECT_TYPE"};
+					dispLabels = new String[] {"项目编号", "项目名称", "项目类型"};
+					retFields = new String[] {"PROJECT_NUMBER", "PROJECT_NAME"};
+					viewPercent = new String[] {"10%", "60%", "30%"};
+					qryNames = new String[] {"PROJECT_NUMBER", "NAME","PROJECT_TYPE"};
+					qryLabels = new String[] {"项目编号", "项目名称", "项目类型"};
+					primaryKeys = new String[] {"PROJECT_ID"};
+
+					lookProp.setTotalWidth(700);
+                    String multipleChose = req.getParameter("multipleChose");
+                    if(!StrUtil.isEmpty(multipleChose) && multipleChose.equalsIgnoreCase("true")){
+                        lookProp.setMultipleChose(true);
+                    } else {
+                        lookProp.setMultipleChose(false);
+                    }
+					lookProp.setDtoClass(EtsPaProjectsAllDTO.class);
+				}
+				else if (lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT)) {
 					 
 //					this.setOptions(req, res, LookUpConstant.LOOK_UP_PROJECT );
 					

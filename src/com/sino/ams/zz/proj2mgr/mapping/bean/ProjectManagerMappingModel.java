@@ -23,10 +23,11 @@ public class ProjectManagerMappingModel extends BaseSQLProducer {
 	public SQLModel getProjectManagerMappingModel() {
 		SQLModel model = new SQLModel();
 		List strArg = new ArrayList();
-		String strSql = "SELECT SEGMENT1, NAME, PROJECT_STATUS_CODE FROM ETS_PA_PROJECTS_ALL A " +
+		String strSql = "SELECT A.SEGMENT1, A.NAME, A.PROJECT_STATUS_CODE, C.USERNAME FROM ETS_PA_PROJECTS_ALL A " +
 				"INNER JOIN SF_PROJECT_MANAGER_MAPPING B " +
-				"ON A.SEGMENT1=B.PROJECT_ID AND B.USER_ID=?";		
-		strArg.add(sfUser.getUserId());
+				"ON A.SEGMENT1=B.PROJECT_ID " +
+				"LEFT JOIN SF_USER C " +
+				"ON B.USER_ID=C.USER_ID";		
 		model.setArgs(strArg);
 		model.setSqlStr(strSql);
 		return model;

@@ -2,6 +2,7 @@ package com.sino.soa.mis.srv.pagequiryassetcustdetail.servlet;
 
 import com.sino.ams.bean.OrgOptionProducer;
 import com.sino.ams.system.user.dto.SfUserDTO;
+import com.sino.ams.zz.proj2mgr.mapping.bean.MappingUtility;
 import com.sino.base.constant.db.QueryConstant;
 import com.sino.base.data.RowSet;
 import com.sino.base.db.conn.DBManager;
@@ -41,7 +42,7 @@ import java.sql.Connection;
  * To change this template use File | Settings | File Templates.
  */
 public class SBFIFAPageinquiryAssetCustDetailServlet extends BaseServlet {
-
+	
     public void performTask(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String forwardURL = "";
         Message message = SessionUtil.getMessage(req);
@@ -49,12 +50,16 @@ public class SBFIFAPageinquiryAssetCustDetailServlet extends BaseServlet {
         int count = 0;
         long resumeTime = 0;
         try {
-            SfUserDTO user = (SfUserDTO) SessionUtil.getUserAccount(req);
+            SfUserDTO user = (SfUserDTO) SessionUtil.getUserAccount(req);            
             Request2DTO req2DTO = new Request2DTO();
             req2DTO.setDTOClassName(SBFIFAPageinquiryAssetCustDetailDTO.class.getName());
             SBFIFAPageinquiryAssetCustDetailDTO dtoParameter = (SBFIFAPageinquiryAssetCustDetailDTO) req2DTO.getDTO(req);
             String action = dtoParameter.getAct();
             conn = getDBConnection(req);
+            
+            //String projects = MappingUtility.getAuthorizedProjects(user.getUserId(), conn);
+            //req.setAttribute("projects", projects);
+            
             SBFIFAPageinquiryAssetCustDetailDAO srvAssetCategoryDAO = new SBFIFAPageinquiryAssetCustDetailDAO(user, dtoParameter, conn);
             OrgOptionProducer optionProducer = new OrgOptionProducer(user, conn);
             String range = "N";//·ÇTD

@@ -145,10 +145,14 @@ public class EtsWorkorderDAO extends BaseDAO {
 				}
 				operatorResult = DBOperator.updateBatchRecords(sqlModList, conn);
 			}
-		} catch (SQLModelException | QueryException ex) {
+		} catch (SQLModelException ex) {
 			ex.printLog();
 			throw new DataHandleException(ex);
-		} catch (Exception e) {
+		} catch (QueryException ex) {
+			ex.printLog();
+			throw new DataHandleException(ex);
+		} 
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
