@@ -400,7 +400,7 @@
                             <td height="22" rowspan="2"><input type="checkbox" name="checkCtrl" value='' onclick="checkAll(this.name,'barcodes');"/></td>
                             <td height="22" rowspan="2"><font color="white">条形码</font></td>
                             <td height="22" rowspan="2"><font color="white">核实结果</font></td>
-                            <td height="22" rowspan="2"><font color="white">专业管理部门</font></td>
+							<td height="22" rowspan="2"><font color="white">专业管理部门</font></td>
                             <td height="22" colspan="1" align="center"><font color="white">状态</font></td>
                             <td height="22" colspan="3" align="center"><font color="white">扫描属性</font></td>
                             <%if(workorderDTO.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)){%>
@@ -439,7 +439,8 @@
                             <td height="20" onclick="<%=jsPara%>">
                                 <input type="text" name="dealResult" class="input_style2" onclick="chooseResult(this);" value="<%=AmsOrderConstant.CONFIRM_NONE%>" readOnly="true" size='15'>
                             </td>
-                            <td>
+							<td>
+
                             	<input type="text" name="specialDept" class="input_style2" onclick="chooseSpecialDept(this);" value="<%=AmsOrderConstant.CONFIRM_SPECIAL_DEPT%>" readOnly="true" size="40">
                             </td>
                             <td height="20" onclick="<%=jsPara%>">
@@ -523,19 +524,18 @@
             if (!checkDeal()) {
                 return;
             }
-            
-            if(!checkDeptCode()) {
+			
+			if(!checkDeptCode()) {
             	return;
             }
-            
+			
             document.mainFrm.act.value = "confirm";
             document.getElementById("checkCtrl").checked = true;
             checkAll("checkCtrl", "barcodes");
             document.mainFrm.submit()
         }
     }
-    
-    //zhanghuan
+	//zhanghuan
     function checkDeptCode() {
     	var allCheckObj = document.mainFrm.barcodes;//document.all["barcodes"];
     	var allDeptObj = document.mainFrm.specialDept;//document.all["specialDept"];
@@ -557,7 +557,6 @@
 	    }
 	    return true;
     }
-    
     function checkDeal() {
         //    if (document.all('isInitScan').value != '') {
         //        return true;
@@ -622,8 +621,8 @@
         var result = window.showModalDialog(targetAction, null, winstyle);
         if (result) obj.value = result;
     }
-    
-    //统一选择专业管理部门（所有选中的记录）
+	
+	//统一选择专业管理部门（所有选中的记录）
     function chooseSpecialDeptForChecked() 
     {
     	if(!mainFrm.setAllcheckedSpecialDept.checked) return;

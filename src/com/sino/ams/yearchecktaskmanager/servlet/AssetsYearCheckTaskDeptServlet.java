@@ -73,7 +73,7 @@ public class AssetsYearCheckTaskDeptServlet extends BaseServlet {
 			System.out.println("cityBaseDate="+cityBaseDate);
 			
 			String fromAction = req.getParameter("action");
-			if(fromAction!=null && fromAction.equals("fromRemain ")){
+			if(fromAction!=null && fromAction.equals("fromRemain")){
 				//任务提醒
 				//父级任务信息
 				String parentOrderNumber = req.getParameter("parentOrderNumber");

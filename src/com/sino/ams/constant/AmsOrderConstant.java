@@ -18,7 +18,7 @@ public interface AmsOrderConstant {
 
     //==================工单差异比较
     String CONFIRM_NONE="未处理";
-    String CONFIRM_SPECIAL_DEPT="请选择专业管理部门";
+	String CONFIRM_SPECIAL_DEPT="请选择专业管理部门";
     String CONFIRM_SCAN="扫描结果为准";
     String CONFIRM_SYSTEM="系统数据为准";
 

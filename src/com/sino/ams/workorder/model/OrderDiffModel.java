@@ -660,7 +660,7 @@ public class OrderDiffModel {
         sqlArgs.add(workorderDtlDTO.getResponsibilityUser());
         sqlArgs.add(workorderDtlDTO.getMaintainUser());
         sqlArgs.add(workorderDtlDTO.getItemCode());
-        sqlArgs.add(workorderDtlDTO.getSpecialityDeptCode());
+		sqlArgs.add(workorderDtlDTO.getSpecialityDeptCode());
         if (workorderDtlDTO.getWorkorderType().equals(DictConstant.ORDER_TYPE_HDV)) {
             sqlArgs.add(DictConstant.ITEM_STATUS_TO_ASSETS);
         }
@@ -737,8 +737,8 @@ public class OrderDiffModel {
                 "   ?,\n" +
                 "   ?,\n" +
                 "   ?,\n" +
-                "   ?,\n" +
-                "	?" +
+				"   ?,\n" +
+                "   ?" +
                 ")";
         sqlArgs.add(workorderDtlDTO.getBarcode());
         sqlArgs.add(workorderDtlDTO.getItemQty());
@@ -762,8 +762,7 @@ public class OrderDiffModel {
             sqlArgs.add(DictConstant.ITEM_STATUS_NORMAL);
         }
 
-        sqlArgs.add(workorderDtlDTO.getSpecialityDeptCode());
-        
+		sqlArgs.add(workorderDtlDTO.getSpecialityDeptCode());
         sqlModel.setArgs(sqlArgs);
         sqlModel.setSqlStr(sqlStr);
 
@@ -783,7 +782,7 @@ public class OrderDiffModel {
         String sqlStr = "UPDATE ETS_WORKORDER_DIFF_DTL SET\n" +
                 "  ITEM_NEW_STATUS=CONVERT(INT,?),\n" +
                 "  VERIFY_RESULT=?,\n" +
-                "  SPECIALITY_DEPT=?,\n" +
+				"  SPECIALITY_DEPT=?,\n" +
                 "  DIFFERENCE_REASON=?,\n" +
                 "  REMARK=?\n" +
                 "   WHERE BARCODE=?\n" +
@@ -791,7 +790,7 @@ public class OrderDiffModel {
 
         sqlArgs.add(itemStatus);
         sqlArgs.add(dealResult);
-        sqlArgs.add(specialityDept);
+		sqlArgs.add(specialityDept);
         sqlArgs.add(diffReason);
         sqlArgs.add(remark);
         sqlArgs.add(barcode);

@@ -64,15 +64,15 @@
     ASSCHKTaskRemainDAO taskRemainDAO = new ASSCHKTaskRemainDAO(userDTO,null,null,request);
     RowSet taskRowSet = taskRemainDAO.getAllData();
     int taskRowCount = 0;
-    int defautlTaskCount = 1;
+    int defautlTaskCount = 3;
     String taskBeginDate ="";
     String taskEndDate ="";
+    String orderTypeName="";
     String code = "";
+    String levle ="";//level
     if (taskRowSet != null && !taskRowSet.isEmpty()) {
     	taskRowCount = rs.getSize()>10?10:taskRowSet.getSize();
     }
-   
-    
     String taskRemainAction="/servlet/com.sino.ams.yearchecktaskmanager.servlet.ASSCHKTaskRemainServlet";
     //
     
@@ -148,8 +148,7 @@
                 <tr style="border-color:RED">
                     <td>&nbsp;</td>
                     <td colspan="3" valign="top">
-
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0"  >
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="overflow-y:scroll;overflow-x:hidden;" >
                     <%
                     	if(taskRowCount>0){
                     		if(taskRowCount<defautlTaskCount){
@@ -157,12 +156,12 @@
                     		}
                     %>
                     <tr height="24px" >
-                    	<td width="20%">任务名称</td>
-                    	<td width="20%">任务编码</td>
-                    	<td width="20%">任务发布日期</td>
-                    	<td width="20%">任务开始日期</td>
-                    	<td width="20%">任务完成日期</td>
+                    	<td width="25%">任务名称</td>
+                    	<td width="25%">任务编码</td>
+                    	<td width="25%">任务发布日期</td>
+                    	<td width="25%">任务类型</td>
                     </tr>
+                    </table>
                     <%
                     	}
                     %>
@@ -176,43 +175,49 @@
                                 title = StrUtil.nullToString(row.getValue("ORDER_NAME"));
                                 code = StrUtil.nullToString(row.getValue("ORDER_NUMBER"));
                                 date = StrUtil.nullToString(row.getValue("CREATION_DATE"));
-                                taskBeginDate =  StrUtil.nullToString(row.getValue("CHECK_TASK_DATE_FROM"));
-                                taskEndDate = StrUtil.nullToString(row.getValue("CHECK_TASK_DATE_END"));
                                 String orderType=StrUtil.nullToString(row.getValue("ORDER_TYPE"));
+                                orderTypeName=StrUtil.nullToString(row.getValue("ORDER_TYPE_NAME"));
                                 String roleName =StrUtil.nullToString(row.getValue("IMPLEMNET_ROLE_NAME"));
                                 date1 = f.parse(date);
+                                levle=StrUtil.nullToString(row.getValue("ORDER_LEVEL"));
                                 days = (int) ((date2.getTime() - date1.getTime()) / 86400000);    
                     %>
-                     <tr height="24px" onclick="do_showTaskDetail('<%=code%>','<%=orderType%>','<%=title%>','<%=roleName%>');"
+                     <table width="100%" border="0" cellspacing="0" cellpadding="0" style="overflow:scroll;" >
+                     <tr height="24px" onclick="do_showTaskDetail('<%=code%>','<%=orderType%>','<%=title%>','<%=roleName%>','<%=levle%>');"
                                 title="点击查看任务“<%=title%>”详细信息">
-                            <td width="20%" class="font-hui" style="cursor:pointer"  
+                            <td width="25%" class="font-hui" style="cursor:pointer"  
                                >
                             <%=title.length() < 18 ? title : title.substring(0, 17) + "..."%>
                            
                             <%if (days < 7) { %><img src="/images/main/new.jpg" width="32" height="11"/><%} %>
                             </td>
-                            <td width="20%" class="font-hui" style="cursor:pointer" align="left">
+                            <td width="25%" class="font-hui" style="cursor:pointer" align="left">
                                 [<%=code%>]
                             </td>
-                            <td width="20%" class="font-hui" style="cursor:pointer" align="left">
+                            <td width="25%" class="font-hui" style="cursor:pointer" align="left">
                                 [<%=date%>]
                             </td>
+                            <td width="25%" class="font-hui" style="cursor:pointer" align="left">
+                                [<%=orderTypeName%>]
+                            </td>
+                            <%--
                              <td width="20%" class="font-hui" style="cursor:pointer" align="left">
                                 [<%=taskBeginDate%>]
                             </td>
                               <td width="20%" class="font-hui" style="cursor:pointer" align="left">
                                 [<%=taskEndDate%>]
                             </td>
-                            <input type="hidden" name="orderType" value="<%=orderType%>>"/>
-                            <input type="hidden" name="roleName" value="<%=roleName%>>"/>
+                            --%>
+                            <input type="hidden" name="orderType" value="<%=orderType%>"/>
+                            <input type="hidden" name="roleName" value="<%=roleName%>"/>
+                            <input type="hidden" name="level" value="<%=levle%>"/>
                        </tr>
                 <%
                        }
 	                title="";
                     code="";
                     date="";
-	            	taskBeginDate="";
-	            	taskEndDate="";
+                    orderTypeName="";
                 }
                 %>
                         </table>
@@ -338,12 +343,12 @@
          window.open(url);
     }
 
-    function do_showTaskDetail(orderNumber,orderType,orderName,roleName){
+    function do_showTaskDetail(orderNumber,orderType,orderName,roleName,levle){
 	   //实地
 	   //非实地
-       //从省公司下发
-       //从地市公司下发
-       //从部门经理下发
+	   //从省公司下发
+	   //从地市公司下发
+	   //从部门经理下发
        
     //地市公司资产管理员接受省下发盘点任务
     var url="";
@@ -354,22 +359,21 @@
     	var url ="/servlet/com.sino.sinoflow.servlet.NewCase?sf_appName=checkapp&taskType=y"
     //实地非无线[先到部门，部门在处理]
     }else if(orderType=="ADDRESS-NON-WIRELESS"){
-		var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
-    //非实地[软件类]
+        var url ="/servlet/com.sino.sinoflow.servlet.NewCase?sf_appName=checkapp&taskType=y"
+    //非实地[]
     }else if(
     	    (orderType=="NON-ADDRESS-SOFTWARE"||orderType=="NON-ADDRESS-CLIENT"||orderType=="NON-ADDRESS-PIPELINE")
-            &&roleName=="部门资产管理员")
+           )
         {
-   	    //if(confirm("确定要继续下发吗？继续请点击“确定”按钮，否则请点击“取消”按钮进行资产确认")){
-   		//	var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
-   		//}else{
-   		//	var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckFaServlet";
-   		//}	
-    	var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
+   		 if(roleName=="部门资产管理员"){
+    			var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
+   		 }else {
+   			    var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckFaServlet";
+   	   	 }
     }
-      if(!url==""){
-    	  if(orderType=="ADDRESS-WIRELESS"){
-			url+="&action=fromRemain&parentOrderNumber="+orderNumber+"&orderType="+orderType+"&orderName="+orderName+"&roleName="+roleName;
+    if(!url==""){
+    	  if(orderType=="ADDRESS-WIRELESS"||orderType=="ADDRESS-NON-WIRELESS"){
+			url+="&action=fromRemain&parentOrderNumber="+orderNumber+"&orderTypes="+orderType+"&orderName="+orderName+"&roleName="+roleName;
     	  }else{
            url+="?action=fromRemain&parentOrderNumber="+orderNumber+"&orderType="+orderType+"&orderName="+orderName+"&roleName="+roleName;
     	  }

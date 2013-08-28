@@ -39,6 +39,7 @@ import com.sino.ams.system.project.dto.EtsPaProjectsAllDTO;
 import com.sino.ams.system.user.dto.EtsOuCityMapDTO;
 import com.sino.ams.system.user.dto.SfUserDTO;
 import com.sino.ams.workorder.dto.ZeroTurnLineDTO;
+import com.sino.ams.yearchecktaskmanager.dto.AssetsYeartParentOrderDTO;
 import com.sino.ams.yearchecktaskmanager.dto.EtsItemYearCheckDTO;
 import com.sino.ams.yearchecktaskmanager.dto.EtsObjectTaskDTO;
 import com.sino.base.constant.message.MessageConstant;
@@ -98,7 +99,7 @@ public class AssetsYearLookUpServlet extends BaseServlet {
 					dispLabels = new String[] {"任务编号", "任务名称"};
 					viewPercent = new String[] {"50%", "50%"};
 					retFields = new String[] {"TASK_NUMBER",
-								"TASK_NAME", "TASK_TYPE"};
+								"TASK_NAME", "TASK_TYPE","TASK_TYPE_NAME"};
 					qryNames = new String[] {"ORDER_NUMBER ", "ORDER_NAME "};
 					qryLabels = new String[] {"任务编码", "任务名称"};
 					primaryKeys = new String[] {"TASK_NUMBER"};
@@ -122,17 +123,69 @@ public class AssetsYearLookUpServlet extends BaseServlet {
 					lookProp.setMultipleChose(true);
 					lookProp.setDtoClass(EtsObjectTaskDTO.class);
 				} else if (lookUpName.equals("LOOK_UP_NO_ADDRESS_TASK")) { //查找地点
-					dispNames = new String[] {"ORDER_NUMBER", "ORDER_NAME","ROLE_NAME","DEPT_NAME","ORDER_TYPE"};
-					dispLabels = new String[] {"任务编号", "任务名称","接收人角色","接收人所属部门","工单类型"};
+					dispNames = new String[] {"ORDER_NUMBER", "ORDER_NAME","ROLE_NAME","DEPT_NAME","ORDER_TYPE_NAME"};
+					dispLabels = new String[] {"任务编号", "任务名称","接收人角色","接收人所属部门","工单类型名称"};
 					viewPercent = new String[] {"20%", "20%","20%","20%","20%"};
 					retFields = new String[] {"ORDER_NUMBER",
-								"ORDER_NAME", "ROLE_NAME","DEPT_NAME","ORDER_TYPE"};
+								"ORDER_NAME", "ROLE_NAME","DEPT_NAME","ORDER_TYPE","ORDER_TYPE_NAME"};
 					qryNames = new String[] {"ORDER_NUMBER", "ORDER_NAME",};
 					qryLabels = new String[] {"任务编码", "任务名称"};
 					primaryKeys = new String[] {"ORDER_NUMBER"};
 					lookProp.setTotalWidth(700);
 					lookProp.setMultipleChose(false);
-					lookProp.setDtoClass(EtsItemYearCheckDTO.class);			  } 
+					lookProp.setDtoClass(EtsItemYearCheckDTO.class);			 
+				}  else if (lookUpName.equals("LOOK_UP_USER")) { //资产流程查找用户
+					dispNames = new String[] {"USER_NAME", "EMPLOYEE_NUMBER",
+							"LOGIN_NAME", "COMPANY_CODE", "COMPANY_NAME"};
+					dispLabels = new String[] {"用户姓名", "用户员工号", "用户登录名", "公司代码",
+							 "公司名称"};
+					viewPercent = new String[] {"15%", "30%", "15%", "15%",
+							  "20%"};
+					retFields = new String[] {"USER_ID", "COMPANY_CODE",
+							"COMPANY_NAME", "USER_NAME", "EMPLOYEE_NUMBER",
+							"LOGIN_NAME"};
+					qryNames = new String[] {"USER_NAME", "EMPLOYEE_NUMBER",
+						   "LOGIN_NAME"};
+					qryLabels = new String[] {"姓名", "员工号", "登录名"};
+					primaryKeys = new String[] {"USER_ID"};
+
+					lookProp.setTotalWidth(700);
+					lookProp.setMultipleChose(false);
+					lookProp.setDtoClass(AmsAssetsPriviDTO.class);
+				
+			} else if (lookUpName.equals("LOOK_UP_USER_CHECK_BATCH")) { //资产盘点单任务批，选择归档人
+				dispNames = new String[] {"USER_NAME", "EMPLOYEE_NUMBER",
+							"LOGIN_NAME", "COMPANY_CODE", "COMPANY_NAME"};
+				dispLabels = new String[] {"用户姓名", "用户员工号", "用户登录名", "公司代码",
+							 "公司名称"};
+				viewPercent = new String[] {"15%", "30%", "15%", "15%",
+							  "20%"};
+				retFields = new String[] {"USER_ID", "COMPANY_CODE",
+							"COMPANY_NAME", "USER_NAME", "EMPLOYEE_NUMBER",
+							"LOGIN_NAME"};
+				qryNames = new String[] {"USER_NAME", "EMPLOYEE_NUMBER",
+						   "LOGIN_NAME"};
+				qryLabels = new String[] {"姓名", "员工号", "登录名"};
+				primaryKeys = new String[] {"USER_ID"};
+
+				lookProp.setTotalWidth(700);
+				lookProp.setMultipleChose(false);
+				lookProp.setDtoClass(AmsAssetsPriviDTO.class);
+		} else if(lookUpName.equals("LOOK_UP_PARENT_ORDER_LEVE_3")){//查找当前人的盘点任务
+			
+			dispNames = new String[] {"PARENT_ORDER_NAME", "PARENT_ORDER_NUMBER","PARENT_ORDER_TYPE_NAME",
+					"PARENT_IMPLEMNET_DEPT_NAME"};
+			dispLabels = new String[] {"任务名称", "任务编号", "任务类型","接收部门"};
+			viewPercent = new String[] {"20%", "20%","20%","40%"};
+			qryNames = new String[] {"ORDER_NUMBER"};
+			retFields = new String[] {"PARENT_ORDER_NAME", "PARENT_ORDER_NUMBER","PARENT_ORDER_TYPE_NAME","PARENT_ORDER_TYPE","PARENT_IMPLEMNET_DEPT_NAME"};
+			qryLabels = new String[] {"任务编号"};
+			primaryKeys = new String[] {"PARENT_ORDER_NUMBER"};
+
+			lookProp.setTotalWidth(600);
+			lookProp.setMultipleChose(false);
+			lookProp.setDtoClass(AssetsYeartParentOrderDTO.class);
+		}
 				lookProp.setCalPattern(LINE_PATTERN);
 				lookProp.setDisFieldNames(dispNames);
 				lookProp.setDisFieldLabels(dispLabels);

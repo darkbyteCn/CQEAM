@@ -24,8 +24,10 @@ import com.sino.ams.workorder.model.ZeroTurnModel;
 import com.sino.ams.yearchecktaskmanager.dto.EtsItemYearCheckDTO;
 import com.sino.ams.yearchecktaskmanager.dto.EtsItemYearCheckLineDTO;
 import com.sino.ams.yearchecktaskmanager.model.AssetsYearCheckFaModel;
+import com.sino.ams.yearchecktaskmanager.util.AssetsCheckTaskConstant;
 import com.sino.base.constant.WorldConstant;
 import com.sino.base.constant.calen.CalendarConstant;
+import com.sino.base.data.Row;
 import com.sino.base.db.datatrans.CustomTransData;
 import com.sino.base.db.datatrans.DataRange;
 import com.sino.base.db.datatrans.DataTransfer;
@@ -36,6 +38,7 @@ import com.sino.base.db.sql.model.SQLModel;
 import com.sino.base.db.util.DBOperator;
 import com.sino.base.dto.DTO;
 import com.sino.base.dto.DTOSet;
+import com.sino.base.exception.ContainerException;
 import com.sino.base.exception.DataHandleException;
 import com.sino.base.exception.DataTransException;
 import com.sino.base.exception.QueryException;
@@ -60,9 +63,13 @@ public class AssetsYearCheckFaDAO extends AMSBaseDAO {
 
 	/**
 	 * 获取当前用户拥有的非实地盘点资产信息
+	 * @throws ContainerException 
 	 */
-	public DTOSet getLineData() throws QueryException {
+	public DTOSet getLineData() throws QueryException, ContainerException {
 		EtsItemYearCheckDTO dto = (EtsItemYearCheckDTO) dtoParameter;
+		String[] str=getLevel(dto);
+		dto.setLevel(str[0]);
+		dto.setSendType(str[1]);
 		AssetsYearCheckFaModel model = (AssetsYearCheckFaModel) sqlProducer;
 		SQLModel sqlModel = model.getLineModel();
 		SimpleQuery simp = new SimpleQuery(sqlModel, conn);
@@ -72,8 +79,9 @@ public class AssetsYearCheckFaDAO extends AMSBaseDAO {
 	}
 
 
-	// jeffery
-	public void confirm(String str) {
+	// jeffery  <!-- 2013-07-04 Jeffery-->
+	public boolean confirm(String str) {
+		boolean flag=true;
 		int userId=userAccount.getUserId();
 		int orgId=userAccount.getOrganizationId();
 		try {
@@ -92,61 +100,21 @@ public class AssetsYearCheckFaDAO extends AMSBaseDAO {
 						notes);
 				DBOperator.updateRecord(sqlModel, conn);
 				
-				SQLModel sqlModel2 = model.getMatchUpdateModel(barcode, checkStatus, notes);
-				DBOperator.updateRecord(sqlModel2, conn);
-
 			}
 		} catch (DataHandleException e) {
 			// TODO Auto-generated catch block
+			flag=false;
 			e.printStackTrace();
 		}
+		return flag;
 	}
 	
-//	 public File exportFile(SfUserDTO user, EtsItemYearCheckDTO dto, Connection conn) throws DataTransException {
-//	        File file = null;
-//	        DataTransfer transfer = null;
-//			AssetsYearCheckFaModel assetsModel = (AssetsYearCheckFaModel)sqlProducer;
-//			SQLModel sqlModel =assetsModel.getLineModel();
-//			TransRule rule = new TransRule();
-//			rule.setDataSource(sqlModel);
-//			rule.setCalPattern(CalendarConstant.LINE_PATTERN);
-//			rule.setSourceConn(conn);
-//			String fileName = "";
-//			fileName = "个人待确认非实地资产.xls";
-//			String filePath = WorldConstant.USER_HOME;
-//			filePath += WorldConstant.FILE_SEPARATOR;
-//			filePath += fileName;
-//			rule.setTarFile(filePath);
-//
-//			DataRange range = new DataRange();
-//			rule.setDataRange(range);
-//
-//			Map fieldMap = new HashMap();
-//
-//			fieldMap.put("BARCODE", "资产标签号");
-//			fieldMap.put("ASSETS_DESCRIPTION", "资产名称");
-//			fieldMap.put("CONTENT_NAME", "资产类别描述");
-//			fieldMap.put("CHECK_STATUS", "确认状态");
-//			fieldMap.put("NOTES", "备注");
-//
-//			rule.setFieldMap(fieldMap);
-//
-//			CustomTransData custData = new CustomTransData();
-//			custData.setReportTitle(fileName);
-//			custData.setReportPerson(user.getUsername());
-//			custData.setNeedReportDate(true);
-//			rule.setCustData(custData);
-//			//设置分页显示
-//			TransferFactory factory = new TransferFactory();
-//			transfer = factory.getTransfer(rule);
-//			transfer.transData();
-//			file = (File) transfer.getTransResult();
-//	        return file;
-//	    }
-//	 
 	 
-	 public File exportFile(SfUserDTO user, EtsItemYearCheckDTO dto, Connection conn) throws DataTransException, SQLModelException {
+	 public File exportFile(SfUserDTO user, EtsItemYearCheckDTO dto, Connection conn) throws DataTransException, SQLModelException, QueryException, ContainerException {
 	       File file = null;
+	       String[] str=getLevel(dto);
+		   dto.setLevel(str[0]);
+		   dto.setSendType(str[1]);
 	       AssetsYearCheckFaModel assetsModel = (AssetsYearCheckFaModel)sqlProducer;
 		   SQLModel sqlModel =assetsModel.getLineModel();
 		   String reportTitle = "";
@@ -183,63 +151,44 @@ public class AssetsYearCheckFaDAO extends AMSBaseDAO {
 	       return file;
 	   }
 	 
+	 //获取任务等级
+	 public String[] getLevel(EtsItemYearCheckDTO dto) throws QueryException, ContainerException{
+	    String level="";					//任务等级
+	    String orderType=dto.getOrderType();//工单类型
+	    String sendType="";
+	    String deptCode="";
+	    String [] str=new String[3];
+	    
+	    AssetsYearCheckFaModel model = (AssetsYearCheckFaModel) sqlProducer;
+		SQLModel sqlModel = model.getQueryLevelModel();
+        SimpleQuery sq = new SimpleQuery(sqlModel, conn);
+        sq.setCalPattern(CalendarConstant.LINE_PATTERN);
+        sq.executeQuery();
+        Row row = sq.getFirstRow();
+        
+        level = row.getStrValue("ORDER_LEVEL");
+        if(orderType.equals(AssetsCheckTaskConstant.ORDER_TYPE_NON_ADDRESS_SOFTWARE)){
+        	sendType = row.getStrValue("NON_ADDRESS_ASSETS_SOFT");
+        }else if(orderType.equals(AssetsCheckTaskConstant.ORDER_TYPE_NON_ADDRESS_CLIENT)){
+        	sendType = row.getStrValue("NON_ADDRESS_ASSETS_CLIENT");
+        }else if(orderType.equals(AssetsCheckTaskConstant.ORDER_TYPE_NON_ADDRESS_PIPELINE)){
+        	sendType = row.getStrValue("NON_ADDRESS_ASSETS_PIPELINE");
+        }
+        deptCode = row.getStrValue("IMPLEMENT_DEPT_ID");
+       
+        if(level==null){
+        	level="";
+        }
+        if(sendType==null){
+        	sendType="";
+        }
+        if(deptCode==null){
+        	deptCode="";
+        }
+        str[0]=level;
+        str[1]=sendType;
+        str[2]=deptCode;
+        return str;
+	}
 	 
-	// jeffery
-		public void conClient(String str) {
-//			int userId=userAccount.getUserId();
-//			int orgId=userAccount.getOrganizationId();
-			try {
-				String dot[] = str.split(",");
-				for (int i = 0; i < dot.length; i++) {
-					String barcode=dot[i];
-					if(!barcode.equals("")){
-						AssetsYearCheckFaModel model = (AssetsYearCheckFaModel) sqlProducer;
-						SQLModel sqlModel = model.getClientModel(barcode);
-						DBOperator.updateRecord(sqlModel, conn);
-					}
-				}
-			} catch (DataHandleException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		
-		 public File exportClientFile(SfUserDTO user, EtsItemYearCheckDTO dto, Connection conn) throws DataTransException, SQLModelException {
-		       File file = null;
-		       AssetsYearCheckFaModel assetsModel = (AssetsYearCheckFaModel)sqlProducer;
-			   SQLModel sqlModel =assetsModel.getExportModel();
-			   String reportTitle = "";
-			   reportTitle = "客户端资产确认";
-			   String fileName = reportTitle + ".xls";
-			   String filePath = WorldConstant.USER_HOME;
-			   filePath += WorldConstant.FILE_SEPARATOR;
-			   filePath += fileName;
-			   TransRule rule = new TransRule();
-			   rule.setDataSource(sqlModel);
-			   rule.setSourceConn(conn);
-			   rule.setTarFile(filePath);
-			   DataRange range = new DataRange();
-			   rule.setDataRange(range);
-			   Map fieldMap = new HashMap();
-
-			   fieldMap.put("BARCODE", "资产标签号");
-			   fieldMap.put("ASSETS_DESCRIPTION", "资产名称");
-			   fieldMap.put("FA_CATEGORY1", "应用领域描述");
-			   fieldMap.put("WORKORDER_OBJECT_CODE", "地点编码");
-			   fieldMap.put("WORKORDER_OBJECT_NAME", "地点描述");
-			   rule.setFieldMap(fieldMap);
-			   CustomTransData custData = new CustomTransData();
-			   custData.setReportTitle(reportTitle);
-			   custData.setReportPerson(userAccount.getUsername());
-			   custData.setNeedReportDate(true);
-			   rule.setCustData(custData);
-			   rule.setCalPattern(LINE_PATTERN);
-			   TransferFactory factory = new TransferFactory();
-			   DataTransfer transfer = factory.getTransfer(rule);
-			   transfer.transData();
-			   file = (File) transfer.getTransResult();
-		       return file;
-		   }
-
 }

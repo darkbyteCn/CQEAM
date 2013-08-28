@@ -71,7 +71,7 @@ public class AssetsYearCheckTaskProvinceModel extends AMSSQLProducer{
 	    sqlModel.setArgs(sqlArgs);
 	    return sqlModel;
 	}
-	//获取所有需要下发的地市
+	//获取所有需要下发的地市，上市和TD
     public SQLModel  getAllOUModel(AssetsYearCheckTaskHeaderDTO headerDto){
     	SQLModel sqlModel = new SQLModel();
 	    List sqlArgs = new ArrayList();
@@ -85,8 +85,9 @@ public class AssetsYearCheckTaskProvinceModel extends AMSSQLProducer{
 	      .append(" SU.USER_ID IMPLEMENT_BY \n")
 		  .append(" FROM ETS_OU_CITY_MAP EOCM,SF_USER SU,SF_USER_AUTHORITY SUA,AMS_MIS_EMPLOYEE AME,AMS_MIS_DEPT AMD \n")
 		  .append(" where EOCM.ORGANIZATION_ID = SU.ORGANIZATION_ID \n")
-		  .append(" and EOCM.IS_TD='N' \n")
+		  .append(" and (EOCM.IS_TD='N' or EOCM.IS_TD='Y') \n")
 		  .append(" and SU.USER_ID = SUA.USER_ID \n")
+		  .append(" and SU.ENABLED ='Y'  \n")
 		  .append(" and SUA.ROLE_NAME='"+AssetsCheckTaskConstant.ORDER_RECIVE_ROLE_TO_CITY+"' \n")
           .append(" and SU.EMPLOYEE_NUMBER = AME.EMPLOYEE_NUMBER \n")
           .append(" and AME.DEPT_CODE = AMD.DEPT_CODE ")

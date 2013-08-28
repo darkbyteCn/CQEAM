@@ -21,6 +21,11 @@
 <%
     RequestParser parser = new RequestParser();
     parser.transData(request);
+    String orderNumber= "";
+    String orderType="";
+    String roleName="";
+    String title="";
+    String level="";
 %>
 
 <div id="$$$waitTipMsg$$$" style="position:absolute; bottom:45%; left:5; z-index:10; visibility:hidden">
@@ -47,56 +52,47 @@
             <td width="30%" align="right">任务名称：</td>
             <td width="60%">
                 <input style="width:90%" type="text" name="taskName" maxlength="100"
-                       value="<%=StrUtil.nullToString(request.getAttribute("taskName"))%>">
+                 value="<%=StrUtil.nullToString(request.getAttribute("taskName"))%>">
             </td>
             <td>
                 <input type="button" name = 'button' class="btn_long" title="点击查询"  align="left"
-                			value=" 查 询 " id="queryImg" style="cursor:'hand'" onClick="query(); return false;"/>
+                 value=" 查 询 " id="queryImg" style="cursor:'hand'" onClick="query(); return false;"/>
             </td>
         </tr>
     </table>
-<table  id="headTb" style="display:none;">
+    <table  id="headTb" style="display:none;">
         <tr height="20">
-            <td width="20%" align=center>任务名称</td>
-            <td width="20%" align=center>任务编码</td>
-            <td width="15%" align=center>下发人</td>
-            <%--<td width="10%" align=center>基准日</td>--%>
-            <td width="15%" align=center>任务创建日期</td>
-            <%--<td width="10%" align=center>基准日开始日期</td>
-            <td width="10%" align=center>基准日结束日期</td>--%>
-            <td width="15%" align=center>任务开始时间</td>
-            <td width="15%" align=center>任务完成时间</td>
+            <td width="25%" align=center>任务名称</td>
+            <td width="25%" align=center>任务编码</td>
+            <td width="25%" align=center>任务创建日期</td>
+            <td width="25%" align=center>任务类型</td>
         </tr>
     </table>
 
 
-<table   border="1" id="listTb" style="display:none;" >
+    <table   border="1" id="listTb" style="display:none;" >
         <%
             RowSet rows = (RowSet) request.getAttribute(QueryConstant.SPLIT_DATA_VIEW);
             if (rows != null && !rows.isEmpty()) {
                 Row row = null;
                 for (int i = 0; i < rows.getSize(); i++) {
                     row = rows.getRow(i);
+                    title       = StrUtil.nullToString(row.getValue("ORDER_NAME"));
+                    orderNumber = StrUtil.nullToString(row.getValue("ORDER_NUMBER"));
+                    orderType   = StrUtil.nullToString(row.getValue("ORDER_TYPE"));
+                    roleName    = StrUtil.nullToString(row.getValue("IMPLEMNET_ROLE_NAME"));
+                    level 		= StrUtil.nullToString(row.getValue("ORDER_LEVEL"));
         %>
-        <tr onMouseMove="style.backgroundColor='#EFEFEF'" onMouseOut="style.backgroundColor='#ffffff'">
-            <td width="20%" height="22"><%=row.getValue("ORDER_NAME") %>
+        <tr onMouseMove="style.backgroundColor='#EFEFEF'" onMouseOut="style.backgroundColor='#ffffff'"
+          onclick="do_showTaskDetail('<%=orderNumber%>','<%=orderType%>','<%=title%>','<%=roleName%>','<%=level%>');" 
+          title="点击查看任务“<%=title%>”详细信息" >
+            <td width="25%" height="22" class="font-hui" style="cursor:pointer"><%=row.getValue("ORDER_NAME") %>
             </td>
-            <td width="20%" height="22"><%=row.getValue("ORDER_NUMBER") %>
+            <td width="25%" height="22" class="font-hui" style="cursor:pointer"><%=row.getValue("ORDER_NUMBER") %>
             </td>
-            <td width="15%" height="22"><%=row.getValue("DISTRUBTE_BY_NAME") %>
+            <td width="25%" height="22" class="font-hui" style="cursor:pointer"><%=row.getValue("CREATION_DATE") %>
             </td>
-            <%--<td width="10%" height="22"><%=row.getValue("CHECK_BASE_DATE_CITY") %>
-            </td>
-            --%>
-            <td width="15%" height="22"><%=row.getValue("CREATION_DATE") %>
-            </td>
-            <%--<td width="10%" height="22"><%=row.getValue("CHECK_BASE_DATE_FROM") %>
-            </td>
-            <td width="10%" height="22"><%=row.getValue("CHECK_BASE_DATE_END") %>
-            </td>
-            --%><td width="15%" height="22"><%=row.getValue("CHECK_TASK_DATE_FROM") %>
-            </td>
-            <td width="15%" height="22"><%=row.getValue("CHECK_TASK_DATE_END") %>
+             <td width="25%" height="22" class="font-hui" style="cursor:pointer"><%=row.getValue("ORDER_TYPE_NAME") %>
             </td>
         <%
                 }
@@ -130,6 +126,45 @@
         impForm1.action = url;
         document.getElementById("queryImg").disabled = true;
         impForm1.submit();
+    }
+
+
+    function do_showTaskDetail(orderNumber,orderType,orderName,roleName,levle){
+ 	   //实地
+ 	   //非实地
+ 	   //从省公司下发
+ 	   //从地市公司下发
+ 	   //从部门经理下发
+        
+     //地市公司资产管理员接受省下发盘点任务
+     var url="";
+     if(orderType=="ASS-CHK-TASK"){
+     	var url ="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskCityServlet"
+     //实地无线[盘点责任人]
+     }else if(orderType=="ADDRESS-WIRELESS"){
+     	var url ="/servlet/com.sino.sinoflow.servlet.NewCase?sf_appName=checkapp&taskType=y"
+     //实地非无线[先到部门，部门在处理]
+     }else if(orderType=="ADDRESS-NON-WIRELESS"){
+         var url ="/servlet/com.sino.sinoflow.servlet.NewCase?sf_appName=checkapp&taskType=y"
+     //非实地[]
+     }else if(
+     	    (orderType=="NON-ADDRESS-SOFTWARE"||orderType=="NON-ADDRESS-CLIENT"||orderType=="NON-ADDRESS-PIPELINE")
+            )
+         {
+    		 if(roleName=="部门资产管理员"){
+     			var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckTaskDeptServlet";
+    		 }else {
+    			    var url="/servlet/com.sino.ams.yearchecktaskmanager.servlet.AssetsYearCheckFaServlet";
+    	   	 }
+     }
+     if(!url==""){
+     	  if(orderType=="ADDRESS-WIRELESS"||orderType=="ADDRESS-NON-WIRELESS"){
+ 			url+="&action=fromRemain&parentOrderNumber="+orderNumber+"&orderTypes="+orderType+"&orderName="+orderName+"&roleName="+roleName;
+     	  }else{
+            url+="?action=fromRemain&parentOrderNumber="+orderNumber+"&orderType="+orderType+"&orderName="+orderName+"&roleName="+roleName;
+     	  }
+     	  window.open(url);
+       }
     }
     
 </script>

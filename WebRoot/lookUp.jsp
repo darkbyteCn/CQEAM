@@ -90,7 +90,7 @@
     <script type="text/javascript" src="/WebLibary/js/SinoToolBar.js"></script>
     <script type="text/javascript" src="/WebLibary/js/SinoToolBarConst.js"></script>
     <script type="text/javascript" src="/WebLibary/js/BarVarSX.js"></script>
-    <script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
+	<script type="text/javascript" src="/WebLibary/js/jquery.js"></script>
 </head>
 <base target="_self">
 <body leftmargin="0" topmargin="0" onload="do_SetPageWidth()" onkeydown="autoExeFunction('do_Search()');">

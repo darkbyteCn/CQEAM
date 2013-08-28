@@ -29,7 +29,7 @@ FORM {
 <script type="text/javascript">
 
     <%if(dto.getTaskType().equals("send")){ %>
-          printTitleBar("已盘点任务查询");
+          printTitleBar("已下发盘点任务查询");
     <%}else if(dto.getTaskType().equals("received")){ %>
           printTitleBar("个人盘点任务查询");
     <%} %>
@@ -54,18 +54,20 @@ FORM {
 </form>
 <input type="hidden" name="helpId" value=""> 
 <div id="headDiv" style="overflow-y:scroll;overflow-x:hidden;position:absolute;top:48px;left:0px;width:100%">
-    <table class="eamHeaderTable" border="1" width="100%">
+    <table class="eamHeaderTable" border="1" width="150%">
         <tr height=23px onClick="executeClick(this)" style="cursor:pointer" title="点击全选或取消全选">
             <td align=center width="3%"><input type="checkbox" name="mainCheck" value="" onPropertyChange="checkAll('mainCheck','subCheck')"></td>
-            <td align=center width="25%">任务编号</td>
-            <td align=center width="25%">任务名称</td>
+            <td align=center width="16%">任务编号</td>
+            <td align=center width="16%">任务名称</td>
+            <td align=center width="16%">工单类型</td>
             <%if(dto.getTaskType().equals("send")){ %>
-            <td align=center width="22%">任务接收人</td>
-            <td align=center width="25%">接收人所属部门</td>
+            <td align=center width="17%">任务接收人</td>
+            <td align=center width="16%">接收人所属部门</td>
             <%}else if(dto.getTaskType().equals("received")){ %>
-            <td align=center width="22%">任务下发人</td>
-            <td align=center width="25%">任务下发日期</td>
+            <td align=center width="17%">任务下发人</td>
+            <td align=center width="16%">任务下发日期</td>
             <%} %>
+            <td align=center width="16%">接收人角色</td>
 			<td style="display:none">隐藏域字段</td>
         </tr>
     </table>
@@ -76,7 +78,7 @@ FORM {
 %>
 <div id="dataDiv" style="overflow:scroll;height:100%;width:100%;position:absolute;top:71px;left:0px;height:485px" align="left" onscroll="document.getElementById('headDiv').scrollLeft = this.scrollLeft;">
  
-	<table id="dataTable" width="100%" border="1" bordercolor="#666666" style="TABLE-LAYOUT:fixed;word-break:break-all">
+	<table id="dataTable" width="150%" border="1" bordercolor="#666666" style="TABLE-LAYOUT:fixed;word-break:break-all">
 
 <%
 		Row row = null;
@@ -85,21 +87,23 @@ FORM {
 %>
     <tr class="dataTR" onclick="executeClick(this)">
         <td width="3%" align="center"><input type="checkbox" name="subCheck" id="subCheck<%=i%>" ></td></td>
-        <td width="25%" align="center" style="cursor:pointer" >
+        <td width="16%" align="center" style="cursor:pointer" >
             <input type="text" class="finput2" readonly name="orderNumber" value="<%=row.getValue("ORDER_NUMBER")%>"></td>
-        <td width="25%" align="left" style="cursor:pointer" >
+        <td width="16%" align="left" style="cursor:pointer" >
             <input type="text" class="finput2" readonly  name="orderName"  value="<%=row.getValue("ORDER_NAME")%>"></td>
+        <td width="16%" align="left" style="cursor:pointer" >
+            <input type="text" class="finput2" readonly  name="orderTypeName"  value="<%=row.getValue("ORDER_TYPE_NAME")%>"></td>
          <%if(dto.getTaskType().equals("send")){ %>
-        <td width="22%" align="left" style="cursor:pointer" >
+        <td width="17%" align="left" style="cursor:pointer" >
             <input type="text" class="finput2" readonly value="<%=row.getValue("IMPLEMENT_NAME")%>">
          </td>
-        <td width="25%" align="left" style="cursor:pointer" >
+        <td width="16%" align="left" style="cursor:pointer" >
             <input type="text" class="finput" readonly value="<%=row.getValue("IMPLEMNET_DEPT_NAME")%>"></td>
          <% }else if(dto.getTaskType().equals("received")){%>
-            <td width="22%" align="left" style="cursor:pointer" >
+            <td width="17%" align="left" style="cursor:pointer" >
            <input type="text" class="finput2" readonly value="<%=row.getValue("DISTRUBTE_BY_NAME")%>">
          </td>
-        <td width="25%" align="left" style="cursor:pointer" >
+        <td width="16%" align="left" style="cursor:pointer" >
             <input type="text" class="finput" readonly value="<%=row.getValue("SEND_DATE")%>"></td>
          <%} %>
 		<td style="display:none">
@@ -110,6 +114,9 @@ FORM {
 			 <input type="hidden" name="distrubteBy" value="<%=row.getValue("DISTRUBTE_BY")%>">
 			   <%} %>
 		</td>
+		<!-- 2013-07-04 Jeffery-->
+        <td width="16%" align="center" style="cursor:pointer" >
+            <input type="text" class="finput2" readonly name="implementRoleName" value="<%=row.getValue("IMPLEMNET_ROLE_NAME")%>"></td>
 
     </tr>
  

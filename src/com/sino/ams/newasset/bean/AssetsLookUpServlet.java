@@ -386,7 +386,8 @@ public class AssetsLookUpServlet extends BaseServlet {
 
 					lookProp.setTotalWidth(700);
 					lookProp.setMultipleChose(false);
-					lookProp.setDtoClass(AmsAssetsPriviDTO.class);					
+					lookProp.setDtoClass(AmsAssetsPriviDTO.class);
+					
 				}
 				else if(lookUpName.equals(LookUpConstant.LOOK_UP_USER_WITH_DEPT))
 				{
@@ -643,7 +644,7 @@ public class AssetsLookUpServlet extends BaseServlet {
 			            lookProp.setMultipleChose(false);
 			        }
 					lookProp.setDtoClass(EtsPaProjectsAllDTO.class);
-				} 
+				}
 				else if(lookUpName.equals(AssetsLookUpConstant.LOOK_UP_PROJECT_AUTHORIZED)) {
 
 					dispNames = new String[] {"PROJECT_NUMBER", "PROJECT_NAME",

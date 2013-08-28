@@ -10,13 +10,33 @@ public class EtsItemYearCheckDTO extends AmsAssetsAddressVDTO {
 	private String orderNumber ="";//盘点任务编码
 	private String orderName = ""; //盘点任务名称
 	private String orderType = "";//盘点类型
+	private String orderTypeName="";//任务类型名称
 	private String excel="";
 	private String ExcelLineId = "";//Excel行号
-	  
-	  
+	private String level="";        //任务等级
+	private String sendType="";     //下发方式[地市]
+	
+	public String getSendType() {
+		return sendType;
+	}
+	public void setSendType(String sendType) {
+		this.sendType = sendType;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
 	//备注
 	private String notes="";
 	
+	public String getOrderTypeName() {
+		return orderTypeName;
+	}
+	public void setOrderTypeName(String orderTypeName) {
+		this.orderTypeName = orderTypeName;
+	}
 	public String getExcelLineId() {
 		return ExcelLineId;
 	}

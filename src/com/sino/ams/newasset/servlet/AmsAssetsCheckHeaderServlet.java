@@ -89,6 +89,7 @@ public class AmsAssetsCheckHeaderServlet extends BaseServlet {
 				checkProp.addDbField("HEADER_ID");
 				pageDAO.setWebCheckProp(checkProp);
 				pageDAO.setCalPattern(LINE_PATTERN);
+				//pageDAO.setPageSize(50);//jeffery
 				pageDAO.produceWebData();
 				req.setAttribute(QueryConstant.QUERY_DTO, dtoPara);
 				forwardURL = AssetsURLList.HEADER_QRY_PAGE;

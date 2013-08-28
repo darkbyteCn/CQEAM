@@ -22,9 +22,19 @@ public class AmsAssetsCheckBatchDTO extends AMSFlowDTO {
 	  private String taskNumber ="";//盘点任务编码
 	  private String taskName = ""; //盘点任务名称
 	  private String taskType = "";//盘点类型
+	  private String taskTypeName ="";//盘点类型名称<!-- 2013-07-04 Jeffery-->
 	//
+	
 	  
 	private String batchId = "";
+	public String getTaskTypeName() {
+		return taskTypeName;
+	}
+
+	public void setTaskTypeName(String taskTypeName) {
+		this.taskTypeName = taskTypeName;
+	}
+
 	public String getTaskType() {
 		return taskType;
 	}

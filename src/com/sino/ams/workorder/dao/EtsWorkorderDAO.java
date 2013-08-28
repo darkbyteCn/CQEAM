@@ -103,6 +103,7 @@ public class EtsWorkorderDAO extends BaseDAO {
         boolean operatorResult = true;
 		try {
 			SQLModel sqlModel = null;			
+
 			List<SQLModel> sqlModList = new ArrayList<SQLModel>();
 			OrderExtendModel orderExtend = new OrderExtendModel();
 			

@@ -1613,7 +1613,7 @@ if(!dto.getResponsibilityUserName().equals("")){
 			sqlArgs.add( StrUtil.nullToString( dto.getVendorName() ) );
 			sqlArgs.add( StrUtil.nullToString(  dto.getVendorNumber() ) );
 			sqlArgs.add( StrUtil.nullToString(  dto.getVendorNumber() ) );
-		}
+		}	
 		else if(lookUpName.equals("PROJECT_NO_AUTHORIZED")){
 			EtsPaProjectsAllDTO dto = (EtsPaProjectsAllDTO) super.dtoParameter;
 			sqlStr = "SELECT EPPA.PROJECT_ID,"

@@ -33,6 +33,7 @@ import com.sino.ams.yearchecktaskmanager.dto.EtsItemYearCheckDTO;
 import com.sino.ams.yearchecktaskmanager.dto.EtsItemYearCheckLineDTO;
 import com.sino.ams.yearchecktaskmanager.model.AssetsYearCheckFaModel;
 import com.sino.ams.yearchecktaskmanager.util.AssetsCheckTaskConstant;
+import com.sino.ams.yearchecktaskmanager.util.CommonUseUtil;
 import com.sino.ams.yearchecktaskmanager.util.ReadAssetsExcel;
 import com.sino.base.constant.WorldConstant;
 import com.sino.base.constant.db.QueryConstant;
@@ -91,9 +92,9 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
 					dto, conn);
 			AssetsOptProducer optProducer = new AssetsOptProducer(user, conn);
 			assetsDAO.setServletConfig(getServletConfig(req));
-			String checkStatusOption = setOpt(dto
-					.getCheckStatus());
-			dto.setCheckStatusOption(checkStatusOption);
+//			String checkStatusOption = setOpt(dto
+//					.getCheckStatus());
+//			dto.setCheckStatusOption(checkStatusOption);
 			String pattern=req.getParameter("action");//页面跳转方式
 			String orderNumber=req.getParameter("parentOrderNumber");//工单编码
 			String orderType=req.getParameter("orderType");//工单类型
@@ -103,6 +104,11 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
             	dto.setOrderName(orderName);
             	dto.setOrderNumber(orderNumber);
             	dto.setOrderType(orderType);
+            	if(orderType!=null){
+            		String orderTypeName=CommonUseUtil.getNameByType(orderType);
+            		dto.setOrderTypeName(orderTypeName);
+            	}
+            	
             }			
             HttpSession session=req.getSession();
             session.setAttribute("req", "");
@@ -114,6 +120,7 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
 					//come from page url
 					ds = (DTOSet) assetsDAO.getLineData();
 				}
+				ds=retDTOSet(ds);
 				req.setAttribute(AssetsWebAttributes.ORDER_LINE_DATA, ds);
 				req.setAttribute(QueryConstant.QUERY_DTO, dto);
 				forwardURL = "/yearchecktaskmanager/assetsYearCheckFa.jsp";
@@ -122,6 +129,7 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
 						.getAttribute(AssetsWebAttributes.ORDER_LINE_DATA);
 				if (ds == null) {
 					ds = (DTOSet) assetsDAO.getLineData();
+					ds=retDTOSet(ds);
 				}
 				req.setAttribute(QueryConstant.QUERY_DTO, dto);
 				req.setAttribute(AssetsWebAttributes.ORDER_LINE_DATA, ds);
@@ -131,8 +139,17 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
 			    req2DTO.setIgnoreFields(EtsItemYearCheckDTO.class);
 			    DTOSet orderLines = req2DTO.getDTOSet(req);
 		        String str=req.getParameter("typeStr");
-		        assetsDAO.confirm(str);
+		        boolean falg = assetsDAO.confirm(str);
+		        //<!-- 2013-07-04 Jeffery-->
+		        message = new Message();
+		        if(falg==true){
+		        	message.setMessageValue("确认成功");
+		        }else {
+		        	message.setMessageValue("确认失败");
+		        	
+		        }
 		        DTOSet ds = (DTOSet) assetsDAO.getLineData();
+		        ds=retDTOSet(ds);
 		        req.setAttribute(QueryConstant.QUERY_DTO, dto);
 				req.setAttribute(AssetsWebAttributes.ORDER_LINE_DATA, ds);
 				forwardURL = "/yearchecktaskmanager/assetsYearCheckFa.jsp";
@@ -173,10 +190,13 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
 	                	for (int i = 0; i < dtoSet.getSize(); i++) {
 							EtsItemYearCheckLineDTO lineDTO=(EtsItemYearCheckLineDTO) dtoSet.getDTO(i);
 							String barcode=lineDTO.getBarcode();
-							if(map.containsKey(barcode)){
+							if(!map.containsKey(barcode)){
 								lineDTO.setErrorMsg("资产不属于选择盘点任务下资产");
 								errSet.addDTO(lineDTO);
 							}else{
+								String checkStatus=lineDTO.getCheckStatus();
+								String status = setOpt(checkStatus);
+								lineDTO.setCheckStatusOption(status);
 								succSet.addDTO(lineDTO);
 							}
 						}
@@ -219,6 +239,9 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLModelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ContainerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
@@ -285,6 +308,16 @@ public class AssetsYearCheckFaServlet extends BaseServlet {
         }
         return dtoSet;
     }
-
+    
+    //为DTO封装确认下拉框选择
+    public DTOSet retDTOSet(DTOSet ds){
+    	for (int i = 0; i < ds.getSize(); i++) {
+			EtsItemYearCheckLineDTO lineDTO=(EtsItemYearCheckLineDTO) ds.getDTO(i);
+			String checkStatusOption = setOpt(lineDTO.getCheckStatus());
+			lineDTO.setCheckStatusOption(checkStatusOption);
+		}
+    	return ds;
+    }
+    
 
 }

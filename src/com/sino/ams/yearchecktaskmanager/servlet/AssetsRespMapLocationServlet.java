@@ -1,6 +1,5 @@
 package com.sino.ams.yearchecktaskmanager.servlet;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -25,7 +24,6 @@ import com.sino.base.log.Logger;
 import com.sino.base.message.Message;
 import com.sino.base.util.StrUtil;
 import com.sino.base.web.ServletForwarder;
-import com.sino.base.web.request.download.WebFileDownload;
 import com.sino.base.web.request.upload.RequestParser;
 import com.sino.base.web.request.upload.UploadFile;
 import com.sino.base.web.request.upload.UploadFileSaver;
@@ -50,87 +48,75 @@ public class AssetsRespMapLocationServlet extends BaseServlet {
 		String forwardURL = "/yearchecktaskmanager/assetsRespMapLocation.jsp";
 		Message message = new Message();
 		String action ="";
-		//action = req.getParameter("act");
+		action = req.getParameter("act");
 		Connection conn = null;
 		action = StrUtil.nullToString(action);
 		try {
 			conn = DBManager.getDBConnection();
 			SfUserDTO user = (SfUserDTO) SessionUtil.getUserAccount(req);
 			AssetsRespMapLocationDTO dto = new AssetsRespMapLocationDTO();
-			AssetsRespMapLocationDAO dao = new AssetsRespMapLocationDAO(user,dto,conn);
-			String fileName = null; //上传的文件名称
-			action = req.getParameter("action"); //
-			System.out.println("action="+action);
-			if(action.equals("EXPORT_LOCATION")){
-				System.out.println("下载地点信息");
-			}else{
-				RequestParser reqPar = new RequestParser();
-				reqPar.transData(req);
-				
-				UploadFile[] upFiles = null;
-				UploadRow uploadRow;
-				String conFilePath = PDAUtil.getCurUploadFilePath(conn);
-				UploadFileSaver uploadFileSaver = reqPar.getFileSaver();
-				uploadFileSaver.saveFiles(conFilePath);
-				uploadRow = uploadFileSaver.getRow();
-				upFiles = uploadRow.getFiles();
-				if (upFiles == null) {
-				} else if (upFiles.length != 1 || upFiles[0].getFileName().equals("")) {
-				}
-				UploadFile uploadFile = upFiles[0];
-				fileName = uploadFile.getAbsolutePath();
+			AssetsRespMapLocationDAO dao = new AssetsRespMapLocationDAO(user,dto, conn);
+			String fileName = null; // 上传的文件名称
+
+			RequestParser reqPar = new RequestParser();
+			reqPar.transData(req);
+
+			UploadFile[] upFiles = null;
+			UploadRow uploadRow;
+			String conFilePath = PDAUtil.getCurUploadFilePath(conn);
+			UploadFileSaver uploadFileSaver = reqPar.getFileSaver();
+			uploadFileSaver.saveFiles(conFilePath);
+			uploadRow = uploadFileSaver.getRow();
+			upFiles = uploadRow.getFiles();
+			if (upFiles == null) {
+			} else if (upFiles.length != 1
+					|| upFiles[0].getFileName().equals("")) {
 			}
-			//excel文件上传
-			if(action.equals("") || action.equals("EXCEL")){
-				Logger.logInfo("AuthorityBatchUpdateServlet-->Excel submit servlet begin....");
-				//1---解析request
-				if(fileName==null){
-					throw new Exception("获取上传文件失败");
-				}
-				Logger.logInfo("AuthorityBatchUpdateServlet--> step 1 upload excel file completed.");
-				
-				//2---读取excel文件内容到DTOSet
-				ExcelReader xlsUtil = new ExcelReader();
-				xlsUtil.setFileName(fileName);
-				xlsUtil.setNumberOfColumn(columnNum);
-				xlsUtil.setStartRowNum(startRowNum);
-				DTOSet dtoSet = xlsUtil.readXls(0);
-				
-				Logger.logInfo("AuthorityBatchUpdateServlet--> step 2 excel file resoving completed.");
-				//3---删除临时表数据
-				dao.deleteTmpByUser();
-				Logger.logInfo("AuthorityBatchUpdateServlet--> step 3 delete tmp data completed.");
-			    //4--保存数据到临时表
-				dao.saveData(dtoSet);
-				Logger.logInfo("AuthorityBatchUpdateServlet--> step 4 save data to tmp table completed.");
-				//5--数据校验
-				boolean isSuccess = this.verifyDataAndUpdate(dtoSet,dao);
-				Logger.logInfo("AuthorityBatchUpdateServlet--> step 5 validate data completed.");
-				if(isSuccess){
-					//7--数据校验通过后，开始新增或者修改权限
-					dao.saveOrUpdateData(dtoSet);
-					String msgValue = "批量盘点责任人和地点匹配关系数据成功!";
-					message.setMessageValue(msgValue);
-					message.setIsError(false);
-				}else{
-					String msgValue = "批量导入盘点责任人和地点匹配关系数据失败,请看具体行中错误信息!";
-					message.setMessageValue(msgValue);
-					message.setIsError(true);
-				}
-				
-				//--返回结果
-				RowSet  rows = dao.getImportDataDetail();
-				req.setAttribute(QueryConstant.SPLIT_DATA_VIEW, rows);
-				forwardURL = "/yearchecktaskmanager/assetsRespMapLocationDetail.jsp";
-				
-			}else if(action.equals("EXPORT_LOCATION")){
-				//导出
-            	File file = dao.getExportFile();
-                WebFileDownload fileDown = new WebFileDownload(req, res);
-                fileDown.setFilePath(file.getAbsolutePath());
-				fileDown.download();
-                file.delete();
+			UploadFile uploadFile = upFiles[0];
+			fileName = uploadFile.getAbsolutePath();
+
+			// excel文件上传
+			Logger.logInfo("AuthorityBatchUpdateServlet-->Excel submit servlet begin....");
+			// 1---解析request
+			if (fileName == null) {
+				throw new Exception("获取上传文件失败");
 			}
+			Logger.logInfo("AuthorityBatchUpdateServlet--> step 1 upload excel file completed.");
+
+			// 2---读取excel文件内容到DTOSet
+			ExcelReader xlsUtil = new ExcelReader();
+			xlsUtil.setFileName(fileName);
+			xlsUtil.setNumberOfColumn(columnNum);
+			xlsUtil.setStartRowNum(startRowNum);
+			DTOSet dtoSet = xlsUtil.readXls(0);
+
+			Logger.logInfo("AuthorityBatchUpdateServlet--> step 2 excel file resoving completed.");
+			// 3---删除临时表数据
+			dao.deleteTmpByUser();
+			Logger.logInfo("AuthorityBatchUpdateServlet--> step 3 delete tmp data completed.");
+			// 4--保存数据到临时表
+			dao.saveData(dtoSet);
+			Logger.logInfo("AuthorityBatchUpdateServlet--> step 4 save data to tmp table completed.");
+			// 5--数据校验
+			boolean isSuccess = this.verifyDataAndUpdate(dtoSet, dao);
+			Logger.logInfo("AuthorityBatchUpdateServlet--> step 5 validate data completed.");
+			if (isSuccess) {
+				// 7--数据校验通过后，开始新增或者修改权限
+				dao.saveOrUpdateData(dtoSet);
+				String msgValue = "批量盘点责任人和地点匹配关系数据成功!";
+				message.setMessageValue(msgValue);
+				message.setIsError(false);
+			} else {
+				String msgValue = "批量导入盘点责任人和地点匹配关系数据失败,请看具体行中错误信息!";
+				message.setMessageValue(msgValue);
+				message.setIsError(true);
+			}
+
+			// --返回结果
+			RowSet rows = dao.getImportDataDetail();
+			req.setAttribute(QueryConstant.SPLIT_DATA_VIEW, rows);
+			forwardURL = "/yearchecktaskmanager/assetsRespMapLocationDetail.jsp";
+				
 		} catch (PoolPassivateException ex) {
 			message.setMessageValue("失败,"+ex.getMessage());
 			message.setIsError(true);

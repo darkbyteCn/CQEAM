@@ -46,18 +46,25 @@ FORM {
         <td width="20%"><input class="input_style1" type="text" name="barcode" style="width:100%" value="<%=dto.getBarcode()%>"></td>
     </tr>
     <tr>
-        <td align=right width="7%" height="18">任务名称：</td>
-        <td width="20%" height="18">
+        <td align=right width="10%" >任务名称：</td>
+        <td width="20%" >
             <input type="text" name="orderName" class="finputNoEmpty" readonly style="width:80%" value="<%=dto.getOrderName()%>" size="20">
 						<a href="" title="点击选择任务" onclick="chooseTask(); return false;">[…]</a>
-					</td>
+		</td>
+		<td width="10%" align="right">任务编号：</td>
+        <td width="20%">
+          <input class="input_style1" type="text" name="orderNumber" readonly style="width:100%" value="<%=dto.getOrderNumber()%>">
+        </td>
+        <td width="10%" align="right">任务类型：</td>
+        <td width="20%">
+          <input class="input_style1" type="text" name="orderTypeName" readonly  style="width:100%" value="<%=dto.getOrderTypeName()%>">
         </td>
         
     </tr>
 </table>
        
 <input type="hidden" name="act" value="">
-<input type="hidden" name="orderNumber" value="<%=dto.getOrderNumber()%>">
+<%--<input type="hidden" name="orderNumber" value="<%=dto.getOrderNumber()%>">--%>
 <input type="hidden" name="orderType" value="<%=dto.getOrderType()%>">
 <input type="hidden" name="excel" value="">
 <input type="hidden" name="excelPath"  value="" >
@@ -69,6 +76,8 @@ FORM {
        <img src="/images/eam_images/confirm.jpg" id="confirmImg" style="cursor:pointer" onclick="do_Confirm();" title="确认设备">&nbsp;
        <img src="/images/eam_images/imp_from_excel.jpg" alt="Excel导入"  onClick="do_excel();">
        <img src="/images/eam_images/export.jpg" alt="Excel导出" onclick="do_ExportData()">
+       <!-- 2013-07-04 Jeffery-->
+      <!-- <img src="/images/eam_images/delete_line.jpg" alt="删除行" onClick="deleteLine(); return false;">-->
        <%
        if (errorSet != null) {
            if (!errorSet.isEmpty()) {
@@ -176,7 +185,7 @@ EtsItemYearCheckLineDTO lineDTO = null;
         </td>
         --%>
         <td width="20%" align="left" >
-              <select name="checkStatus" id="checkStatus<%=i%>" onchange="do_SetCheckCategory(this);" class="finputNoEmpty" style="width: 100%"><%=dto.getCheckStatusOption()%></select>
+              <select name="checkStatus" id="checkStatus<%=i%>" onchange="do_SetCheckCategory(this);" class="finputNoEmpty" style="width: 100%"><%=lineDTO.getCheckStatusOption()%></select>
         </td>
         <td width="20%" align="left" >
               <input name="notes" id="notes<%=i%>"  class="finput" style="width: 100%"><%=lineDTO.getNotes()%></input>
@@ -289,6 +298,7 @@ function do_Confirm() {
 		    document.mainFrm.typeStr.value=Str;
 		    document.mainFrm.act.value = "CONFIRM_ACTION";
 		    document.mainFrm.submit();
+		    document.getElementById("$$$waitTipMsg$$$").style.visibility = "visible";//<!-- 2013-07-04 Jeffery-->
 		}
    	}
 }
@@ -347,6 +357,11 @@ function do_Transfer() {
 	   var width = screen.width-10;
 	   var height = screen.height-60;   
 	   window.open("/yearchecktaskmanager/assetsYearCheckFaError.jsp","","left=0,top=0,width="+width+",height="+height+",title=yes,scrollbars=yes,resizable=no,location=no,toolbar=no, menubar=no"); 
-	}
+}
+
+function deleteLine() {
+    var tab = document.getElementById("dataTable");
+    deleteTableRow(tab, 'subCheck');
+}
 
 </script>

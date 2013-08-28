@@ -78,7 +78,6 @@ public class ReadAssetsExcel {
 			 if(strValue != null){
 				 strValue = strValue.trim();
 			 }
-             int dotIndex = strValue.indexOf(".");
 	         switch (indexk) {
 				 case 0: //资产标签
 					 onNetDtlDTO.setBarcode(strValue);
@@ -90,7 +89,17 @@ public class ReadAssetsExcel {
 					 onNetDtlDTO.setContentName(strValue);
 					 break;
 				 case 3://确认状态
-					 onNetDtlDTO.setCheckStatusOption(strValue);   
+//					 onNetDtlDTO.setCheckStatusOption(strValue); 
+					 if(!strValue.isEmpty()){
+						 if(strValue.equals(AssetsCheckTaskConstant.CHECKED_NAME)){
+							 onNetDtlDTO.setCheckStatus(AssetsCheckTaskConstant.CHECKED);
+						 }else if(strValue.equals(AssetsCheckTaskConstant.CHECKED_LOSS_NAME)){
+							 onNetDtlDTO.setCheckStatus(AssetsCheckTaskConstant.CHECKED_LOSS);
+						 }else if(strValue.equals(AssetsCheckTaskConstant.CHECKED_NOT_MACTH_NAME)){
+							 onNetDtlDTO.setCheckStatus(AssetsCheckTaskConstant.CHECKED_NOT_MACTH);
+						 }
+					 }
+					 
 					 break;
 				 case 4://备注
 					 onNetDtlDTO.setNotes(strValue);

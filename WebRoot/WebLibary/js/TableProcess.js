@@ -216,7 +216,7 @@ function appendDTO2Table(tab, dtoObj, useOldData, uniqueField) {
     if (uniqueField == "undefined" || uniqueField == null) {
         return;
     }
-    if (dtoObj[uniqueField] != "undefined") {
+    if (typeof(dtoObj[uniqueField]) != "undefined") {
         var dataExist = false;
         var newAssets = dtoObj[uniqueField];
         var objs = document.getElementsByName(uniqueField);

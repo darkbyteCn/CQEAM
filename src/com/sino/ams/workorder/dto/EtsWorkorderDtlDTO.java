@@ -40,15 +40,15 @@ public class EtsWorkorderDtlDTO extends CheckBoxDTO{
     private String responsibilityUser;//责任人
     private String maintainUser = "";//维护人员（代维人员）
 
-    private String specialityDept = "";
+	private String specialityDept = "";
+
 
     public EtsWorkorderDtlDTO() {
 		super();
 		this.creationDate = new SimpleCalendar();
 		this.uploadDate = new SimpleCalendar();
 	}
-    
-    public void setSpecialityDept(String dept) {
+	public void setSpecialityDept(String dept) {
     	this.specialityDept = dept;
     }
 
@@ -67,7 +67,6 @@ public class EtsWorkorderDtlDTO extends CheckBoxDTO{
     	
     	return code;
     }
-    
 	/**
 	 * 功能：设置工单设备明细表--工单提交时(EAM)属性 工单号
 	 * @param workorderNo String

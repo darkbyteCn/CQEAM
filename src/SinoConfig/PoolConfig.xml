@@ -5,14 +5,15 @@
         <!--recycleCheck：对本连接池是否进行强行回收检查-->
          <dataSource>
             <dbDriver>com.sybase.jdbc3.jdbc.SybDriver</dbDriver>
-           <!--  <dbUrl>jdbc:sybase:Tds:10.1.13.195:5000/eamcp</dbUrl> -->
-            <dbUrl>jdbc:sybase:Tds:LONGDREAM1:5000/eamcq</dbUrl>
+           <dbUrl>jdbc:sybase:Tds:LOONGDREAM:5000/eamcq</dbUrl>
+             <!-- <dbUrl>jdbc:sybase:Tds:192.168.1.109:5000/eamcq</dbUrl> -->
             <!--<dbUrl>jdbc:sybase:Tds:10.204.7.70:5000/shanxi</dbUrl>-->
             <dbUser>sa</dbUser>
             <encrypt>FALSE</encrypt>
             <encodeStr>CMSDBPool</encodeStr>
-            <dbPwd>P@swrd1</dbPwd>
-        </dataSource>
+            <dbPwd>abc123</dbPwd><!--
+            <dbPwd>luobo1234</dbPwd>
+        --></dataSource>
         <connProperty>
             <initConn>2</initConn>
             <!--初始化连接数，0表示不初始化-->

@@ -59,11 +59,19 @@
         <!-- jeffery -->
         <tr>
            <td align=right width="7%" height="18">任务名称：</td>
-           <td width="20%" height="18">
+           <td width="15%" height="18">
                 <input type="text" name="taskName" class="finputNoEmpty" readonly style="width:80%" value="<%=batchDTO.getTaskName()%>" size="20">
                 <a href="" title="点击选择任务" onclick="chooseOrderTask(); return false;">[…]</a></td>
             </td>
-        
+            <!-- 2013-07-04 Jeffery-->
+	        <td width="7%" align="right">任务编号：</td>
+	        <td width="15%">
+	          <input class="input_style1" type="text" name="taskNumber" readonly style="width:100%" value="<%=batchDTO.getTaskNumber()%>">
+	        </td>
+	        <td width="7%" align="right">任务类型：</td>
+	        <td width="15%">
+	          <input class="input_style1" type="text" name="taskTypeName" readonly  style="width:100%" value="<%=batchDTO.getTaskTypeName()%>">
+	        </td>
         </tr>
     </table>
 </div>
@@ -77,12 +85,12 @@
 <input type="hidden" name="act" value="">
 <input type="hidden" name="procdureName" value="<%=batchDTO.getProcdureName()%>">
 <input type="hidden" name="checkDept" value="<%=batchDTO.getCheckDept()%>">
-<input type="hidden" name="taskNumber" value="<%=batchDTO.getTaskNumber()%>">
+<!-- <input type="hidden" name="taskNumber" value="<%=batchDTO.getTaskNumber()%>">-->
 <input type="hidden" name="taskType" value="<%=batchDTO.getTaskType()%>">
 <div id="buttonDiv" style="position:absolute;top:195px;left:1px;width:100%">
 
         <img src="/images/eam_images/choose.jpg" alt="点击选择盘点地点" onClick="do_SelectCheckLocation(); return false;">
-       	<%--<img src="/images/eam_images/imp_from_excel.jpg" alt="点击导入盘点地点" onClick="do_ImportCheckLocation(); return false;">--%>
+       	<img src="/images/eam_images/imp_from_excel.jpg" alt="点击导入盘点地点" onClick="do_ImportCheckLocation(); return false;">
         <img src="/images/eam_images/delete_line.jpg" alt="删除" onClick="do_DeleteLines(); return false;">
 
 <img src="/images/eam_images/detail_info.jpg" id="img6" alt="资产明细" onClick="do_ViewAssetsData()">
@@ -92,20 +100,29 @@
 		<input type="checkbox" name="allStartTime" id="allStartTime"><label for="allStartTime">开始日期</label>
 		<input type="checkbox" name="allImplementDays" id="allImplementDays"><label for="allImplementDays">执行周期</label>
 		<input type="checkbox" name="allArchiveUser" id="allArchiveUser"><label for="allArchiveUser">归档人</label>
-		<input type="checkbox" name="allCheckCategory" id="allCheckCategory"><label for="allCheckCategory">扫描专业</label>
+		<%--<input type="checkbox" name="allCheckCategory" id="allCheckCategory"><label for="allCheckCategory">扫描专业</label>
+		--%>
 
     </div>
     <div id="headDiv" style="overflow:hidden;width:100%">
     <table class=headerTable border=1 id="headTb" style="width:120%;TABLE-LAYOUT:fixed;word-break:break-all">
         <tr height=23px style="cursor:pointer" title="点击全选或取消全选">
             <td align=center width="3%"><input type="checkbox" name="mainCheck" value="" onPropertyChange="checkAll('mainCheck','subCheck')"></td>
+            <%--<td align=center width="11%">工单编号</td>
+            <td align=center width="8%">工单状态</td>
+            <td align=center width="15%">地点代码</td>
+            <td align=center width="15%">地点简称</td>
+            <td align=center width="8%">扫描专业</td> 
+            <td align=center width="10%">开始日期</td>
+            <td align=center width="10%">执行周期</td>
+            <td align=center width="10%">执行人</td>
+            <td align=center width="10%">归档人</td>
+            
+            --%>
             <td align=center width="14%">工单编号</td>
             <td align=center width="8%">工单状态</td>
-
             <td align=center width="15%">地点代码</td>
             <td align=center width="20%">地点简称</td>
-           <!--  <td align=center width="8%">扫描专业</td> -->
-
             <td align=center width="10%">开始日期</td>
             <td align=center width="10%">执行周期</td>
             <td align=center width="10%">执行人</td>
@@ -123,18 +140,25 @@
     if (chkHeaders == null || chkHeaders.isEmpty()) {
 %>
             <tr class="dataTR" style="display:none">
-                <td align="center" width="3%"><input type="checkbox" name="subCheck" id="subCheck0"></td>
-                <td width="14%"><input type="text" readonly class="finput" name="transNo" id="transNo0"></td>
+                <td align="center" width="3%"><input type="checkbox" name="subCheck" id="subCheck0"></td><%--
+                <td width="11%"><input type="text" readonly class="finput" name="transNo" id="transNo0"></td>
                 <td width="8%"><input type="text" readonly class="finput" name="statusName" id="statusName0"></td>
-
                 <td width="15%"><input type="text" readonly class="finput" name="objectCode" id="objectCode0"></td>
-                <td width="20%"><input type="text" readonly class="finput" name="objectName" id="objectNameName0"></td>
-                <!-- <td width="8%"><select name="checkCategory" id="checkCategory0" style="width:100%" onChange="do_SetCheckCategory(this)"><%=batchDTO.getCheckCategoryOpt()%></select></td> -->
-
+                <td width="15%"><input type="text" readonly class="finput" name="objectName" id="objectNameName0"></td>
+                <td width="8%"><select name="checkCategory" id="checkCategory0" style="width:100%" onChange="do_SetCheckCategory(this)"><%=batchDTO.getCheckCategoryOpt()%></select></td> 
                 <td width="10%"><input type="text" name="startTime" id="startTime0" class="finputNoEmpty" style="cursor:pointer;text-align:center" readonly value="" onclick="gfPop.fEndPop(referToday0, startTime0)" title="点击选择或更改该盘点工单“开始日期”"></td>
                 <td width="10%"><input type="text" name="implementDays" id="implementDays0" class="finputNoEmpty" value="" onkeydown="intOnlyOnkeyDown(this.value);" onBlur="do_SetLineDays(this)"></td>
                 <td width="10%"><input type="text" name="implementUser" id="implementUser0" class="finputNoEmpty" style="cursor:pointer;text-align:left" readonly value="" onclick="do_SelectUser(1, this);" title="点击选择或更改本盘点工单“执行人”"></td>
-                <td width="10%"><input type="text" name="archivedUser" id="archivedUser0" class="finput" style="cursor:pointer" readonly value="" onclick="do_SelectUser(2, this);" title="点击选择或更改本盘点工单“归档人”"></td>
+                <td width="10%"><input type="text" name="archivedUser" id="archivedUser0" class="finputNoEmpty" style="cursor:pointer" readonly value="" onclick="do_SelectUser(2, this);" title="点击选择或更改本盘点工单“归档人”"></td>
+                --%>
+                <td width="14%"><input type="text" readonly class="finput" name="transNo" id="transNo0"></td>
+                <td width="8%"><input type="text" readonly class="finput" name="statusName" id="statusName0"></td>
+                <td width="15%"><input type="text" readonly class="finput" name="objectCode" id="objectCode0"></td>
+                <td width="20%"><input type="text" readonly class="finput" name="objectName" id="objectNameName0"></td>
+                <td width="10%"><input type="text" name="startTime" id="startTime0" class="finputNoEmpty" style="cursor:pointer;text-align:center" readonly value="" onclick="gfPop.fEndPop(referToday0, startTime0)" title="点击选择或更改该盘点工单“开始日期”"></td>
+                <td width="10%"><input type="text" name="implementDays" id="implementDays0" class="finputNoEmpty" value="" onkeydown="intOnlyOnkeyDown(this.value);" onBlur="do_SetLineDays(this)"></td>
+                <td width="10%"><input type="text" name="implementUser" id="implementUser0" class="finputNoEmpty" style="cursor:pointer;text-align:left" readonly value="" onclick="do_SelectUser(1, this);" title="点击选择或更改本盘点工单“执行人”"></td>
+                <td width="10%"><input type="text" name="archivedUser" id="archivedUser0" class="finputNoEmpty" style="cursor:pointer" readonly value="" onclick="do_SelectUser(2, this);" title="点击选择或更改本盘点工单“归档人”"></td>
 
                 <td width="0%" style="display:none">
                     <input type="hidden" name="headerId" id="headerId0">
@@ -166,17 +190,24 @@
 %>
             <tr class="dataTR">
                 <td align="center" width="3%"><input type="checkbox" name="subCheck" id="subCheck<%=i%>" value=""></td>
-                <td width="14%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="transNo" id="transNo<%=i%>" value="<%=chkHeader.getTransNo()%>"></td>
+                <%--<td width="11%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="transNo" id="transNo<%=i%>" value="<%=chkHeader.getTransNo()%>"></td>
                 <td width="8%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="statusName" id="statusName<%=i%>" value="<%=chkHeader.getStatusName()%>"></td>
-
                 <td width="15%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="objectCode" id="objectCode<%=i%>" value="<%=chkHeader.getObjectCode()%>" style="color:<%=fontColor%>"></td>
-                <td width="20%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="objectName" id="objectName<%=i%>" value="<%=chkHeader.getObjectName()%>"></td>
-               <!--  <td width="8%"><select name="checkCategory" id="checkCategory<%=i%>" style="width:100%" onChange="do_SetCheckCategory(this)"><%=chkHeader.getCheckCategoryOpt()%></select></td> -->
-
+                <td width="15%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="objectName" id="objectName<%=i%>" value="<%=chkHeader.getObjectName()%>"></td>
+                <td width="8%"><select name="checkCategory" id="checkCategory<%=i%>" style="width:100%" onChange="do_SetCheckCategory(this)"><%=chkHeader.getCheckCategoryOpt()%></select></td>
                 <td width="8%"><input type="text" name="startTime" id="startTime<%=i%>" value="<%=chkHeader.getStartTime()%>" class="finputNoEmpty" style="cursor:pointer;text-align:center" title="点击选择或更改该盘点工单“开始日期”" class="noEmptyInput" readonly onClick="gfPop.fEndPop(referToday<%=i%>, startTime<%=i%>)"></td>
                 <td width="8%"><input type="text" name="implementDays" id="implementDays<%=i%>" value="<%=strDays%>" class="finputNoEmpty" style="cursor:pointer" onkeydown="intOnlyOnkeyDown(this.value);" onBlur="do_SetLineDays(this)"></td>
                 <td width="8%"><input type="text" name="implementUser" id="implementUser<%=i%>" value="<%=chkHeader.getImplementUser()%>" class="finputNoEmpty" style="cursor:pointer;text-align:left" readonly onclick="do_SelectUser(1, this);" title="点击选择或更改本盘点工单“执行人”"></td>
-                <td width="8%"><input type="text" name="archivedUser" id="archivedUser<%=i%>" value="<%=chkHeader.getArchivedUser()%>" class="finput" style="cursor:pointer" readonly onclick="do_SelectUser(2, this);" title="点击选择或更改本盘点工单“归档人”"></td>
+                <td width="8%"><input type="text" name="archivedUser" id="archivedUser<%=i%>" value="<%=chkHeader.getArchivedUser()%>" class="finputNoEmpty" style="cursor:pointer" readonly onclick="do_SelectUser(2, this);" title="点击选择或更改本盘点工单“归档人”"></td>--%>
+                
+                <td width="14%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="transNo" id="transNo<%=i%>" value="<%=chkHeader.getTransNo()%>"></td>
+                <td width="8%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="statusName" id="statusName<%=i%>" value="<%=chkHeader.getStatusName()%>"></td>
+                <td width="15%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="objectCode" id="objectCode<%=i%>" value="<%=chkHeader.getObjectCode()%>" style="color:<%=fontColor%>"></td>
+                <td width="20%" onClick="do_ShowDetail(this)" title="点击查看盘点工单“<%=transNo%>”的详细信息"><input type="text" readonly class="finput" name="objectName" id="objectName<%=i%>" value="<%=chkHeader.getObjectName()%>"></td>
+                <td width="8%"><input type="text" name="startTime" id="startTime<%=i%>" value="<%=chkHeader.getStartTime()%>" class="finputNoEmpty" style="cursor:pointer;text-align:center" title="点击选择或更改该盘点工单“开始日期”" class="noEmptyInput" readonly onClick="gfPop.fEndPop(referToday<%=i%>, startTime<%=i%>)"></td>
+                <td width="8%"><input type="text" name="implementDays" id="implementDays<%=i%>" value="<%=strDays%>" class="finputNoEmpty" style="cursor:pointer" onkeydown="intOnlyOnkeyDown(this.value);" onBlur="do_SetLineDays(this)"></td>
+                <td width="8%"><input type="text" name="implementUser" id="implementUser<%=i%>" value="<%=chkHeader.getImplementUser()%>" class="finputNoEmpty" style="cursor:pointer;text-align:left" readonly onclick="do_SelectUser(1, this);" title="点击选择或更改本盘点工单“执行人”"></td>
+                <td width="8%"><input type="text" name="archivedUser" id="archivedUser<%=i%>" value="<%=chkHeader.getArchivedUser()%>" class="finputNoEmpty" style="cursor:pointer" readonly onclick="do_SelectUser(2, this);" title="点击选择或更改本盘点工单“归档人”"></td>
 
                 <td width="0%" style="display:none">
                     <input type="hidden" name="headerId" id="headerId<%=i%>" value="<%=chkHeader.getHeaderId()%>">
@@ -238,8 +269,8 @@ function do_Save_app() {
 					isValid = false;
 				}
 			} else {
-				fieldNames = "startTime;implementDays;implementUser";
-				fieldLabels = "开始日期;执行周期;执行人";
+				fieldNames = "startTime;implementDays;implementUser;archivedUser";
+				fieldLabels = "开始日期;执行周期;执行人;归档人";
 				validateType = EMPTY_VALIDATE;
 				isValid = formValidate(fieldNames, fieldLabels, validateType);
 				if(isValid){
@@ -408,9 +439,20 @@ function do_ImportCheckLocation() {
 		return;
 	}
 
+	if(mainFrm.taskName.value == ""){
+		alert("请先选择盘点任务，再执行本操作。");
+		chooseOrderTask();
+		return;
+	}
+
+	if(mainFrm.taskType.value=="ADDRESS-WIRELESS"){
+		alert("实地无线不需要导入地点");
+		return;
+    }
+
 	var popscript = "dialogWidth:60;dialogHeight:30;center:yes;status:no;scrollbars:no;help:no";
 	//var url = "/newasset/importCheckLocation.jsp";
-	var url = "/servlet/com.sino.ams.newasset.servlet.AmsAssetsCheckBatchServlet?act=ImportLocation";
+	var url = "/servlet/com.sino.ams.newasset.servlet.AmsAssetsCheckBatchServlet?act=ImportLocation?isYear=Y";
 	//var locations = window.open(url);
 	var locations = window.showModalDialog(url, null, popscript);
 	if (locations) {
@@ -429,15 +471,15 @@ function do_ImportCheckLocation() {
   * /////功能：选择执行人、归档人
  */
 function do_SelectUser(selCategory, lineBox){
-	var lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_USER%>";
+	var lookUpName = "LOOK_UP_USER";
 	if(selCategory == 2){
-		lookUpName = "<%=AssetsLookUpConstant.LOOK_UP_USER_CHECK_BATCH%>";
+		lookUpName = "LOOK_UP_USER_CHECK_BATCH";
 	}
 	var dialogWidth = 44;
 	var dialogHeight = 29;
 	var checkDept=mainFrm.checkDept.value;
 	var userPara = "organizationId=<%=orgId%>&groupId=" + mainFrm.groupId.value+"&deptCode="+checkDept;;
-	var objs = lookUpAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
+	var objs = lookUpYearAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
 	var textId = lineBox.id;
 	var textName = lineBox.name;
 	var idNumber = textId.substring(textName.length);

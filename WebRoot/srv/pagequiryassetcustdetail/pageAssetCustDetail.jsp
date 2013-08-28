@@ -67,7 +67,7 @@
         if (objs) {
             var obj = objs[0];
             dto2Frm(obj, "mainFrm");
-           	document.mainFrm.projectNumber.value = obj["projectNumber"];            
+            document.mainFrm.projectNumber.value = obj["projectNumber"];
         }else {
             document.mainFrm.projectNumber.value = "";
         }

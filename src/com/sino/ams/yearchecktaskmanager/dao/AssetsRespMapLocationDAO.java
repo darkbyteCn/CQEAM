@@ -130,6 +130,7 @@ private SfUserDTO sfUser = null;
 		return result;
 		
 	}
+	
 	@SuppressWarnings("rawtypes")
 	public File getExportFile() throws DataTransException {
 		File file = null;
@@ -150,7 +151,6 @@ private SfUserDTO sfUser = null;
 			DataRange range = new DataRange();
 			rule.setDataRange(range);
 			Map fieldMap = getFieldMap();
-
 			rule.setFieldMap(fieldMap);
 			CustomTransData custData = new CustomTransData();
 			custData.setReportTitle(reportTitle);
@@ -176,5 +176,51 @@ private SfUserDTO sfUser = null;
 		fieldMap.put("WORKORDER_OBJECT_NAME", "地点组合名称");
 		return fieldMap;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public File getExportPersonsFile() throws DataTransException {
+		File file = null;
+		try {
+			AssetsRespMapLocationModel abuModel = (AssetsRespMapLocationModel)sqlProducer;
+			SQLModel sqlModel = abuModel.getCheckPersonsModel();
+			String reportTitle = "";
 
+			reportTitle = "本地市无线资产盘点责任人集值";
+			String fileName = reportTitle + ".xls";
+			String filePath = WorldConstant.USER_HOME;
+			filePath += WorldConstant.FILE_SEPARATOR;
+			filePath += fileName;
+			TransRule rule = new TransRule();
+			rule.setDataSource(sqlModel);
+			rule.setSourceConn(conn);
+			rule.setTarFile(filePath);
+			DataRange range = new DataRange();
+			rule.setDataRange(range);
+			Map fieldMap = getCheckPersonsFieldMap();
+			rule.setFieldMap(fieldMap);
+			CustomTransData custData = new CustomTransData();
+			custData.setReportTitle(reportTitle);
+			custData.setReportPerson(((SfUserDTO) userAccount).getUsername());
+			custData.setNeedReportDate(true);
+			rule.setCustData(custData);
+			rule.setCalPattern(LINE_PATTERN);
+			TransferFactory factory = new TransferFactory();
+			DataTransfer transfer = factory.getTransfer(rule);
+			transfer.transData();
+			file = (File) transfer.getTransResult();
+		} catch (DataTransException ex) {
+			ex.printLog();
+			throw new DataTransException(ex);
+		}
+		return file;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Map getCheckPersonsFieldMap() {
+		Map fieldMap = new HashMap();
+		fieldMap.put("USERNAME", "盘点责任人姓名");
+		fieldMap.put("EMPLOYEE_NUMBER", "盘点责任人员工编号");
+		fieldMap.put("DEPT_NAME","盘点责任人的部门");
+		return fieldMap;
+	}
 }

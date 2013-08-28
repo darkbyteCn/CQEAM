@@ -304,6 +304,7 @@ public interface DictConstant {
     //begin====================省公司代码======================
     String PROVINCE_CODE_NM = "42";//内蒙移动公司省代码
     String PROVINCE_CODE_JIN = "41";//山西移动公司省代码
+//    String PROVINCE_CODE_JIN = "411";//山西移动公司省代码
     String PROVINCE_CODE_SHAN = "40";//陕西移动公司省代码
     String PROVINCE_CODE_HN = "25"; //河南移动公司省代码
 	String PROVINCE_CODE_SHAN_BENBU = "4010";//陕西移动公司省本部代码

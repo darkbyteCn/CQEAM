@@ -250,7 +250,8 @@ var dataTable = document.getElementById("dataTable");
 		var dialogHeight = 29;
 		var lookUpName = "LOOK_UP_PARENT_ORDER_LEVE_3";
 		var userPara=""
-		var datas = lookUpCheckTaskValues(lookUpName, dialogWidth, dialogHeight, userPara);
+		//var datas = lookUpCheckTaskValues(lookUpName, dialogWidth, dialogHeight, userPara);
+		var datas = lookUpYearAssetsValues(lookUpName, dialogWidth, dialogHeight, userPara);
 		if (datas) {
 			 var obj = datas[0];
 			 document.getElementById("parentOrderNumber").value=obj["parentOrderNumber"];

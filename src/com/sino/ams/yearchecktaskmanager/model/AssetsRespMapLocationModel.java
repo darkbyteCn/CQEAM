@@ -28,6 +28,21 @@ private SfUserDTO sfUser = null;
 		return sqlModel;
 		
 	}
+	
+	public SQLModel getCheckPersonsModel(){
+		SQLModel sqlModel = new SQLModel();
+        List sqlArgs = new ArrayList();
+		String sqlStr = " SELECT SU.USERNAME,AME.EMPLOYEE_NUMBER,AMD.DEPT_NAME "+
+		 " from SF_USER SU,SF_USER_AUTHORITY SUA,AMS_MIS_EMPLOYEE AME,AMS_MIS_DEPT AMD "+
+		 " where SU.USER_ID = SUA.USER_ID and SU.EMPLOYEE_NUMBER = AME.EMPLOYEE_NUMBER "+
+		 " and AME.DEPT_CODE = AMD.DEPT_CODE "+
+		 " and SUA.ROLE_NAME='实地无线资产盘点责任人' and SU.ORGANIZATION_ID=? ";
+		sqlArgs.add(userAccount.getOrganizationId());
+		sqlModel.setSqlStr(sqlStr);
+		sqlModel.setArgs(sqlArgs);
+		return sqlModel;
+		
+	}
 	//删除临时表数据
 	public SQLModel getDeleteTmpModel(){
 		SQLModel sqlModel = new SQLModel();
@@ -58,7 +73,7 @@ private SfUserDTO sfUser = null;
 			  .append("WORKORDER_OBJECT_CODE,")
 			  .append("WORKORDER_OBJECT_NMAE,")
 			  .append("	CREATEED_BY, ")
-			  .append("	ERROR_MESSAGE, )")
+			  .append("	ERROR_MESSAGE,")
 			  .append(" EXCEL_ROW_NUMBER, ")
 			  .append("	CREATION_DATE )")
 			  .append("	VALUES(NEWID(),?,?,?,?,?,?,?,?,?,GETDATE())");
@@ -123,7 +138,7 @@ private SfUserDTO sfUser = null;
 		  .append(" WORKORDER_OBJECT_NMAE,")
 		  .append(" ERROR_MESSAGE,")
 		  .append("	CREATEED_BY,")
-		  .append("	CREATE_DATE,")
+		  .append("	CREATION_DATE,")
 		  .append("	EXCEL_ROW_NUMBER ")
 		  .append(" FROM AMS_ASSETS_YEAR_CHECK_RML_TMP WHERE CREATEED_BY = ? ")
 		  .append(" order by EXCEL_ROW_NUMBER ");

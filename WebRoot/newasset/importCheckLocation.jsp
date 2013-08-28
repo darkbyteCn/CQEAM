@@ -32,6 +32,7 @@ response.setHeader("Pragma", "No-cache");
 <%
 	RowSet rows = (RowSet) request.getAttribute(QueryConstant.SPLIT_DATA_VIEW);
 	List<String> list = (List) request.getAttribute("NOLOCATIOND_DATA");
+	String isYear=request.getAttribute("isYear");//jeffery
 	Row row = null;
 	boolean hasData = (rows != null && rows.getSize() > 0);
 %>
@@ -113,6 +114,9 @@ response.setHeader("Pragma", "No-cache");
 </body>
 <script type="text/javascript">
     function doSub() {
+//jeffery
+alert("<%=isYear%>");
+        
     	var excelName = document.mainFrm.flName.value;
     	if (excelName.indexOf('.xls') == -1) {
     		alert("请确保您导入的文件格式为xls！");

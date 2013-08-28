@@ -1,7 +1,9 @@
 package com.sino.ams.yearchecktaskmanager.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import com.sino.ams.yearchecktaskmanager.util.AssetsCheckTaskOrderGeneretor;
 import com.sino.ams.yearchecktaskmanager.util.CommonUtil;
 import com.sino.base.data.Row;
 import com.sino.base.data.RowSet;
+import com.sino.base.db.conn.DBManager;
 import com.sino.base.db.query.SimpleQuery;
 import com.sino.base.db.sql.model.SQLModel;
 import com.sino.base.db.util.DBOperator;
@@ -40,6 +43,29 @@ public class AssetsYearCheckTaskCityDAO extends AMSProcedureBaseDAO{
 		AssetsYearCheckTaskHeaderDTO dtoPara = (AssetsYearCheckTaskHeaderDTO) dtoParameter;
 		sqlProducer = new AssetsYearCheckTaskCityModel((SfUserDTO) userAccount,dtoPara);
 	}
+	
+	//拍照调用过程SNAPSHOT_EII,只拍baseDate之前的数据
+    public String snapshotData(int organizitionId,String baseDate){
+    	String result ="Y";
+//        CallableStatement cst = null;
+//        String sqlStr = "{CALL dbo.SNAPSHOT_EII(?,?,?)}";
+//        try {
+//            cst = conn.prepareCall(sqlStr);
+//            cst.setInt(1, organizitionId);
+//            cst.setString(2, baseDate);
+//            cst.registerOutParameter(3, Types.VARCHAR);
+//            conn.setAutoCommit(true);            
+//            cst.execute();
+//            result = cst.getString(3);
+//        } catch(Exception e){
+//        	e.printStackTrace();
+//        	result = "N";
+//        	//throw new Exception("拍照过程异常：",e);
+//        }finally {
+//            DBManager.closeDBStatement(cst);
+//        }
+        return result;
+    }
 	
 	//保存地市基准日
 	public void saveBaseDateCity(AssetsYearCheckTaskBaseDateDTO cityBaseDto) throws DataHandleException {

@@ -159,6 +159,7 @@ function do_Confirm() {
 		document.mainFrm.typeStr.value=Str;
 	    document.mainFrm.act.value = "CONFIRM_ACTION";
 	    mainFrm.submit();
+	    document.getElementById("$$$waitTipMsg$$$").style.visibility = "visible";
 	}
 }
 

@@ -21,6 +21,7 @@ import com.sino.ams.yearchecktaskmanager.dto.AssetsYearCheckTaskHeaderDTO;
 import com.sino.ams.yearchecktaskmanager.dto.AssetsYearCheckTaskLineDTO;
 import com.sino.ams.yearchecktaskmanager.util.AssetsCheckTaskConstant;
 import com.sino.ams.yearchecktaskmanager.util.CommonUtil;
+import com.sino.base.constant.message.MessageConstant;
 import com.sino.base.dto.DTOSet;
 import com.sino.base.dto.Request2DTO;
 import com.sino.base.exception.CalendarException;
@@ -60,6 +61,7 @@ public class AssetsYearCheckTaskCityServlet extends BaseServlet {
 			//地市的基准日和下发规则信息
 			req2DTO.setDTOClassName(AssetsYearCheckTaskBaseDateDTO.class.getName());
 			AssetsYearCheckTaskBaseDateDTO cityBaseDto = (AssetsYearCheckTaskBaseDateDTO) req2DTO.getDTO(req);
+			System.out.println("cityBaseDto:"+cityBaseDto);
 			
 			//地市基准日
 			String isExsitsCityBaseDate = req.getParameter("cityBaseDateIsExists");
@@ -118,27 +120,38 @@ public class AssetsYearCheckTaskCityServlet extends BaseServlet {
 					req.setAttribute("ASSETS_CLASS", htmlDataClass.toString());
 					req.setAttribute("NON_ADDRESS_CATEGORY", nonAddressCageroy);
 					
-					forwardURL = "/yearchecktaskmanager/assetsYearCheckTaskCityOneTime.jsp";
+					forwardURL = "/yearchecktaskmanager/assetsYearCheckTaskCity.jsp";
 				}else if(action.equals("DO_SEND")){
 					//下发任务
-					System.out.println("1111");
 					req2DTO.setDTOClassName(AssetsYearCheckTaskLineDTO.class.getName());
 					req2DTO.setIgnoreFields(AssetsYearCheckTaskHeaderDTO.class);
 		            DTOSet lineSet = req2DTO.getDTOSet(req);
-		            System.out.println("lineSet size:"+lineSet.getSize());
+		           /* System.out.println("lineSet size:"+lineSet.getSize());
 		            for (int i = 0; i < lineSet.getSize(); i++){
 		            	AssetsYearCheckTaskLineDTO lineDto = (AssetsYearCheckTaskLineDTO) lineSet.getDTO(i);
 		            	System.out.println(lineDto);
-		            }
+		            }*/
 		            //判断基准日是否需要新建
 		            System.out.println("isExsitsCityBaseDate="+isExsitsCityBaseDate);
+		            String result = "";
 		            if(isExsitsCityBaseDate.equals("N")){
+		            	//保存基准日
 		            	checkTastCityDAO.saveBaseDateCity(cityBaseDto);
+		            	//拍照
+			            result = checkTastCityDAO.snapshotData(user.getOrganizationId(),cityBaseDto.getCheckBaseDateCity());
 		            }else{
-		            	System.out.println("存在");
+		            	//System.out.println("存在");
 		            }
 		            //仅下发任务即可
 		            checkTastCityDAO.createOrder(lineSet);
+		            
+		            if(result.equals("N")){
+		            	 message.setIsError(true);
+				         message.setMessageValue("下发盘点任务成功,但数据拍照失败，请联系管理员！");
+		            }else{
+		            	 message.setIsError(false);
+				         message.setMessageValue("下发盘点任务成功");
+		            }
 		            
 		            req.setAttribute("CITY_BASE_DATE", getCityBaseDate(checkTaskProvinceDAO));
 					req.setAttribute("CITY_BASE_DATE_IS_EXISTS", "Y");
@@ -147,8 +160,7 @@ public class AssetsYearCheckTaskCityServlet extends BaseServlet {
 		            req.setAttribute("ASSETS_CLASS", htmlDataClass.toString());
 		            req.setAttribute("NON_ADDRESS_CATEGORY", nonAddressCageroy);
 		            req.setAttribute("ORDER_LINE_DATA",lineSet);
-		            message.setIsError(false);
-		            message.setMessageValue("下发盘点任务成功");
+		           
 		            forwardURL = "/yearchecktaskmanager/assetsYearCheckTaskCityDetail.jsp";
 				}else if(action.equals("DO_SEND_ONE_TIME")){
 					//一次性下发所有任务
@@ -174,6 +186,7 @@ public class AssetsYearCheckTaskCityServlet extends BaseServlet {
 		} catch (Exception e){
 			message.setIsError(true);
 			message.setMessageValue("出现错误，请联系管理员！");
+			forwardURL = MessageConstant.MSG_PRC_SERVLET;;
 		}finally{
 			 ServletForwarder forwarder;
 		     closeDBConnection(conn);

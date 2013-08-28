@@ -27,7 +27,6 @@ import com.sino.ams.inv.storeman.dto.EamInvStoremanDTO;
 import com.sino.ams.net.statistic.dto.EquipStatDTO;
 import com.sino.ams.newasset.dto.AmsMisDeptDTO;
 import com.sino.ams.newasset.dto.AmsMisEmployeeDTO;
-//import com.sino.ams.newasset.dto.AmsWorkOrderDTO;
 import com.sino.ams.newasset.dto.AssetsTagNumberQueryDTO;
 import com.sino.ams.newasset.dto.GroupDTO;
 import com.sino.nm.ams.others.cabel.dto.AmsCabelInfoDTO;
