@@ -15,3 +15,4 @@ encoding//src/config/app.properties=gbk
 encoding//src/config/help.properties=gbk
 encoding//war/WEB-INF/web.xml=GBK
 encoding/<project>=gbk
+encoding/build.xml=GBK

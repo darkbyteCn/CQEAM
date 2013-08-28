@@ -6,10 +6,10 @@
 	<lastImage>/images/eam_images/last_page.jpg</lastImage><!--翻页查询中的下一页图片-->
 	<showTurnTo>false</showTurnTo><!--是否显示跳转图片-->
 	<turnImage>/images/eam_images/last_page.jpg</turnImage><!--翻页查询中的尾页图片-->
-	<pageSize>15</pageSize><!--每页记录数-->
-	<tipPageSize>15</tipPageSize><!--当页面记录大于该值时，显示提示信息-->
-	<tipPageNo>15</tipPageNo><!--当当前页数大于等于该值时，显示提示信息-->
-	<tipPageMinus>15</tipPageMinus><!--当跳转页与当前页大于等于该值时,显示提示信息-->
+	<pageSize>30</pageSize><!--每页记录数-->
+	<tipPageSize>30</tipPageSize><!--当页面记录大于该值时，显示提示信息-->
+	<tipPageNo>30</tipPageNo><!--当当前页数大于等于该值时，显示提示信息-->
+	<tipPageMinus>30</tipPageMinus><!--当跳转页与当前页大于等于该值时,显示提示信息-->
 	<cusDefinePageSize>true</cusDefinePageSize><!--是否允许用户定义记录数-->
 	<showStatiInfo>true</showStatiInfo><!--是否显示统计信息-->
     <countPages>true</countPages><!--是否计算总记录数-->
