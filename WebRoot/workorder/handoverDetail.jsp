@@ -199,8 +199,8 @@ boolean hasTransObject=true;
                     + "px;center:yes;status:no;scrollbars:no;help:no;resizable:yes";
             var retVal = window.showModalDialog(url, null, winstyle);
             
-            var rets = retVal.split(";");
             if (retVal) {
+            	var rets = retVal.split(";");
                 document.mainFrm.implementBy.value = rets[0];
                 document.mainFrm.arcUser.value = rets[0];
                 document.mainFrm.groupId.value = rets[1];
