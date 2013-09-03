@@ -202,6 +202,7 @@ boolean hasTransObject=true;
             var rets = retVal.split(";");
             if (retVal) {
                 document.mainFrm.implementBy.value = rets[0];
+                document.mainFrm.arcUser.value = rets[0];
                 document.mainFrm.groupId.value = rets[1];
                 document.mainFrm.act.value = "<%=WebActionConstant.UPDATE_ACTION%>";
                 document.mainFrm.submit();
